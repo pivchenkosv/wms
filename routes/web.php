@@ -11,6 +11,7 @@
 |
 */
 
+Route::view('/users', 'app');
 Route::get('/', function () {
     return view('auth.login');
 });
