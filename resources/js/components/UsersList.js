@@ -6,7 +6,8 @@ class UsersList extends Component {
     constructor() {
         super()
         this.state = {
-            users: []
+            users: [],
+            user: null,
         }
     }
 
@@ -62,7 +63,7 @@ class UsersList extends Component {
                                             id={user.id}
                                             key={user.id}
                                         >
-                                            <span id={user.id} className='badge badge-pill' id='userId'>
+                                            <span id={user.id} className='badge badge-pill'>
                                                 {user.id}
                                             </span>
                                             <span id={user.id} className='badge badge-pill'>
