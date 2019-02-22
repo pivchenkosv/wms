@@ -1,19 +1,22 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import { Redirect } from 'react-router-dom';
 
-class Login extends Component {
+class Register extends Component {
     constructor() {
         super();
         this.state = {
+            name: '',
             email: '',
             password: '',
+            confirmPassword: '',
             error: '',
             toDashboard: false,
         };
 
         this.handlePassChange = this.handlePassChange.bind(this);
         this.handleUserChange = this.handleUserChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleConfirmPassChange = this.handleConfirmPassChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dismissError = this.dismissError.bind(this);
     }
@@ -33,18 +36,16 @@ class Login extends Component {
         }
         console.log(this.state);
         const params = new URLSearchParams();
+        params.append('name', this.state.name);
         params.append('email', this.state.email);
         params.append('password', this.state.password);
+        params.append('password_confirmation', this.state.confirmPassword);
         params.append('_token',$('meta[name="csrf-token"]').attr('content'));
-        axios.post('api/login', params, {
+        axios.post('api/register', params, {
             headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         }).then(response => {
             console.log(response);
             console.log(response.data);
-            this.setState({
-                toDashboard: true
-            })
-            // return <Redirect to='/home' />;
         }).catch(response => {
             console.log(response);
             console.log(response.data);
@@ -53,6 +54,12 @@ class Login extends Component {
     }
 
     handleUserChange(evt) {
+        this.setState({
+            name: evt.target.value,
+        });
+    };
+
+    handleEmailChange(evt) {
         this.setState({
             email: evt.target.value,
         });
@@ -64,55 +71,71 @@ class Login extends Component {
         });
     }
 
+    handleConfirmPassChange(evt) {
+        this.setState({
+            confirmPassword: evt.target.value,
+        });
+    }
+
     render() {
 
-        if (this.state.toDashboard === true) {
-            return <Redirect to='/home' />
-        }
         return (
-            <div className="Login">
+            <div className="Register">
                 <div className="container py-4">
                     <div className="row justify-content-center">
                         <div className="col-md-8">
                             <div className="card">
-                                <div className="card-header">Login</div>
+                                <div className="card-header">Register</div>
+
                                 <div className="card-body">
                                     <form onSubmit={this.handleSubmit}>
                                         <input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')} />
                                         <div className="form-group row">
-                                            <label htmlFor="email" className="col-md-4 col-form-label text-md-right">E-Mail
-                                                Address</label>
+                                            <label htmlFor="name" className="col-md-4 col-form-label text-md-right">Name</label>
+
+                                            <div className="col-md-6">
+                                                <input id="name" type="text"
+                                                       className="form-control"
+                                                       name="name" value={this.state.name} onChange={this.handleUserChange} required autoFocus/>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group row">
+                                            <label htmlFor="email" className="col-md-4 col-form-label text-md-right">E-mail Address</label>
+
                                             <div className="col-md-6">
                                                 <input id="email" type="email"
                                                        className="form-control"
-                                                       name="email" value={this.state.email} onChange={this.handleUserChange} required autoFocus/>
+                                                       name="email" value={this.state.email} onChange={this.handleEmailChange} required/>
                                             </div>
                                         </div>
+
                                         <div className="form-group row">
                                             <label htmlFor="password"
                                                    className="col-md-4 col-form-label text-md-right">Password</label>
+
                                             <div className="col-md-6">
                                                 <input id="password" type="password"
                                                        className="form-control"
                                                        name="password" value={this.state.password} onChange={this.handlePassChange} required/>
                                             </div>
                                         </div>
+
                                         <div className="form-group row">
-                                            <div className="col-md-6 offset-md-4">
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" name="remember" id="remember"/>
-                                                        <label className="form-check-label" htmlFor="remember">
-                                                            Remember Me
-                                                        </label>
-                                                </div>
+                                            <label htmlFor="password-confirm"
+                                                   className="col-md-4 col-form-label text-md-right">Confirm Password</label>
+
+                                            <div className="col-md-6">
+                                                <input id="password-confirm" type="password" className="form-control"
+                                                       name="password_confirmation" value={this.state.confirmPassword} onChange={this.handleConfirmPassChange} required/>
                                             </div>
                                         </div>
+
                                         <div className="form-group row mb-0">
-                                            <div className="col-md-8 offset-md-4">
-                                                <button type="submit" className="btn btn-primary">Login</button>
-                                                <a className="btn btn-link" href="password/request">
-                                                    Forgot Your Password?
-                                                </a>
+                                            <div className="col-md-6 offset-md-4">
+                                                <button type="submit" className="btn btn-primary">
+                                                    Register
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -125,5 +148,5 @@ class Login extends Component {
         );
     }
 }
-export default Login
+export default Register
 
