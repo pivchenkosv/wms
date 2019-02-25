@@ -9,6 +9,9 @@ class UsersList extends Component {
             users: [],
             user: null,
         }
+
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.showUserInfo = this.showUserInfo.bind(this);
     }
 
     showUserInfo(evt) {
