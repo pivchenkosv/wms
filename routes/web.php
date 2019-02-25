@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::view('/{path?}', 'app');
+Route::view('/admin/users', 'app');
+Route::get('/',[
+    'as' => 'login',
+    'uses' => 'Auth\LoginController@showLoginForm'
+]);
 
 //Auth::routes();
 
@@ -55,7 +58,7 @@ Route::get('register', [
     'as' => 'register',
     'uses' => 'Auth\RegisterController@showRegistrationForm'
 ]);
-Route::post('register', [
-    'as' => '',
-    'uses' => 'Auth\RegisterController@register'
-]);
+//Route::post('register', [
+//    'as' => '',
+//    'uses' => 'Auth\RegisterController@register'
+//]);

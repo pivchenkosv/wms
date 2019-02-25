@@ -16,13 +16,10 @@ class CheckRoleAdmin
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if ($user && $user->role != 'ROLE_ADMIN') {
-            return redirect('home');
-        }
-        if (empty($user)) {
-            return redirect('home');
+        if ($user != null && $user->role == 'ROLE_ADMIN') {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/home');
     }
 }
