@@ -30,3 +30,7 @@ Route::post('register', [
     'as' => '',
     'uses' => 'Auth\RegisterController@register'
 ]);
+Route::post('deleteUser', [
+    'as' => '',
+    'uses' => 'AdminController@delete'
+]);

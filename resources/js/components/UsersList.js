@@ -21,6 +21,10 @@ class UsersList extends Component {
         this.setState({user: null});
     }
 
+    rerenderList = (users) => {
+        this.setState({users: users});
+    }
+
     showUserInfo(user) {
         // this.setState({viewForm: false},function () {
         //     this.setState({viewForm: true});
@@ -33,7 +37,7 @@ class UsersList extends Component {
     createNewUser() {
         this.setState({user: null}, function () {
             this.setState({user: {
-                    id: 0,
+                    id: null,
                     name: '',
                     email: '',
                     role: '',
@@ -107,7 +111,7 @@ class UsersList extends Component {
                     </div>
                     <div id="user" className="col-md-4">
                         {(this.state.user) ?
-                            <User user={this.state.user} unmountForm = {this.handleFormUnmount}/> : ''}
+                            <User user={this.state.user} unmountForm = {this.handleFormUnmount} rerenderUsersList = {this.rerenderList}/> : ''}
                     </div>
                 </div>
             </div>

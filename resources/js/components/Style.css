@@ -7,4 +7,8 @@
         margin: 0 auto;
         max-width: 320px;
     }
+
+    .mar {
+        margin-left: 5px;
+    }
 }

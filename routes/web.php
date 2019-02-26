@@ -11,9 +11,11 @@
 |
 */
 
-Route::view('/{path?}', 'app');
-Route::view('/admin/users', 'app');
 Route::get('/',[
+    'as' => 'login',
+    'uses' => 'Auth\LoginController@showLoginForm'
+]);
+Route::get('login', [
     'as' => 'login',
     'uses' => 'Auth\LoginController@showLoginForm'
 ]);
@@ -22,10 +24,6 @@ Route::get('/',[
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('login', [
-    'as' => 'login',
-    'uses' => 'Auth\LoginController@showLoginForm'
-]);
 Route::post('login', [
     'as' => '',
     'uses' => 'Auth\LoginController@login'
@@ -53,11 +51,13 @@ Route::get('password/reset/{token}', [
     'uses' => 'Auth\ResetPasswordController@showResetForm'
 ]);
 
+Route::view('/{path?}', 'app');
+Route::view('/admin/users', 'app');
 // Registration Routes...
-Route::get('register', [
-    'as' => 'register',
-    'uses' => 'Auth\RegisterController@showRegistrationForm'
-]);
+//Route::get('register', [
+//    'as' => 'register',
+//    'uses' => 'Auth\RegisterController@showRegistrationForm'
+//]);
 //Route::post('register', [
 //    'as' => '',
 //    'uses' => 'Auth\RegisterController@register'
