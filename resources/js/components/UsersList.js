@@ -1,28 +1,49 @@
 import axios from 'axios'
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import ReactDOM from "react-dom";
+import User from "./User";
 
 class UsersList extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
             users: [],
             user: null,
+            //viewForm: false,
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
         this.showUserInfo = this.showUserInfo.bind(this);
+        this.showUserInfo = this.showUserInfo.bind(this);
+        this.handleFormUnmount = this.handleFormUnmount.bind(this);
+        this.createNewUser = this.createNewUser.bind(this);
     }
 
-    showUserInfo(evt) {
-        let id = evt.target.getAttribute('id');
-        console.log(evt.target.getAttribute('id'));
-        axios.get('/api/admin/users/' + id).then(response => {
-            this.setState({
-                user: response.data
-            })
-        })
+    handleFormUnmount(){
+        this.setState({user: null});
+    }
+
+    showUserInfo(user) {
+        // this.setState({viewForm: false},function () {
+        //     this.setState({viewForm: true});
+        // });
+        this.setState({user: null}, function () {
+            this.setState({user: user});
+        });
     };
+
+    createNewUser() {
+        this.setState({user: null}, function () {
+            this.setState({user: {
+                    id: 0,
+                    name: '',
+                    email: '',
+                    role: '',
+                }});
+        });
+    };
+
     componentDidMount () {
         axios.get('/api/admin/users').then(response => {
             this.setState({
@@ -41,9 +62,9 @@ class UsersList extends Component {
                             <div className='card-header'>
                                 <div className='row'>
                                     <div className='col-sm-8'>Users Table</div>
-                                    <Link className='btn btn-primary btn-sm mb-3 col-sm-3' to='/register'>
+                                    <button className='btn btn-primary btn-sm mb-3 col-sm-3' onClick={this.createNewUser}>
                                         Create new user account
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                             <div className='card-header'>
@@ -60,11 +81,9 @@ class UsersList extends Component {
                                 <ul className='list-group list-group-flush'>
                                     {users.map(user => (
                                         <Link
+                                            to="#"
                                             className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                                            to={'#'}
-                                            onClick={this.showUserInfo}
-                                            id={user.id}
-                                            key={user.id}
+                                            onClick={() => this.showUserInfo(user)}
                                         >
                                             <span id={user.id} className='badge badge-pill'>
                                                 {user.id}
@@ -88,6 +107,10 @@ class UsersList extends Component {
                                 </ul>
                             </div>
                         </div>
+                    </div>
+                    <div id="user" className="col-md-4">
+                        {(this.state.user) ?
+                            <User user={this.state.user} unmountForm = {this.handleFormUnmount}/> : ''}
                     </div>
                 </div>
             </div>

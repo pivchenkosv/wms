@@ -11,7 +11,7 @@
 |
 */
 
-Route::view('/{path?}', 'app');
+//Route::view('/{path?}', 'app');
 Route::view('/admin/users', 'app');
 Route::get('/',[
     'as' => 'login',
