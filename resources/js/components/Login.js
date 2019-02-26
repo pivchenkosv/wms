@@ -79,26 +79,26 @@ class Login extends Component {
                                 <div className="card-body">
                                     <form onSubmit={this.handleSubmit}>
                                         <input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')} />
-                                        <div className="form-group row">
-                                            <label htmlFor="email" className="col-md-4 col-form-label text-md-right">E-Mail
+                                        <div className="form-group">
+                                            <label htmlFor="email" className="col-md-12 col-form-label text-md-left">E-Mail
                                                 Address</label>
-                                            <div className="col-md-6">
+                                            <div className="col-md-12">
                                                 <input id="email" type="email"
                                                        className="form-control"
                                                        name="email" value={this.state.email} onChange={this.handleUserChange} required autoFocus/>
                                             </div>
                                         </div>
-                                        <div className="form-group row">
+                                        <div className="form-group">
                                             <label htmlFor="password"
-                                                   className="col-md-4 col-form-label text-md-right">Password</label>
-                                            <div className="col-md-6">
+                                                   className="col-md-12 col-form-label text-md-left">Password</label>
+                                            <div className="col-md-12">
                                                 <input id="password" type="password"
                                                        className="form-control"
                                                        name="password" value={this.state.password} onChange={this.handlePassChange} required/>
                                             </div>
                                         </div>
-                                        <div className="form-group row">
-                                            <div className="col-md-6 offset-md-4">
+                                        <div className="form-group">
+                                            <div className="col-md-8 offset-md-2">
                                                 <div className="form-check">
                                                     <input className="form-check-input" type="checkbox" name="remember" id="remember"/>
                                                         <label className="form-check-label" htmlFor="remember">
@@ -108,7 +108,7 @@ class Login extends Component {
                                             </div>
                                         </div>
                                         <div className="form-group row mb-0">
-                                            <div className="col-md-8 offset-md-4">
+                                            <div className="col-md-12 offset-md-2">
                                                 <button type="submit" className="btn btn-primary">Login</button>
                                                 <a className="btn btn-link" href="password/request">
                                                     Forgot Your Password?

@@ -11,7 +11,7 @@
 |
 */
 
-//Route::view('/{path?}', 'app');
+Route::view('/{path?}', 'app');
 Route::view('/admin/users', 'app');
 Route::get('/',[
     'as' => 'login',
@@ -22,7 +22,7 @@ Route::get('/',[
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/login', [
+Route::get('login', [
     'as' => 'login',
     'uses' => 'Auth\LoginController@showLoginForm'
 ]);

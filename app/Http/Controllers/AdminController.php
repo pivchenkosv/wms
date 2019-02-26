@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware(['auth', 'admin']);
     }
 
     public function index()
@@ -22,6 +22,15 @@ class AdminController extends Controller
     public function show($id)
     {
         $user = User::all()->find($id);
+
+        return $user->toJson();
+    }
+
+    public function delete(Request $request){
+        $id = $request->input('id');
+        User::destroy($id);
+
+        $user = User::all();
 
         return $user->toJson();
     }

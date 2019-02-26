@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import axios from "axios";
+import './Style.css';
 
 class User extends Component {
     user;
@@ -15,24 +17,73 @@ class User extends Component {
     }
 
     isUserChanged = () => {
-        return (this.state.user === this.props.user);
-    }
+        return (this.state.userInfo.name === this.props.user.name &&
+                this.state.userInfo.email === this.props.user.email &&
+                this.state.userInfo.role === this.props.user.role);
+    };
+
+    selected = (event) => {
+        if (this.state.userInfo.role === event.target.value)
+        {
+            event.target.selected = 'selected';
+            return 'selected';
+        }
+    };
 
     inputChange = (event) => {
         const {name, value} = event.target;
+        console.log(this.props);
         this.setState({
         userInfo: {
             ...this.state.userInfo,
             [name]: value,
         }})
-    }
+    };
 
     handleRoleChange(evt) {
-        this.user.role = evt.target.value;
+        let value = evt.target.options[evt.target.selectedIndex].value;
+        console.log(value);
         this.setState({
-            user: this.user,
+            userInfo: {
+                ...this.state.userInfo,
+                role: value,
+            }
+        }, function () {
+            console.log(this.state.userInfo.role);
         });
     };
+
+    handleSubmit = (evt) => {
+        evt.preventDefault();
+        const params = new URLSearchParams();
+        if (this.state.userInfo.id !== null)
+            params.append('id' ,this.state.userInfo.id);
+        params.append('name', this.state.userInfo.name);
+        params.append('email', this.state.userInfo.email);
+        params.append('role', this.state.userInfo.role);
+        params.append('password', '12345678');
+        params.append('password_confirmation', '12345678');
+        params.append('_token',$('meta[name="csrf-token"]').attr('content'));
+        axios.post('/api/register', params, {
+            headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        }).then(response => {
+            console.log('fulfilled', response);
+            console.log(response.data);
+            this.props.rerenderUsersList(response.data);
+        }).catch(response => {
+            console.log('rejected', response);
+            console.log(response.data);
+        })
+    };
+
+    deleteUser = (event) => {
+        event.preventDefault();
+        const id = new URLSearchParams();
+        id.append('id', this.state.userInfo.id);
+        axios.post('/api/deleteUser', id).then(response => {
+            this.props.rerenderUsersList(response.data);
+        })
+    }
 
     render() {
         const {userInfo} = this.state;
@@ -76,43 +127,23 @@ class User extends Component {
                         <div className="form-group">
                             <label htmlFor="roles" className="col-form-label text-md-left">Role</label>
 
-                            <select id="roles" className="col-md-12" onChange={this.handleRoleChange}>
-                                <option id="ROLE_WORKER">ROLE_WORKER</option>
-                                <option id="ROLE_MANAGER">ROLE_MANAGER</option>
-                                <option id="ROLE_ADMIN">ROLE_ADMIN</option>
+                            <select id="roles" value={userInfo.role} className="col-md-12" onChange={this.handleRoleChange}>
+                                <option id="WORKER" value="ROLE_WORKER">Warehouse worker</option>
+                                <option id="MANAGER" value="ROLE_MANAGER">Warehouse manager</option>
+                                <option id="ADMIN" value="ROLE_ADMIN">Admin</option>
                             </select>
                         </div>
                         <div className="form-group row mb-4">
-                            <div className="col-md-6 ">
+                            <div className="col-md-8 ">
                                 <button id="save" type="submit" className="btn btn-primary" disabled={this.isUserChanged()}>
                                     Save
                                 </button>
+                                {userInfo.id ?
+                                    <button id="delete" type="submit" className="btn btn-primary btn-danger mar" onClick={this.deleteUser}>
+                                        Delete User
+                                    </button> : '' }
                             </div>
                         </div>
-
-
-                        {/*<div className="form-group row">*/}
-                        {/*<label htmlFor="password"*/}
-                        {/*className="col-md-4 col-form-label text-md-right">Password</label>*/}
-
-                        {/*<div className="col-md-6">*/}
-                        {/*<input id="password" type="password"*/}
-                        {/*className="form-control"*/}
-                        {/*name="password" value={this.state.password} onChange={this.handlePassChange}*/}
-                        {/*required/>*/}
-                        {/*</div>*/}
-                        {/*</div>*/}
-
-                        {/*<div className="form-group row">*/}
-                        {/*<label htmlFor="password-confirm"*/}
-                        {/*className="col-md-4 col-form-label text-md-right">Confirm Password</label>*/}
-
-                        {/*<div className="col-md-6">*/}
-                        {/*<input id="password-confirm" type="password" className="form-control"*/}
-                        {/*name="password_confirmation" value={this.state.confirmPassword}*/}
-                        {/*onChange={this.handleConfirmPassChange} required/>*/}
-                        {/*</div>*/}
-                        {/*</div>*/}
                     </form>
                 </div>
             </div>
