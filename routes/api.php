@@ -16,8 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('admin/users', 'AdminController@index');
-Route::get('admin/users/{id}', 'AdminController@show');
+Route::get('admin/users', [
+    'as' => 'users',
+    'uses' => 'AdminController@index'
+]);
+//Route::get('admin/users/{id}', 'AdminController@show');
 Route::get('login', [
     'as' => 'login',
     'uses' => 'Auth\LoginController@showLoginForm'
@@ -33,4 +36,20 @@ Route::post('register', [
 Route::post('deleteUser', [
     'as' => '',
     'uses' => 'AdminController@delete'
+]);
+Route::get('cells', [
+    'as' => 'cells',
+    'uses' => 'CellController@showCells'
+]);
+Route::get('products', [
+    'as' => 'products',
+    'uses' => 'ProductController@index'
+]);
+Route::get('stocks', [
+    'as' => 'stocks',
+    'uses' => 'StockController@index'
+]);
+Route::get('tasks', [
+    'as' => 'tasks',
+    'uses' => 'TaskController@index',
 ]);

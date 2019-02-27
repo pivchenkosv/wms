@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cell;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -33,5 +34,11 @@ class AdminController extends Controller
         $user = User::all();
 
         return $user->toJson();
+    }
+
+    public function showCells()
+    {
+        $cells = Cell::all();
+        return $cells->toJson();
     }
 }
