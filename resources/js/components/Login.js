@@ -41,9 +41,9 @@ class Login extends Component {
         }).then(response => {
             console.log(response);
             console.log(response.data);
-            this.setState({
-                toDashboard: true
-            })
+            // this.setState({
+            //     toDashboard: true
+            // })
             // return <Redirect to='/home' />;
         }).catch(response => {
             console.log(response);
@@ -66,9 +66,9 @@ class Login extends Component {
 
     render() {
 
-        if (this.state.toDashboard === true) {
-            return <Redirect to='/home' />
-        }
+        // if (this.state.toDashboard === true) {
+        //     return <Redirect to='/home' />
+        // }
         return (
             <div className="Login">
                 <div className="container py-4">
@@ -110,7 +110,7 @@ class Login extends Component {
                                         <div className="form-group row mb-0">
                                             <div className="col-md-12 offset-md-2">
                                                 <button type="submit" className="btn btn-primary">Login</button>
-                                                <a className="btn btn-link" href="password/request">
+                                                <a className="btn btn-link" href="password/reset">
                                                     Forgot Your Password?
                                                 </a>
                                             </div>

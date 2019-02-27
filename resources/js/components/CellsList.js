@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
-import User from "./UsersList";
 
-class Cells extends Component {
+class CellsList extends Component {
     constructor() {
         super();
         this.state = {
@@ -31,7 +30,7 @@ class Cells extends Component {
                                 <div className='row'>
                                     <div className='col-sm-8'>Users Table</div>
                                     <button className='btn btn-primary btn-sm mb-3 col-sm-3' onClick={this.createNewUser}>
-                                        Create new user account
+                                        Create new cell
                                     </button>
                                 </div>
                             </div>
@@ -39,7 +38,7 @@ class Cells extends Component {
                                 <div className='list-group-item d-flex justify-content-between align-items-left'>
                                     <span className='badge badge-pill'>id</span>
                                     <span className='badge badge-pill'>volume</span>
-                                    <span className='badge badge-pill'>is_free</span>
+                                    <span className='badge badge-pill'>status</span>
                                     <span className='badge badge-pill'>stockID</span>
                                 </div>
                             </div>
@@ -60,7 +59,7 @@ class Cells extends Component {
                                             </span>
 
                                             <span id={cell.id} className='badge badge-primary badge-pill'>
-                                                {cell.is_free}
+                                                {cell.status}
                                             </span>
                                             <span id={cell.id} className='badge badge-pill'>
                                                 {cell.stock_id}
@@ -81,4 +80,4 @@ class Cells extends Component {
     }
 }
 
-export default Cells
+export default CellsList

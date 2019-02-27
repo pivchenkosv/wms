@@ -26,6 +26,7 @@ class CreateTasksTable extends Migration
             $table->foreign('to_cell')->references('id')->on('cells');
             $table->unsignedInteger('assigned_user');
             $table->foreign('assigned_user')->references('id')->on('users');
+            $table->string('status')->default('OPENED');
             $table->timestamps();
         });
     }
