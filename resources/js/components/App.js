@@ -6,6 +6,7 @@ import Header from './Header'
 import UsersList from "./UsersList";
 import Login from "./Login";
 import Home from "./Home";
+import Cells from "./Cells";
 import Register from "./Register";
 class App extends Component {
 
@@ -22,6 +23,7 @@ class App extends Component {
                         <Route exact path='/' component={Login}/>
                         <Route exact path='/home' component={Home}/>
                         <Route exact path='/register' component={Register}/>
+                        <Route exact path='/cells' component={Cells}/>
                     </Switch>
                 </div>
             </BrowserRouter>

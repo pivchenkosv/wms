@@ -34,3 +34,4 @@ Route::post('deleteUser', [
     'as' => '',
     'uses' => 'AdminController@delete'
 ]);
+Route::get('cells', 'AdminController@showCells');
