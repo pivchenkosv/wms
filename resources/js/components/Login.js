@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import { Redirect } from 'react-router-dom';
+import {setUser} from "../actions/users";
+import { connect } from 'react-redux';
+import useLocalStorage from 'react-use-localstorage';
 
 class Login extends Component {
     constructor() {
@@ -39,12 +42,18 @@ class Login extends Component {
         axios.post('api/login', params, {
             headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         }).then(response => {
+            if (response.data.success){
+                this.props.setUser(response.data.user);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+            }
+            // const user = this.props.user || null;
+            // console.log('user1: ' , user);
             console.log(response);
             console.log(response.data);
-            // this.setState({
-            //     toDashboard: true
-            // })
-            // return <Redirect to='/home' />;
+            if (this.props.user){
+                console.log('should be redirected');
+                this.props.history.push('/tasks');
+            }
         }).catch(response => {
             console.log(response);
             console.log(response.data);
@@ -125,5 +134,20 @@ class Login extends Component {
         );
     }
 }
-export default Login
+
+const mapStateToProps = (store, ownProps) => {
+    console.log('mapStateToProps when remove');
+    console.log(store)
+    return {
+        user: store.user
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    console.log('mapDispatchToProps when add');
+    return {
+        setUser: (user) => setUser(user)(dispatch),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
