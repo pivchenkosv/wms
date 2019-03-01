@@ -49,6 +49,14 @@ Route::get('stocks', [
     'as' => 'stocks',
     'uses' => 'StockController@index'
 ]);
+Route::post('editStock', [
+    'as' => '',
+    'uses' => 'StockController@save'
+]);
+Route::post('delStock', [
+    'as' => '',
+    'uses' => 'StockController@delStock'
+]);
 Route::get('tasks', [
     'as' => 'tasks',
     'uses' => 'TaskController@index',

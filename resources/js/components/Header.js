@@ -16,7 +16,7 @@ class Header extends React.Component {
         document.getElementById('logout-form').submit();
     }
 
-    Dropdown(props) {
+    Dropdown() {
         const user = JSON.parse(localStorage.getItem('user')) || null;
         console.log('user1 from header: ', user);
         if (user === null)
@@ -110,14 +110,6 @@ class Header extends React.Component {
     }
 
     render() {
-        const user = {
-            created_at: "2019-02-19 14:54:36",
-email: "admin@adm.ad",
-email_verified_at: null,
-id: 1,
-name: "admin",
-role: "ROLE_WORKER",
-updated_at: "2019-02-19 14:54:36"};
         return (
             <nav className="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div className="container">
@@ -129,7 +121,7 @@ updated_at: "2019-02-19 14:54:36"};
                         <ul className="navbar-nav mr-auto">
                         </ul>
                         <ul className="navbar-nav ml-auto">
-                            {this.Dropdown(user)}
+                            {this.Dropdown()}
                             {/*<Dropdown user={user} logout={this.logout}/>*/}
                         </ul>
                     </div>

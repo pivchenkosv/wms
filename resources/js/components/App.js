@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Redirect, Route, Router, Switch} from 'react-router-dom'
 import Header from './Header'
 import UsersList from "./UsersList";
 import Login from "./Login";
@@ -15,10 +15,13 @@ import TasksList from "./TasksList";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import reducers from '../reducers/users';
+import createHistory from 'history/createBrowserHistory';
 
 const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : f => f;
 
 const store = createStore(reducers, {user: JSON.parse(localStorage.getItem('user'))}, enhancers);
+
+const history = createHistory();
 
 class App extends Component {
 
@@ -26,7 +29,7 @@ class App extends Component {
         super(props)
     }
 
-    router() {
+    router(history) {
         console.log(store.user);
         let user = JSON.parse(localStorage.getItem('user'));
         switch (user ? user.role : 'unauthorized') {
@@ -64,7 +67,7 @@ class App extends Component {
                     <Redirect to="/tasks" />
                 </Switch>
             );
-            case 'unauthorized': return(<Switch><Route exact path='/login' component={Login}/><Route exact path='/' component={Login}/><Redirect to="/login" /></Switch>);
+            case 'unauthorized': return(<Switch><Route exact path='/login' component=<Login history={history}/>/><Route exact path='/' component={Login}/><Redirect to="/login" /></Switch>);
         }
     }
 
@@ -72,10 +75,10 @@ class App extends Component {
 
         return (
             <Provider store={store}>
-                <BrowserRouter>
+                <Router history={history}>
                     <div>
-                        <Header/>
-                            {this.router()}
+                        <Header history={history}/>
+                            {this.router(history)}
                             {/*<Route exact path='/admin/users' component={UsersList}/>*/}
                             {/*<Route exact path='/login' component={Login}/>*/}
                             {/*<Route exact path='/' component={Login}/>*/}
@@ -87,7 +90,7 @@ class App extends Component {
                             {/*<Route exact path='/tasks' component={TasksList}/>*/}
                             {/*<Route exact path='/reports' component={ReportsList}/>*/}
                     </div>
-                </BrowserRouter>
+                </Router>
             </Provider>
         )
     }

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import { Redirect } from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import {setUser} from "../actions/users";
 import { connect } from 'react-redux';
+import { hashHistory } from 'react-router';
 import useLocalStorage from 'react-use-localstorage';
 
 class Login extends Component {
@@ -46,13 +47,11 @@ class Login extends Component {
                 this.props.setUser(response.data.user);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
             }
-            // const user = this.props.user || null;
-            // console.log('user1: ' , user);
             console.log(response);
             console.log(response.data);
             if (this.props.user){
                 console.log('should be redirected');
-                this.props.history.push('/tasks');
+                window.location.reload()
             }
         }).catch(response => {
             console.log(response);
@@ -75,9 +74,6 @@ class Login extends Component {
 
     render() {
 
-        // if (this.state.toDashboard === true) {
-        //     return <Redirect to='/home' />
-        // }
         return (
             <div className="Login">
                 <div className="container py-4">

@@ -16,7 +16,6 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('location');
-            $table->integer('capacity');
         });
     }
 
