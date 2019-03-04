@@ -39,6 +39,7 @@ class ProductsList extends Component {
                                     <span className='badge badge-pill'>id</span>
                                     <span className='badge badge-pill'>name</span>
                                     <span className='badge badge-pill'>description</span>
+                                    <span className='badge badge-pill'>volume</span>
                                 </div>
                             </div>
 
@@ -56,9 +57,11 @@ class ProductsList extends Component {
                                             <span id={product.id} className='badge badge-pill'>
                                                 {product.name}
                                             </span>
-
                                             <span id={product.id} className='badge badge-pill'>
                                                 {product.description}
+                                            </span>
+                                            <span id={product.id} className='badge badge-pill'>
+                                                {product.volume}
                                             </span>
                                         </Link>
                                     ))}

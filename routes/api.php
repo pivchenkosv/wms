@@ -57,6 +57,14 @@ Route::post('delStock', [
     'as' => '',
     'uses' => 'StockController@delStock'
 ]);
+Route::get('cellInfo', [
+    'as' => 'cellInfo',
+    'uses' => 'CellController@showInfo'
+]);
+Route::post('editCell', [
+    'as' => '',
+    'uses' => 'CellController@save'
+]);
 Route::get('tasks', [
     'as' => 'tasks',
     'uses' => 'TaskController@index',
