@@ -113,7 +113,7 @@ class CellsList extends Component {
         evt.preventDefault();
         const params = new URLSearchParams();
         if (this.state.cell.id !== 0) {
-            params.append('id', this.state.selectedStock.stock.id);
+            params.append('id', this.state.cell.id);
             axios.post('/api/delCell', params).then(response => {
                 console.log('fulfilled', response);
                 console.log(response.data);

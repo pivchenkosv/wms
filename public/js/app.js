@@ -69569,7 +69569,7 @@ function (_Component) {
       var params = new URLSearchParams();
 
       if (_this.state.cell.id !== 0) {
-        params.append('id', _this.state.selectedStock.stock.id);
+        params.append('id', _this.state.cell.id);
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/delCell', params).then(function (response) {
           console.log('fulfilled', response);
           console.log(response.data);
@@ -70510,6 +70510,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -70518,13 +70528,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -70541,9 +70553,175 @@ function (_Component) {
     _classCallCheck(this, ProductsList);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ProductsList).call(this));
-    _this.state = {
-      products: [] //viewForm: false,
 
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (evt) {
+      evt.preventDefault();
+      var params = new URLSearchParams();
+      if (_this.state.product.id !== 0) params.append('id', _this.state.product.id);
+      params.append('name', _this.state.product.name);
+      params.append('description', _this.state.product.description);
+      params.append('volume', _this.state.product.volume);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/editProduct', params).then(function (response) {
+        console.log('fulfilled', response);
+        console.log(response.data);
+
+        _this.setState({
+          products: response.data,
+          product: null
+        });
+      }).catch(function (response) {
+        console.log('rejected', response);
+        console.log(response.data);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleDelete", function (evt) {
+      evt.preventDefault();
+      var params = new URLSearchParams();
+
+      if (_this.state.product.id !== 0) {
+        params.append('id', _this.state.product.id);
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/delProduct', params).then(function (response) {
+          console.log('fulfilled', response);
+          console.log(response.data);
+
+          _this.setState({
+            products: response.data,
+            product: null
+          });
+        }).catch(function (response) {
+          console.log('rejected', response);
+          console.log(response.data);
+        });
+      } else {
+        _this.setState(function (state) {
+          var products = state.products.filter(function (product) {
+            return 0 !== product.id;
+          });
+          return {
+            products: products
+          };
+        }, function () {
+          console.log(this.state);
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "inputChange", function (event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
+
+      _this.setState({
+        product: _objectSpread({}, _this.state.product, _defineProperty({}, name, value))
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "isValueChanged", function (product) {
+      if (product.name == _this.state.product.name && product.description == _this.state.product.description && product.volume == _this.state.product.volume) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-primary badge col-1",
+          style: {
+            marginLeft: "5%",
+            marginRight: "5%",
+            fontSize: "11px"
+          },
+          onClick: function onClick() {
+            return _this.setState({
+              product: null
+            });
+          }
+        }, "\u2718");
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-primary badge col-1",
+          style: {
+            marginLeft: "5%",
+            marginRight: "5%",
+            fontSize: "11px"
+          },
+          onClick: _this.handleSubmit
+        }, "\u2714");
+      }
+
+      ;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "createNewProduct", function () {
+      var newProduct = {
+        id: 0,
+        name: '',
+        description: '',
+        volume: 5
+      };
+
+      if (!_this.state.products.find(function (product) {
+        return product.id === 0;
+      })) {
+        _this.setState({
+          products: [].concat(_toConsumableArray(_this.state.products), [newProduct]),
+          product: newProduct
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "selected", function (product) {
+      // this.setState({stock: stock})
+      if (_this.state.product && _this.state.product.id === product.id) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "#",
+          className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
+          onClick: function onClick() {
+            return _this.editProduct(product);
+          }
+        }, _this.isValueChanged(product), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          id: product.id,
+          name: "name",
+          value: _this.state.product.name,
+          className: "col-4",
+          onChange: _this.inputChange
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          id: product.id,
+          name: "description",
+          className: "col-4",
+          value: _this.state.product.description,
+          onChange: _this.inputChange
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          id: product.id,
+          name: "volume",
+          type: "number",
+          value: _this.state.product.volume,
+          min: "1",
+          max: "20",
+          className: "col-2",
+          onChange: _this.inputChange
+        }));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "#",
+          className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
+          onClick: function onClick() {
+            return _this.editProduct(product);
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          id: product.id,
+          className: "badge badge-pill col-2"
+        }, product.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          id: product.id,
+          className: "badge badge-pill col-4"
+        }, product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          id: product.id,
+          className: "badge badge-pill col-4"
+        }, product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          id: product.id,
+          className: "badge badge-pill col-2"
+        }, product.volume));
+      }
+    });
+
+    _this.state = {
+      products: [],
+      product: null
     };
     return _this;
   }
@@ -70560,6 +70738,17 @@ function (_Component) {
       });
     }
   }, {
+    key: "editProduct",
+    value: function editProduct(product) {
+      if (!this.state.product || product.id !== this.state.product.id) this.setState({
+        product: null
+      }, function () {
+        this.setState({
+          product: product
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -70568,7 +70757,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row justify-content-left"
+        className: "row justify-content-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -70578,46 +70767,35 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-8"
+        className: "col-sm-6"
       }, "Products Table"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary btn-sm mb-3 col-sm-2",
+        onClick: this.handleDelete,
+        disabled: !this.state.product,
+        style: {
+          marginRight: "1%"
+        }
+      }, "Delete selected"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-primary btn-sm mb-3 col-sm-3",
-        onClick: this.createNewUser
+        onClick: this.createNewProduct
       }, "Create new product"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "list-group-item d-flex justify-content-between align-items-left"
+        className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-pill"
+        className: "badge badge-pill col-2"
       }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-pill"
+        className: "badge badge-pill col-4"
       }, "name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-pill"
+        className: "badge badge-pill col-4"
       }, "description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-pill"
+        className: "badge badge-pill col-2"
       }, "volume"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "list-group list-group-flush"
       }, products.map(function (product) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-          to: "#",
-          className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
-          onClick: function onClick() {
-            return _this3.showUserInfo(product);
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          id: product.id,
-          className: "badge badge-pill"
-        }, product.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          id: product.id,
-          className: "badge badge-pill"
-        }, product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          id: product.id,
-          className: "badge badge-pill"
-        }, product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          id: product.id,
-          className: "badge badge-pill"
-        }, product.volume));
+        return _this3.selected(product);
       })))))));
     }
   }]);

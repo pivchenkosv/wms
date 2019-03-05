@@ -65,6 +65,18 @@ Route::post('editCell', [
     'as' => '',
     'uses' => 'CellController@save'
 ]);
+Route::post('delCell', [
+    'as' => '',
+    'uses' => 'CellController@delete'
+]);
+Route::post('editProduct', [
+    'as' => '',
+    'uses' => 'ProductController@save'
+]);
+Route::post('delProduct', [
+    'as' => '',
+    'uses' => 'ProductController@delete'
+]);
 Route::get('tasks', [
     'as' => 'tasks',
     'uses' => 'TaskController@index',

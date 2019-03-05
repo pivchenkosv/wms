@@ -43,4 +43,12 @@ class CellController extends Controller
 
         return $cells->toJson();
     }
+
+    public function delete(Request $request)
+    {
+        Cell::destroy($request->input('id'));
+        $cells = Cell::all();
+
+        return $cells->toJson();
+    }
 }
