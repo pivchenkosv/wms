@@ -11,4 +11,18 @@
     .mar {
         margin-left: 5px;
     }
+
+    /*div.show-button:hover input {*/
+        /*display: block;*/
+    /*}*/
+
+    /*div.show-button input {*/
+        /*position:absolute;*/
+        /*display:none;*/
+    /*}*/
+
+    /*div.show-button input.update {*/
+        /*top:0;*/
+        /*left:0;*/
+    /*}*/
 }
