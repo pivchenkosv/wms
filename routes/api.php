@@ -81,3 +81,7 @@ Route::get('tasks', [
     'as' => 'tasks',
     'uses' => 'TaskController@index',
 ]);
+Route::get('taskInfo', [
+    'as' => 'taskInfo',
+    'uses' => 'TaskController@showTaskInfo',
+]);

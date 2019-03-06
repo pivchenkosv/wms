@@ -16,6 +16,7 @@ import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import reducers from '../reducers/users';
 import createHistory from 'history/createBrowserHistory';
+import NewTask from "./NewTask";
 
 const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : f => f;
 
@@ -43,6 +44,7 @@ class App extends Component {
                     <Route exact path='/stocks' component={StocksList}/>
                     <Route exact path='/tasks' component={TasksList}/>
                     <Route exact path='/reports' component={ReportsList}/>
+                    <Route exact path='/newTask' component={NewTask}/>
                     <Redirect to="/tasks" />
                 </Switch>
             );
@@ -67,7 +69,7 @@ class App extends Component {
                     <Redirect to="/tasks" />
                 </Switch>
             );
-            case 'unauthorized': return(<Switch><Route exact path='/login' component=<Login history={history}/>/><Route exact path='/' component={Login}/><Redirect to="/login" /></Switch>);
+            case 'unauthorized': return(<Switch><Route exact path='/login' component={Login}/><Route exact path='/' component={Login}/><Redirect to="/login" /></Switch>);
         }
     }
 
