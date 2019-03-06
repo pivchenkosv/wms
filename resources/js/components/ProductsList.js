@@ -93,7 +93,7 @@ class ProductsList extends Component {
             product.volume == this.state.product.volume){
             return (
                 <button className="btn btn-primary badge col-1"
-                        style={{marginLeft: "5%", marginRight: "5%", fontSize: "11px"}}
+                        style={{marginRight: "5%", fontSize: "11px"}}
                         onClick={() => this.setState({product: null})}>
                     {'\u2718'}
                 </button>
@@ -101,7 +101,7 @@ class ProductsList extends Component {
         } else {
             return (
                 <button className="btn btn-primary badge col-1"
-                        style={{marginLeft: "5%", marginRight: "5%", fontSize: "11px"}}
+                        style={{marginRight: "5%", fontSize: "11px"}}
                         onClick={this.handleSubmit}>
                     {'\u2714'}
                 </button>
@@ -131,8 +131,7 @@ class ProductsList extends Component {
         if (this.state.product && this.state.product.id === product.id) {
 
             return (
-                <Link
-                    to="#"
+                <td
                     className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                     onClick={() => this.editProduct(product)}
                 >
@@ -154,28 +153,27 @@ class ProductsList extends Component {
                     <input id={product.id} name="volume" type="number" value={this.state.product.volume} min="1" max="20"
                            className="col-2" onChange={this.inputChange}/>
 
-                </Link>
+                </td>
             );
         } else {
             return (
-                <Link
-                    to="#"
-                    className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                <tr
+                    className='card-body list-group-item list-group-item-action d-flex'
                     onClick={() => this.editProduct(product)}
                 >
-                    <span id={product.id} className='badge badge-pill col-2'>
+                    <td id={product.id} className='badge-pill col-2'>
                                                 {product.id}
-                                            </span>
-                    <span id={product.id} className='badge badge-pill col-4'>
+                                            </td>
+                    <td id={product.id} className='badge-pill col-4'>
                                                 {product.name}
-                                            </span>
-                    <span id={product.id} className='badge badge-pill col-4'>
+                                            </td>
+                    <td id={product.id} className='badge-pill col-4'>
                                                 {product.description}
-                                            </span>
-                    <span id={product.id} className='badge badge-pill col-2'>
+                                            </td>
+                    <td id={product.id} className='badge-pill col-2'>
                                                 {product.volume}
-                                            </span>
-                </Link>
+                                            </td>
+                </tr>
 
             );
         }
@@ -187,9 +185,9 @@ class ProductsList extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-center'>
                     <div className='col-md-8'>
-                        <div className='card'>
-                            <div className='card-header'>
-                                <div className='row'>
+                        <table className='card'>
+                            <tr className='card-header'>
+                                <th className='row'>
                                     <div className='col-sm-6'>Products Table</div>
                                     <button className='btn btn-primary btn-sm mb-3 col-sm-2'
                                             onClick={this.handleDelete}
@@ -201,26 +199,25 @@ class ProductsList extends Component {
                                             onClick={this.createNewProduct}>
                                         Create new product
                                     </button>
-                                </div>
-                            </div>
-                            <div className='card-header'>
-                                <div
-                                    className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
-                                    <span className='badge badge-pill col-2'>id</span>
-                                    <span className='badge badge-pill col-4'>name</span>
-                                    <span className='badge badge-pill col-4'>description</span>
-                                    <span className='badge badge-pill col-2'>volume</span>
-                                </div>
-                            </div>
+                                </th>
+                            </tr>
+                            <tr className='card-header list-group-item list-group-item-action d-flex'>
 
-                            <div className='card-body'>
-                                <ul className='list-group list-group-flush'>
+                                    {/*className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>*/}
+                                    <th className='badge-pill col-2'>id</th>
+                                    <th className='badge-pill col-4'>name</th>
+                                    <th className='badge-pill col-4'>description</th>
+                                    <th className='badge-pill col-2'>volume</th>
+                            </tr>
+
+                            {/*<tr className='card-body'>*/}
+                                {/*<ul className='list-group list-group-flush'>*/}
                                     {products.map(product => (
                                         this.selected(product)
                                     ))}
-                                </ul>
-                            </div>
-                        </div>
+                                {/*</ul>*/}
+                            {/*</tr>*/}
+                        </table>
                     </div>
                     {/*<div id="user" className="col-md-4">*/}
                     {/*{(this.state.user) ?*/}
