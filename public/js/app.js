@@ -83206,6 +83206,51 @@ function (_Component) {
       history.push('/newTask');
     });
 
+    _defineProperty(_assertThisInitialized(_this), "tableHeader", function () {
+      var user = _this.props.user;
+
+      switch (user.role) {
+        case "ROLE_ADMIN":
+        case "ROLE_MANAGER":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+            className: "card-header"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "col-sm-6"
+          }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            type: "button",
+            className: "btn btn-danger btn-sm mb-3 col-sm-2",
+            disabled: !_this.state.task,
+            style: {
+              marginRight: "5px"
+            },
+            onClick: _this.handleDelete
+          }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            className: "btn btn-primary btn-sm mb-3 col-sm-3",
+            onClick: function onClick() {
+              return _this.createNewTask(history);
+            }
+          }, "Create/Update task")));
+
+        case "ROLE_WORKER":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+            className: "card-header"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "col-sm-6"
+          }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            type: "button",
+            className: "btn btn-primary btn-sm mb-3 col-sm-5",
+            disabled: !_this.state.task,
+            style: {
+              marginRight: "5px"
+            }
+          }, "Submit task completed")));
+      }
+    });
+
     _this.state = {
       tasks: [],
       task: null,
@@ -83254,26 +83299,7 @@ function (_Component) {
         className: "col-md-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "card"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-        className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-6"
-      }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button",
-        className: "btn btn-danger btn-sm mb-3 col-sm-2",
-        disabled: !this.state.task,
-        style: {
-          marginRight: "5px"
-        },
-        onClick: this.handleDelete
-      }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "btn btn-primary btn-sm mb-3 col-sm-3",
-        onClick: function onClick() {
-          return _this3.createNewTask(history);
-        }
-      }, "Create/Update task"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      }, this.tableHeader(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "badge-pill col-1"
@@ -83329,7 +83355,8 @@ var mapStateToProps = function mapStateToProps(store, ownProps) {
   console.log(store);
   return {
     task: store.task.task,
-    store: store
+    store: store,
+    user: store.user
   };
 };
 

@@ -52,6 +52,42 @@ class TasksList extends Component {
         history.push('/newTask');
     }
 
+    tableHeader = () => {
+
+        const {user} = this.props
+
+        switch (user.role) {
+            case "ROLE_ADMIN":
+            case "ROLE_MANAGER":
+                return (
+                    <tr className='card-header'>
+                        <th className='row'>
+                            <div className='col-sm-6'>Tasks</div>
+                            <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2' disabled={!this.state.task} style={{marginRight: "5px"}}
+                                    onClick={this.handleDelete}>
+                                Delete
+                            </button>
+                            <a className='btn btn-primary btn-sm mb-3 col-sm-3'
+                               onClick={() => this.createNewTask(history)}>
+                                Create/Update task
+                            </a>
+                        </th>
+                    </tr>
+                );
+            case "ROLE_WORKER":
+                return (
+                    <tr className='card-header'>
+                        <th className='row'>
+                            <div className='col-sm-6'>Tasks</div>
+                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5' disabled={!this.state.task} style={{marginRight: "5px"}}>
+                                Submit task completed
+                            </button>
+                        </th>
+                    </tr>
+                );
+        }
+    }
+
     render() {
         const {tasks} = this.state
         const {location, history} = this.props;
@@ -60,19 +96,7 @@ class TasksList extends Component {
                 <div className='row justify-content-left'>
                     <div className='col-md-8'>
                         <table className='card'>
-                            <tr className='card-header'>
-                                <th className='row'>
-                                    <div className='col-sm-6'>Tasks</div>
-                                    <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2' disabled={!this.state.task} style={{marginRight: "5px"}}
-                                            onClick={this.handleDelete}>
-                                        Delete
-                                    </button>
-                                    <a className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                    onClick={() => this.createNewTask(history)}>
-                                        Create/Update task
-                                    </a>
-                                </th>
-                            </tr>
+                            {this.tableHeader()}
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
                                     <th className='badge-pill col-1'>id</th>
                                     <th className='badge-pill col-3'>description</th>
@@ -122,7 +146,8 @@ const mapStateToProps = (store, ownProps) => {
     console.log(store)
     return {
         task: store.task.task,
-        store: store
+        store: store,
+        user: store.user
     }
 }
 
