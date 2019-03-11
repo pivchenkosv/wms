@@ -15,7 +15,7 @@ class StocksList extends Component {
     componentDidMount() {
         axios.get('/api/stocks').then(response => {
             this.setState({
-                stocks: response.data
+                stocks: response.data.data
             })
         })
     }

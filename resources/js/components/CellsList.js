@@ -25,7 +25,7 @@ class CellsList extends Component {
         })
         axios.get('/api/stocks').then(response => {
             this.setState({
-                stocks: response.data
+                stocks: response.data.data
             })
         })
     }

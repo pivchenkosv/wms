@@ -51,4 +51,11 @@ class CellController extends Controller
 
         return $cells->toJson();
     }
+
+    public function fromCell(Request $request)
+    {
+        $cells = Cell::all();
+        return $cells->toJson();
+        //return response()->json(['success' => true, 'data' => $cells]);
+    }
 }

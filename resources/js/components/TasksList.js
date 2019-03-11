@@ -6,11 +6,12 @@ import {connect} from "react-redux";
 import {setTask, unsetTask} from "../actions/task";
 
 class TasksList extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             tasks: [],
             task: null,
+            store: null,
             //viewForm: false,
         }
     }
@@ -24,6 +25,18 @@ class TasksList extends Component {
     }
 
     handleFormUnmount = () => {
+        this.setState({task: null});
+    }
+
+    handleDelete = (evt) => {
+        evt.preventDefault();
+        const params = new URLSearchParams();
+        params.append('id', this.state.task.id)
+        axios.post('/api/delTask', params).then(response => {
+            this.setState({
+                tasks: response.data
+            })
+        })
         this.setState({task: null});
     }
 
@@ -49,11 +62,14 @@ class TasksList extends Component {
                         <table className='card'>
                             <tr className='card-header'>
                                 <th className='row'>
-                                    <div className='col-sm-8'>Tasks</div>
+                                    <div className='col-sm-6'>Tasks</div>
+                                    <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2' disabled={!this.state.task} style={{marginRight: "5px"}}
+                                            onClick={this.handleDelete}>
+                                        Delete
+                                    </button>
                                     <a className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                       // href = "/newTask"
                                     onClick={() => this.createNewTask(history)}>
-                                        Create new task
+                                        Create/Update task
                                     </a>
                                 </th>
                             </tr>
@@ -105,7 +121,8 @@ const mapStateToProps = (store, ownProps) => {
     console.log('mapStateToProps when remove');
     console.log(store)
     return {
-        task: store.task
+        task: store.task.task,
+        store: store
     }
 }
 
@@ -113,7 +130,7 @@ const mapDispatchToProps = (dispatch) => {
     console.log('mapDispatchToProps when add');
     return {
         setTask: (task) => setTask(task)(dispatch),
-        unsetTask: (task) => unsetTask(task)(dispatch),
+        unsetTask: () => unsetTask()(dispatch),
     }
 }
 

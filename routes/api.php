@@ -61,6 +61,10 @@ Route::get('cellInfo', [
     'as' => 'cellInfo',
     'uses' => 'CellController@showInfo'
 ]);
+Route::get('fromCell', [
+    'as' => 'fromCell',
+    'uses' => 'CellController@fromCell'
+]);
 Route::post('editCell', [
     'as' => '',
     'uses' => 'CellController@save'
@@ -84,4 +88,12 @@ Route::get('tasks', [
 Route::get('taskInfo', [
     'as' => 'taskInfo',
     'uses' => 'TaskController@showTaskInfo',
+]);
+Route::post('editTask', [
+    'as' => '',
+    'uses' => 'TaskController@save'
+]);
+Route::post('delTask', [
+    'as' => '',
+    'uses' => 'TaskController@delete'
 ]);

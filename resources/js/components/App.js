@@ -14,7 +14,7 @@ import ReportsList from "./ReportsList";
 import TasksList from "./TasksList";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
-import reducers from '../reducers/users';
+import reducers from '../reducers';
 import createHistory from 'history/createBrowserHistory';
 import NewTask from "./NewTask";
 
