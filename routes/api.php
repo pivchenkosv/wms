@@ -97,3 +97,7 @@ Route::post('delTask', [
     'as' => '',
     'uses' => 'TaskController@delete'
 ]);
+Route::get('taskCreated', [
+    'as' => 'taskCreated',
+    'uses' => 'TaskController@notifyWorker'
+]);

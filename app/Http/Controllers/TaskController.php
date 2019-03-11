@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TaskCreated;
 use App\Subtask;
 use App\Task;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -58,6 +61,8 @@ class TaskController extends Controller
             $subtask->save();
         }
 
+        $this->notifyWorker($task);
+
         return response()->json(['success' => true, 'data' => $subtasks]);
     }
 
@@ -69,5 +74,14 @@ class TaskController extends Controller
         $tasks = Task::all();
 
         return response()->json($tasks);
+    }
+
+    public function notifyWorker()
+    {
+        $user = User::find(10);
+        $task = Task::find(3);
+
+        return new TaskCreated($task, $user->name);
+//        Mail::to($user->email)->send(new TaskCreated($task, $user->name));
     }
 }
