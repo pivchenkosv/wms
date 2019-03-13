@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
 
 class StocksList extends Component {
     constructor() {
@@ -65,8 +66,7 @@ class StocksList extends Component {
         evt.preventDefault();
         const params = new URLSearchParams();
         if (this.state.selectedStock.stock.id !== 0) {
-            if (this.state.selectedStock.cells.quantity > 0)
-            {
+            if (this.state.selectedStock.cells.quantity > 0) {
                 alert('First delete all cells related to this stock');
             } else {
                 params.append('id', this.state.selectedStock.stock.id);
@@ -107,15 +107,18 @@ class StocksList extends Component {
     };
 
     selected = (stock) => {
+        const {user} = this.props
         // this.setState({stock: stock})
-        if (this.state.selectedStock && this.state.selectedStock.stock.id === stock.stock.id) {
+        if (user.role !== 'ROLE_WORKER' && this.state.selectedStock && this.state.selectedStock.stock.id === stock.stock.id) {
 
             return (
                 <div className="row" style={{width: '50%'}}>
-                    <input id={stock.stock.id} name="location" autoFocus onFocus={() => this.setState({selectedStock: stock})}
+                    <input id={stock.stock.id} name="location" autoFocus
+                           onFocus={() => this.setState({selectedStock: stock})}
                            value={this.state.selectedStock.stock.location} style={{width: '80%'}}
                            onChange={this.inputChange}/>
-                    <button className="btn btn-primary" style={{width: '20%'}} disabled={this.isValueChanged(stock.stock)}
+                    <button className="btn btn-primary" style={{width: '20%'}}
+                            disabled={this.isValueChanged(stock.stock)}
                             onClick={this.handleSubmit}>
                         Save
                     </button>
@@ -134,6 +137,7 @@ class StocksList extends Component {
     render() {
 
         const {stocks} = this.state
+        const {user} = this.props
 
         return (
             <div className='container py-4'>
@@ -143,15 +147,20 @@ class StocksList extends Component {
                             <div className='card-header'>
                                 <div className='row'>
                                     <div className='col-sm-6'>Stocks</div>
-                                    <button className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                            onClick={this.createNewStock}>
-                                        Add new stock info
-                                    </button>
-                                    <button className='btn btn-danger btn-sm mb-3 col-sm-2'
-                                            onClick={this.deleteStock} style={{margin: '0 0 0 5px'}}
-                                            disabled={!this.state.selectedStock}>
-                                        RemoveStock
-                                    </button>
+                                    {user.role !== 'ROLE_WORKER' ?
+                                        <div className="col-sm-6">
+                                            <button className='btn btn-primary btn-sm mb-3 col-sm-6'
+                                                    onClick={this.createNewStock}>
+                                                Add new stock info
+                                            </button>
+                                            <button className='btn btn-danger btn-sm mb-3 col-sm-5'
+                                                    onClick={this.deleteStock} style={{margin: '0 0 0 5px'}}
+                                                    disabled={!this.state.selectedStock}>
+                                                RemoveStock
+                                            </button>
+                                        </div> : ''
+                                    }
+
                                 </div>
                             </div>
                             <div className='card-header'>
@@ -201,4 +210,12 @@ class StocksList extends Component {
     }
 }
 
-export default StocksList
+const mapStateToProps = (store, ownProps) => {
+    console.log('mapStateToProps when remove');
+    console.log(store)
+    return {
+        user: store.user
+    }
+}
+
+export default connect(mapStateToProps, null)(withRouter(StocksList))

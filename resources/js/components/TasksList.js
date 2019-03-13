@@ -40,6 +40,18 @@ class TasksList extends Component {
         this.setState({task: null});
     }
 
+    handleComplete = (evt) => {
+        evt.preventDefault();
+        const params = new URLSearchParams();
+        params.append('id', this.state.task.id)
+        axios.post('/api/completeTask', params).then(response => {
+            this.setState({
+                tasks: response.data
+            })
+        })
+        this.setState({task: null});
+    }
+
     showTaskInfo(task) {
         if (!this.state.task || task.id !== this.state.task.id)
             this.setState({task: null}, function () {
@@ -52,7 +64,7 @@ class TasksList extends Component {
         history.push('/newTask');
     }
 
-    tableHeader = () => {
+    tableHeader = (history) => {
 
         const {user} = this.props
 
@@ -79,7 +91,8 @@ class TasksList extends Component {
                     <tr className='card-header'>
                         <th className='row'>
                             <div className='col-sm-6'>Tasks</div>
-                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5' disabled={!this.state.task} style={{marginRight: "5px"}}>
+                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5' disabled={!this.state.task} style={{marginRight: "5px"}}
+                                    onClick={this.handleComplete}>
                                 Submit task completed
                             </button>
                         </th>
@@ -96,7 +109,7 @@ class TasksList extends Component {
                 <div className='row justify-content-left'>
                     <div className='col-md-8'>
                         <table className='card'>
-                            {this.tableHeader()}
+                            {this.tableHeader(history)}
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
                                     <th className='badge-pill col-1'>id</th>
                                     <th className='badge-pill col-3'>description</th>

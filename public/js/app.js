@@ -80221,7 +80221,7 @@ function (_Component) {
 
       var cells = this.state.cells;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-10"
+        className: "col-12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -80233,13 +80233,15 @@ function (_Component) {
       }, "Cells"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-3"
+        className: "badge badge-pill col-1"
       }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-3"
+        className: "badge badge-pill col-1"
       }, "stockID"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "badge badge-pill col-3"
-      }, "volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, "available volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "badge badge-pill col-3"
+      }, "total volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        className: "badge badge-pill col-4"
       }, "status")), cells ? cells.map(function (cell) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
@@ -80248,13 +80250,13 @@ function (_Component) {
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           id: cell.id,
-          className: "badge col-3",
+          className: "badge col-1",
           style: {
             fontSize: "11px"
           }
         }, cell.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           id: cell.id,
-          className: "badge col-3",
+          className: "badge col-1",
           style: {
             fontSize: "11px"
           }
@@ -80264,9 +80266,15 @@ function (_Component) {
           style: {
             fontSize: "11px"
           }
+        }, cell.available_volume ? cell.available_volume : cell.volume), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+          id: cell.id,
+          className: "badge col-3",
+          style: {
+            fontSize: "11px"
+          }
         }, cell.volume), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           id: cell.id,
-          className: "badge badge-primary col-3",
+          className: "badge badge-primary col-4",
           style: {
             fontSize: "11px"
           }
@@ -80300,6 +80308,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Style.css */ "./resources/js/components/Style.css");
 /* harmony import */ var _Style_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Style_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _StocksList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./StocksList */ "./resources/js/components/StocksList.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -80329,6 +80338,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -80528,8 +80538,9 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "selected", function (cell) {
-      // this.setState({stock: stock})
-      if (_this.state.cell && _this.state.cell.id === cell.id) {
+      var user = _this.props.user; // this.setState({stock: stock})
+
+      if (user.role !== 'ROLE_WORKER' && _this.state.cell && _this.state.cell.id === cell.id) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-8 badge"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -80658,6 +80669,7 @@ function (_Component) {
       var _this3 = this;
 
       var cells = this.state.cells;
+      var user = this.props.user;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -80672,10 +80684,10 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-8"
-      }, "Cells"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Cells"), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-primary btn-sm mb-3 col-sm-3",
         onClick: this.createNewCell
-      }, "Create new cell"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Create new cell") : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "list-group-item justify-content-between align-items-left"
@@ -80717,7 +80729,15 @@ function (_Component) {
   return CellsList;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (CellsList);
+var mapStateToProps = function mapStateToProps(store, ownProps) {
+  console.log('mapStateToProps when remove');
+  console.log(store);
+  return {
+    user: store.user
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])(mapStateToProps, null)(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(CellsList)));
 
 /***/ }),
 
@@ -80788,7 +80808,7 @@ function (_React$Component) {
     key: "Dropdown",
     value: function Dropdown() {
       var user = JSON.parse(localStorage.getItem('user')) || null;
-      console.log('user1 from header: ', user);
+      var history = this.props.history;
       if (user === null) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -80817,25 +80837,42 @@ function (_React$Component) {
               "aria-labelledby": "navbarDropdown"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/admin/users"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/admin/users');
+              }
             }, "Users"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/reports"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('reports');
+              }
             }, "Reports"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/tasks"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/tasks');
+              }
             }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/cells"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/cells');
+              }
             }, "Cells"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/stocks"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/stocks');
+              }
             }, "Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/products"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/products');
+              }
             }, "Products"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/logout",
               onClick: this.logout
             }, "Logout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
               id: "logout-form",
@@ -80869,19 +80906,30 @@ function (_React$Component) {
               "aria-labelledby": "navbarDropdown"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/tasks"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/tasks');
+              }
             }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/cells"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/cells');
+              }
             }, "Cells"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/stocks"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/stocks');
+              }
             }, "Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/products"
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/products');
+              }
             }, "Products"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
-              href: "/logout",
               onClick: this.logout
             }, "Logout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
               id: "logout-form",
@@ -80927,99 +80975,7 @@ function (_React$Component) {
   }]);
 
   return Header;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // function Dropdown(props) {
-//     const user = props.user || null;
-//     console.log('user1 from header: ', user);
-//     if (user === null)
-//         return (
-//             <li className="nav-item">
-//                 <a className="nav-link" href="/login">Login</a>
-//             </li>
-//         );
-//     switch (user.role) {
-//         case 'ROLE_ADMIN':
-//         case 'ROLE_MANAGER': {
-//             return (
-//                 <li className="nav-item dropdown">
-//                     <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-//                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-//                         {user.name} <span className="caret"></span>
-//                     </a>
-//
-//                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-//                         <a className="dropdown-item" href="/admin/users">
-//                             Users
-//                         </a>
-//                         <a className="dropdown-item" href="/reports">
-//                             Reports
-//                         </a>
-//                         <a className="dropdown-item" href="/tasks">
-//                             Tasks
-//                         </a>
-//                         <a className="dropdown-item" href="/cells">
-//                             Cells
-//                         </a>
-//                         <a className="dropdown-item" href="/stocks">
-//                             Stocks
-//                         </a>
-//                         <a className="dropdown-item" href="/products">
-//                             Products
-//                         </a>
-//                         <a className="dropdown-item" href="/logout"
-//                            onClick={props.logout}>
-//                             Logout
-//                         </a>
-//                         <form id="logout-form" action="/logout" method="POST"
-//                               style={{display: none}}>
-//                             <input name='_token' value={$('meta[name="csrf-token"]')}/>
-//                         </form>
-//                     </div>
-//                 </li>
-//             );
-//         }
-//         case 'ROLE_WORKER': {
-//             return (
-//                 <li className="nav-item dropdown">
-//                     <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-//                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-//                         {user.name} <span className="caret"></span>
-//                     </a>
-//
-//                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-//                         <a className="dropdown-item" href="/tasks">
-//                             Tasks
-//                         </a>
-//                         <a className="dropdown-item" href="/cells">
-//                             Cells
-//                         </a>
-//                         <a className="dropdown-item" href="/stocks">
-//                             Stocks
-//                         </a>
-//                         <a className="dropdown-item" href="/products">
-//                             Products
-//                         </a>
-//                         <a className="dropdown-item" href="/logout"
-//                            onClick={props.logout}>
-//                             Logout
-//                         </a>
-//                         <form id="logout-form" action="/logout" method="POST"
-//                               style={{display: none}}>
-//                             <input name='_token' value={$('meta[name="csrf-token"]')}/>
-//                         </form>
-//                     </div>
-//                 </li>
-//             );
-//         }
-//         default:
-//             return (
-//                 <li className="nav-item">
-//                     <a className="nav-link" href="/login">Login</a>
-//                 </li>
-//             );
-//
-//     }
-// }
-
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapStateToProps = function mapStateToProps(store, ownProps) {
   console.log('mapStateToProps when remove');
@@ -81038,7 +80994,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(Header));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Header)));
 
 /***/ }),
 
@@ -81486,16 +81442,8 @@ function (_Component) {
       params.append('description', _this.state.task.description);
       var d = _this.state.task.at;
       d.setHours(d.getHours() + 3);
-      console.log(d.toISOString().slice(0, 19).replace('T', ' '));
       params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
-      params.append('subtasks', JSON.stringify(_this.state.subtasks)); // this.state.subtasks.forEach(function (subtask) {
-      //     params.append('subtask.id', subtask.id);
-      //     params.append('subtask.from_cell', subtask.from_cell);
-      //     params.append('subtask.to_cell', subtask.to_cell);
-      //     params.append('subtask.product_id', subtask.product_id);
-      //     params.append('subtask.quantity', subtask.quantity);
-      // })
-
+      params.append('subtasks', JSON.stringify(_this.state.subtasks));
       axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('api/editTask', params).then(function (response) {
         console.log('response', response); //window.location.reload()
       }).catch(function (response) {
@@ -81995,6 +81943,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -82024,6 +81973,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -82151,8 +82101,9 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "selected", function (product) {
-      // this.setState({stock: stock})
-      if (_this.state.product && _this.state.product.id === product.id) {
+      var user = _this.props.user; // this.setState({stock: stock})
+
+      if (user.role !== 'ROLE_WORKER' && _this.state.product && _this.state.product.id === product.id) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
           onClick: function onClick() {
@@ -82237,6 +82188,7 @@ function (_Component) {
       var _this3 = this;
 
       var products = this.state.products;
+      var user = this.props.user;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -82251,17 +82203,19 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-6"
-      }, "Products Table"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary btn-sm mb-3 col-sm-2",
+      }, "Products Table"), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-sm-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary btn-sm mb-3 col-sm-4",
         onClick: this.handleDelete,
         disabled: !this.state.product,
         style: {
           marginRight: "1%"
         }
       }, "Delete selected"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary btn-sm mb-3 col-sm-3",
+        className: "btn btn-primary btn-sm mb-3 col-sm-6",
         onClick: this.createNewProduct
-      }, "Create new product"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      }, "Create new product")) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "badge-pill col-2"
@@ -82280,7 +82234,15 @@ function (_Component) {
   return ProductsList;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (ProductsList);
+var mapStateToProps = function mapStateToProps(store, ownProps) {
+  console.log('mapStateToProps when remove');
+  console.log(store);
+  return {
+    user: store.user
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, null)(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(ProductsList)));
 
 /***/ }),
 
@@ -82599,49 +82561,47 @@ function (_Component) {
         className: "row justify-content-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-8"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "card"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-8"
-      }, "Reports"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "list-group-item d-flex justify-content-between align-items-left"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "location"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "capacity"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "list-group list-group-flush"
-      }, reports.map(function (report) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-          to: "#",
+      }, "Reports")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "card-header list-group-item list-group-item-action d-flex"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "badge-pill col-1"
+      }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "badge-pill col-2"
+      }, "created by"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "badge-pill col-3"
+      }, "created at"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "badge-pill col-4"
+      }, "action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "badge-pill col-2"
+      }, "task_id")), reports.map(function (report) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
           onClick: function onClick() {
             return _this3.showUserInfo(report);
           }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge badge-pill"
-        }, report.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "badge-pill col-1"
+        }, report.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge badge-pill"
-        }, report.task_id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "badge-pill col-2"
+        }, report.created_by), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge badge-pill"
-        }, report.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "badge-pill col-3"
+        }, report.created_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge badge-pill"
-        }, report.created_at));
-      })))))));
+          className: "badge-pill col-4"
+        }, report.action), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          id: report.id,
+          className: "badge-pill col-2"
+        }, report.task_id));
+      })))));
     }
   }]);
 
@@ -82666,6 +82626,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -82695,6 +82656,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -82807,8 +82769,9 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "selected", function (stock) {
-      // this.setState({stock: stock})
-      if (_this.state.selectedStock && _this.state.selectedStock.stock.id === stock.stock.id) {
+      var user = _this.props.user; // this.setState({stock: stock})
+
+      if (user.role !== 'ROLE_WORKER' && _this.state.selectedStock && _this.state.selectedStock.stock.id === stock.stock.id) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row",
           style: {
@@ -82877,6 +82840,7 @@ function (_Component) {
       var _this3 = this;
 
       var stocks = this.state.stocks;
+      var user = this.props.user;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -82891,17 +82855,19 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-6"
-      }, "Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary btn-sm mb-3 col-sm-3",
+      }, "Stocks"), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-sm-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary btn-sm mb-3 col-sm-6",
         onClick: this.createNewStock
       }, "Add new stock info"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-danger btn-sm mb-3 col-sm-2",
+        className: "btn btn-danger btn-sm mb-3 col-sm-5",
         onClick: this.deleteStock,
         style: {
           margin: '0 0 0 5px'
         },
         disabled: !this.state.selectedStock
-      }, "RemoveStock"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "RemoveStock")) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "list-group-item d-flex justify-content-between align-items-left"
@@ -82958,7 +82924,15 @@ function (_Component) {
   return StocksList;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (StocksList);
+var mapStateToProps = function mapStateToProps(store, ownProps) {
+  console.log('mapStateToProps when remove');
+  console.log(store);
+  return {
+    user: store.user
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, null)(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(StocksList)));
 
 /***/ }),
 
@@ -83200,13 +83174,28 @@ function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "handleComplete", function (evt) {
+      evt.preventDefault();
+      var params = new URLSearchParams();
+      params.append('id', _this.state.task.id);
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/completeTask', params).then(function (response) {
+        _this.setState({
+          tasks: response.data
+        });
+      });
+
+      _this.setState({
+        task: null
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "createNewTask", function (history) {
       _this.props.setTask(_this.state.task);
 
       history.push('/newTask');
     });
 
-    _defineProperty(_assertThisInitialized(_this), "tableHeader", function () {
+    _defineProperty(_assertThisInitialized(_this), "tableHeader", function (history) {
       var user = _this.props.user;
 
       switch (user.role) {
@@ -83246,7 +83235,8 @@ function (_Component) {
             disabled: !_this.state.task,
             style: {
               marginRight: "5px"
-            }
+            },
+            onClick: _this.handleComplete
           }, "Submit task completed")));
       }
     });
@@ -83299,7 +83289,7 @@ function (_Component) {
         className: "col-md-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "card"
-      }, this.tableHeader(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      }, this.tableHeader(history), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "badge-pill col-1"
@@ -83620,6 +83610,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./User */ "./resources/js/components/User.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83639,6 +83630,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -83801,7 +83793,15 @@ function (_Component) {
   return UsersList;
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (UsersList);
+var mapStateToProps = function mapStateToProps(store, ownProps) {
+  console.log('mapStateToProps when remove');
+  console.log(store);
+  return {
+    user: store.user
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["connect"])(mapStateToProps)(UsersList));
 
 /***/ }),
 

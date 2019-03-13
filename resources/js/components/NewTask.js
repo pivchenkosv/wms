@@ -117,18 +117,13 @@ class NewTask extends Component {
         }
         params.append('assigned_user', this.state.task.assigned_user);
         params.append('description', this.state.task.description);
+
         let d = this.state.task.at;
         d.setHours(d.getHours() + 3);
-        console.log(d.toISOString().slice(0, 19).replace('T', ' '));
+
         params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
         params.append('subtasks', JSON.stringify(this.state.subtasks))
-        // this.state.subtasks.forEach(function (subtask) {
-        //     params.append('subtask.id', subtask.id);
-        //     params.append('subtask.from_cell', subtask.from_cell);
-        //     params.append('subtask.to_cell', subtask.to_cell);
-        //     params.append('subtask.product_id', subtask.product_id);
-        //     params.append('subtask.quantity', subtask.quantity);
-        // })
+
         axios.post('api/editTask', params).then(response => {
             console.log('response', response);
             //window.location.reload()

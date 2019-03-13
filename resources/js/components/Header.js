@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {unsetUser} from "../actions/users";
 import useLocalStorage from 'react-use-localstorage';
@@ -18,7 +18,7 @@ class Header extends React.Component {
 
     Dropdown() {
         const user = JSON.parse(localStorage.getItem('user')) || null;
-        console.log('user1 from header: ', user);
+        const {history} = this.props
         if (user === null)
             return (
                 <li className="nav-item">
@@ -36,25 +36,25 @@ class Header extends React.Component {
                         </a>
 
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="/admin/users">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/admin/users')}>
                                 Users
                             </a>
-                            <a className="dropdown-item" href="/reports">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('reports')}>
                                 Reports
                             </a>
-                            <a className="dropdown-item" href="/tasks">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
                                 Tasks
                             </a>
-                            <a className="dropdown-item" href="/cells">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
                                 Cells
                             </a>
-                            <a className="dropdown-item" href="/stocks">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
                                 Stocks
                             </a>
-                            <a className="dropdown-item" href="/products">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
                                 Products
                             </a>
-                            <a className="dropdown-item" href="/logout"
+                            <a className="dropdown-item"
                                onClick={this.logout}>
                                 Logout
                             </a>
@@ -75,19 +75,19 @@ class Header extends React.Component {
                         </a>
 
                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="/tasks">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
                                 Tasks
                             </a>
-                            <a className="dropdown-item" href="/cells">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
                                 Cells
                             </a>
-                            <a className="dropdown-item" href="/stocks">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
                                 Stocks
                             </a>
-                            <a className="dropdown-item" href="/products">
+                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
                                 Products
                             </a>
-                            <a className="dropdown-item" href="/logout"
+                            <a className="dropdown-item"
                                onClick={this.logout}>
                                 Logout
                             </a>
@@ -122,7 +122,6 @@ class Header extends React.Component {
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             {this.Dropdown()}
-                            {/*<Dropdown user={user} logout={this.logout}/>*/}
                         </ul>
                     </div>
                 </div>
@@ -131,99 +130,6 @@ class Header extends React.Component {
 
     }
 }
-
-// function Dropdown(props) {
-//     const user = props.user || null;
-//     console.log('user1 from header: ', user);
-//     if (user === null)
-//         return (
-//             <li className="nav-item">
-//                 <a className="nav-link" href="/login">Login</a>
-//             </li>
-//         );
-//     switch (user.role) {
-//         case 'ROLE_ADMIN':
-//         case 'ROLE_MANAGER': {
-//             return (
-//                 <li className="nav-item dropdown">
-//                     <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-//                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-//                         {user.name} <span className="caret"></span>
-//                     </a>
-//
-//                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-//                         <a className="dropdown-item" href="/admin/users">
-//                             Users
-//                         </a>
-//                         <a className="dropdown-item" href="/reports">
-//                             Reports
-//                         </a>
-//                         <a className="dropdown-item" href="/tasks">
-//                             Tasks
-//                         </a>
-//                         <a className="dropdown-item" href="/cells">
-//                             Cells
-//                         </a>
-//                         <a className="dropdown-item" href="/stocks">
-//                             Stocks
-//                         </a>
-//                         <a className="dropdown-item" href="/products">
-//                             Products
-//                         </a>
-//                         <a className="dropdown-item" href="/logout"
-//                            onClick={props.logout}>
-//                             Logout
-//                         </a>
-//                         <form id="logout-form" action="/logout" method="POST"
-//                               style={{display: none}}>
-//                             <input name='_token' value={$('meta[name="csrf-token"]')}/>
-//                         </form>
-//                     </div>
-//                 </li>
-//             );
-//         }
-//         case 'ROLE_WORKER': {
-//             return (
-//                 <li className="nav-item dropdown">
-//                     <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-//                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-//                         {user.name} <span className="caret"></span>
-//                     </a>
-//
-//                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-//                         <a className="dropdown-item" href="/tasks">
-//                             Tasks
-//                         </a>
-//                         <a className="dropdown-item" href="/cells">
-//                             Cells
-//                         </a>
-//                         <a className="dropdown-item" href="/stocks">
-//                             Stocks
-//                         </a>
-//                         <a className="dropdown-item" href="/products">
-//                             Products
-//                         </a>
-//                         <a className="dropdown-item" href="/logout"
-//                            onClick={props.logout}>
-//                             Logout
-//                         </a>
-//                         <form id="logout-form" action="/logout" method="POST"
-//                               style={{display: none}}>
-//                             <input name='_token' value={$('meta[name="csrf-token"]')}/>
-//                         </form>
-//                     </div>
-//                 </li>
-//             );
-//         }
-//         default:
-//             return (
-//                 <li className="nav-item">
-//                     <a className="nav-link" href="/login">Login</a>
-//                 </li>
-//             );
-//
-//     }
-// }
 
 const mapStateToProps = (store, ownProps) => {
     console.log('mapStateToProps when remove');
@@ -239,4 +145,4 @@ const mapDispatchToProps = dispatch => {
         unsetUser: user => unsetUser(user)(dispatch),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header))

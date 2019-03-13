@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\TaskCreated;
+use App\Report;
 use App\Subtask;
 use App\Task;
 use App\User;
@@ -20,7 +21,7 @@ class TaskController extends Controller
 
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::where('status', '!=', 'REMOVED')->get();
         return $tasks->toJson();
     }
 
@@ -33,11 +34,14 @@ class TaskController extends Controller
 
     public function save(Request $request)
     {
+        $action = '';
         if (!$request->has('id')){
             $task = new Task;
+            $action = 'TASK_CREATED';
         } else {
             $id = $request->input('id');
             $task  = Task::find($id);
+            $action = 'TASK_UPDATED';
         }
         $task->assigned_user = $request->input('assigned_user');
         $task->description = $request->input('description');
@@ -62,6 +66,7 @@ class TaskController extends Controller
         }
 
         $this->notifyWorker($task);
+        $this->makeReport($task, $action);
 
         return response()->json(['success' => true, 'data' => $subtasks]);
     }
@@ -69,19 +74,45 @@ class TaskController extends Controller
     public function delete(Request $request)
     {
         $id = $request->input('id');
-        Subtask::where('task_id', $id)->delete();
-        Task::destroy($id);
-        $tasks = Task::all();
+//        Subtask::where('task_id', $id)->delete();
+//        Task::destroy($id);
+        $task = Task::find($id);
+        $task->status = 'REMOVED';
+        $task->save();
 
+        $this->makeReport($task, 'TASK_REMOVED');
+
+        $tasks = Task::where('status', '!=', 'REMOVED')->get();
         return response()->json($tasks);
     }
 
-    public function notifyWorker()
+    public function notifyWorker($task)
     {
-        $user = User::find(10);
-        $task = Task::find(3);
+        $user = User::find($task->assigned_user);
 
+        Mail::to($user->email)->send(new TaskCreated($task, $user->name));
         return new TaskCreated($task, $user->name);
-//        Mail::to($user->email)->send(new TaskCreated($task, $user->name));
+    }
+
+    private function makeReport($task, $action)
+    {
+        $report = new Report;
+        $report->created_by = Auth::user()->id;
+        $report->action = $action;
+        $report->task_id = $task->id;
+        $report->save();
+    }
+
+    public function completeTask(Request $request)
+    {
+        $id = $request->input('id');
+        $task = Task::find($id);
+        $task->status = 'COMPLETED';
+        $task->save();
+
+        $this->makeReport($task, 'TASK_COMPLETED');
+
+        $tasks = Task::where('status', '!=', 'REMOVED')->get();
+        return response()->json($tasks);
     }
 }
