@@ -1,0 +1,4 @@
+<div>
+    Username: {{ $username }}
+</div>
+

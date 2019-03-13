@@ -8,6 +8,6 @@ export const setTask = (task) => dispatch => {
     dispatch({ type: SET_TASK, data: task });
 }
 
-export const unsetTask = (task) => dispatch => {
-    dispatch({ type: UNSET_TASK, data: task });
+export const unsetTask = () => dispatch => {
+    dispatch({ type: UNSET_TASK });
 }

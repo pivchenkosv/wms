@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import ReactDOM from "react-dom";
 import User from "./User";
+import {connect} from "react-redux";
 
 class UsersList extends Component {
     constructor() {
@@ -122,5 +123,13 @@ class UsersList extends Component {
     }
 }
 
-export default UsersList
+const mapStateToProps = (store, ownProps) => {
+    console.log('mapStateToProps when remove');
+    console.log(store)
+    return {
+        user: store.user
+    }
+}
+
+export default connect(mapStateToProps)(UsersList)
 

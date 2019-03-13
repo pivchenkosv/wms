@@ -22,28 +22,61 @@ class StockController extends Controller
             //$stock = (object)array_merge( (array)$stock, array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
             $stocks[$key] = $stock;
         }
-        return $stocks->toJson();
+        return response(['success' => true, 'data' => $stocks]);
     }
 
-    public function save(Request $request)
+//    public function save(Request $request)
+//    {
+//        if (!$request->has('id')){
+//            $stock = new Stock;
+//            $stock->location = $request->input('location');
+//        } else {
+//            $id = $request->input('id');
+//            $updatedLocation = $request->input('location');
+//            $stock = Stock::find($id);
+//            $stock->location = $updatedLocation;
+//        }
+//        $stock->save();
+//        $stocks = Stock::all();
+//        foreach ($stocks as $key => $stock) {
+//            $stock = array('stock' => $stock, 'cells' => array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
+//            //$stock = (object)array_merge( (array)$stock, array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
+//            $stocks[$key] = $stock;
+//        }
+//        return $stocks->toJson();
+//    }
+
+    public function save(Request $request, Stock $stock)
     {
-        if (!$request->has('id')){
-            $stock = new Stock;
-            $stock->location = $request->input('location');
-        } else {
-            $id = $request->input('id');
-            $updatedLocation = $request->input('location');
-            $stock = Stock::find($id);
-            $stock->location = $updatedLocation;
+        if ($request->has('id')) {
+            $stock = Stock::find($request->has('id'));
         }
-        $stock->save();
-        $stocks = Stock::all();
-        foreach ($stocks as $key => $stock) {
-            $stock = array('stock' => $stock, 'cells' => array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
-            //$stock = (object)array_merge( (array)$stock, array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
-            $stocks[$key] = $stock;
+
+        $stock->location = $request->input('location');
+
+        if ($stock->save()) {
+            $stocks = Stock::all();
+            if ($stocks) {
+                foreach ($stocks as &$stock) {
+                    $stock=$this->handle($stock);
+                }
+            }
+
+            return response()->json(['success' => true, 'data' => $stocks]);
         }
-        return $stocks->toJson();
+
+        return response()->json(['failure' => true]);
+    }
+
+    function handle(Stock $stock)
+    {
+        return array(
+            'stock' => $stock,
+            'cells' => array(
+                'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(),
+                'quantity' => Cell::all()->where('stock_id', $stock->id)->count()
+            )
+        );
     }
 
     public function delStock(Request $request)
@@ -55,6 +88,6 @@ class StockController extends Controller
             //$stock = (object)array_merge( (array)$stock, array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
             $stocks[$key] = $stock;
         }
-        return $stocks->toJson();
+        return response()->json(['success' => true, 'data' => $stocks]);
     }
 }

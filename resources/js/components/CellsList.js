@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import Cell from "./Cell";
 import Style from "./Style.css"
 import StocksList from "./StocksList";
+import {connect} from "react-redux";
 
 class CellsList extends Component {
     constructor() {
@@ -25,7 +26,7 @@ class CellsList extends Component {
         })
         axios.get('/api/stocks').then(response => {
             this.setState({
-                stocks: response.data
+                stocks: response.data.data
             })
         })
     }
@@ -186,9 +187,9 @@ class CellsList extends Component {
         }
 
     selected = (cell) => {
+        const {user} = this.props
         // this.setState({stock: stock})
-        if (this.state.cell && this.state.cell.id === cell.id) {
-
+        if (user.role !== 'ROLE_WORKER' && this.state.cell && this.state.cell.id === cell.id) {
             return (
                 <div className="col-8 badge">
                     {/*<input id={stock.stock.id} name="location" autoFocus onFocus={() => this.setState({selectedStock: stock})}*/}
@@ -246,6 +247,7 @@ class CellsList extends Component {
 
     render() {
         const {cells} = this.state
+        const {user} = this.props
         return (
             <div className='container py-4'>
                 <div className='row justify-content-left'>
@@ -254,10 +256,12 @@ class CellsList extends Component {
                             <div className='card-header'>
                                 <div className='row'>
                                     <div className='col-sm-8'>Cells</div>
-                                    <button className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                            onClick={this.createNewCell}>
+                                    {user.role !== 'ROLE_WORKER' ?
+                                        <button className='btn btn-primary btn-sm mb-3 col-sm-3'
+                                        onClick={this.createNewCell}>
                                         Create new cell
-                                    </button>
+                                        </button> : ''
+                                    }
                                 </div>
                             </div>
                             <div className='card-header'>
@@ -305,4 +309,12 @@ class CellsList extends Component {
     }
 }
 
-export default CellsList
+const mapStateToProps = (store, ownProps) => {
+    console.log('mapStateToProps when remove');
+    console.log(store)
+    return {
+        user: store.user
+    }
+}
+
+export default connect(mapStateToProps, null)(withRouter(CellsList))

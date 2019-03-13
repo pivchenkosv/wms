@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
 
 class ProductsList extends Component {
     constructor() {
@@ -90,7 +91,7 @@ class ProductsList extends Component {
     isValueChanged = (product) => {
         if (product.name == this.state.product.name &&
             product.description == this.state.product.description &&
-            product.volume == this.state.product.volume){
+            product.volume == this.state.product.volume) {
             return (
                 <button className="btn btn-primary badge col-1"
                         style={{marginRight: "5%", fontSize: "11px"}}
@@ -106,7 +107,8 @@ class ProductsList extends Component {
                     {'\u2714'}
                 </button>
             );
-        };
+        }
+        ;
     };
 
     createNewProduct = () => {
@@ -127,8 +129,9 @@ class ProductsList extends Component {
     }
 
     selected = (product) => {
+        const {user} = this.props
         // this.setState({stock: stock})
-        if (this.state.product && this.state.product.id === product.id) {
+        if (user.role !=='ROLE_WORKER' && this.state.product && this.state.product.id === product.id) {
 
             return (
                 <td
@@ -139,8 +142,8 @@ class ProductsList extends Component {
                     {/*value={this.state.selectedStock.stock.location} style={{width: '80%'}}*/}
                     {/*onChange={this.inputChange}/>*/}
                     {/*<span id={product.id} className='badge badge-pill col-2'>*/}
-                                                {/*{product.id}*/}
-                                            {/*</span>*/}
+                    {/*{product.id}*/}
+                    {/*</span>*/}
                     {this.isValueChanged(product)}
                     <input id={product.id} name="name"
                            value={this.state.product.name}
@@ -150,7 +153,8 @@ class ProductsList extends Component {
                            className="col-4"
                            value={this.state.product.description}
                            onChange={this.inputChange}/>
-                    <input id={product.id} name="volume" type="number" value={this.state.product.volume} min="1" max="20"
+                    <input id={product.id} name="volume" type="number" value={this.state.product.volume} min="1"
+                           max="20"
                            className="col-2" onChange={this.inputChange}/>
 
                 </td>
@@ -162,17 +166,17 @@ class ProductsList extends Component {
                     onClick={() => this.editProduct(product)}
                 >
                     <td id={product.id} className='badge-pill col-2'>
-                                                {product.id}
-                                            </td>
+                        {product.id}
+                    </td>
                     <td id={product.id} className='badge-pill col-4'>
-                                                {product.name}
-                                            </td>
+                        {product.name}
+                    </td>
                     <td id={product.id} className='badge-pill col-4'>
-                                                {product.description}
-                                            </td>
+                        {product.description}
+                    </td>
                     <td id={product.id} className='badge-pill col-2'>
-                                                {product.volume}
-                                            </td>
+                        {product.volume}
+                    </td>
                 </tr>
 
             );
@@ -181,6 +185,7 @@ class ProductsList extends Component {
 
     render() {
         const {products} = this.state
+        const {user} = this.props
         return (
             <div className='container py-4'>
                 <div className='row justify-content-center'>
@@ -189,33 +194,37 @@ class ProductsList extends Component {
                             <tr className='card-header'>
                                 <th className='row'>
                                     <div className='col-sm-6'>Products Table</div>
-                                    <button className='btn btn-primary btn-sm mb-3 col-sm-2'
-                                            onClick={this.handleDelete}
-                                            disabled={!this.state.product}
-                                            style={{marginRight: "1%"}}>
-                                        Delete selected
-                                    </button>
-                                    <button className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                            onClick={this.createNewProduct}>
-                                        Create new product
-                                    </button>
+                                    {user.role !== 'ROLE_WORKER' ?
+                                        <div className="col-sm-6">
+                                            <button className='btn btn-primary btn-sm mb-3 col-sm-4'
+                                                    onClick={this.handleDelete}
+                                                    disabled={!this.state.product}
+                                                    style={{marginRight: "1%"}}>
+                                                Delete selected
+                                            </button>
+                                            <button className='btn btn-primary btn-sm mb-3 col-sm-6'
+                                                    onClick={this.createNewProduct}>
+                                                Create new product
+                                            </button>
+                                        </div> : ''
+                                    }
                                 </th>
                             </tr>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
 
-                                    {/*className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>*/}
-                                    <th className='badge-pill col-2'>id</th>
-                                    <th className='badge-pill col-4'>name</th>
-                                    <th className='badge-pill col-4'>description</th>
-                                    <th className='badge-pill col-2'>volume</th>
+                                {/*className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>*/}
+                                <th className='badge-pill col-2'>id</th>
+                                <th className='badge-pill col-4'>name</th>
+                                <th className='badge-pill col-4'>description</th>
+                                <th className='badge-pill col-2'>volume</th>
                             </tr>
 
                             {/*<tr className='card-body'>*/}
-                                {/*<ul className='list-group list-group-flush'>*/}
-                                    {products.map(product => (
-                                        this.selected(product)
-                                    ))}
-                                {/*</ul>*/}
+                            {/*<ul className='list-group list-group-flush'>*/}
+                            {products.map(product => (
+                                this.selected(product)
+                            ))}
+                            {/*</ul>*/}
                             {/*</tr>*/}
                         </table>
                     </div>
@@ -229,4 +238,12 @@ class ProductsList extends Component {
     }
 }
 
-export default ProductsList
+const mapStateToProps = (store, ownProps) => {
+    console.log('mapStateToProps when remove');
+    console.log(store)
+    return {
+        user: store.user
+    }
+}
+
+export default connect(mapStateToProps, null)(withRouter(ProductsList))

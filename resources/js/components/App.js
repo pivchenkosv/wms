@@ -14,7 +14,7 @@ import ReportsList from "./ReportsList";
 import TasksList from "./TasksList";
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
-import reducers from '../reducers/users';
+import reducers from '../reducers';
 import createHistory from 'history/createBrowserHistory';
 import NewTask from "./NewTask";
 
@@ -34,42 +34,48 @@ class App extends Component {
         console.log(store.user);
         let user = JSON.parse(localStorage.getItem('user'));
         switch (user ? user.role : 'unauthorized') {
-            case 'ROLE_ADMIN': return(
-                <Switch>
-                    <Route exact path='/admin/users' component={UsersList}/>
-                    <Route exact path='/home' component={Home}/>
-                    <Route exact path='/register' component={Register}/>
-                    <Route exact path='/cells' component={CellsList}/>
-                    <Route exact path='/products' component={ProductsList}/>
-                    <Route exact path='/stocks' component={StocksList}/>
-                    <Route exact path='/tasks' component={TasksList}/>
-                    <Route exact path='/reports' component={ReportsList}/>
-                    <Route exact path='/newTask' component={NewTask}/>
-                    <Redirect to="/tasks" />
-                </Switch>
-            );
-            case 'ROLE_MANAGER': return(
-                <Switch>
-                    <Route exact path='/home' component={Home}/>
-                    <Route exact path='/cells' component={CellsList}/>
-                    <Route exact path='/products' component={ProductsList}/>
-                    <Route exact path='/stocks' component={StocksList}/>
-                    <Route exact path='/tasks' component={TasksList}/>
-                    <Route exact path='/reports' component={ReportsList}/>
-                    <Redirect to="/tasks" />
-                </Switch>
-            );
-            case 'ROLE_WORKER': return(
-                <Switch>
-                    <Route exact path='/home' component={Home}/>
-                    <Route exact path='/cells' component={CellsList}/>
-                    <Route exact path='/products' component={ProductsList}/>
-                    <Route exact path='/stocks' component={StocksList}/>
-                    <Route exact path='/tasks' component={TasksList}/>
-                    <Redirect to="/tasks" />
-                </Switch>
-            );
-            case 'unauthorized': return(<Switch><Route exact path='/login' component={Login}/><Route exact path='/' component={Login}/><Redirect to="/login" /></Switch>);
+            case 'ROLE_ADMIN':
+                return (
+                    <Switch>
+                        <Route exact path='/admin/users' component={UsersList}/>
+                        <Route exact path='/home' component={Home}/>
+                        <Route exact path='/register' component={Register}/>
+                        <Route exact path='/cells' component={CellsList}/>
+                        <Route exact path='/products' component={ProductsList}/>
+                        <Route exact path='/stocks' component={StocksList}/>
+                        <Route exact path='/tasks' component={TasksList}/>
+                        <Route exact path='/reports' component={ReportsList}/>
+                        <Route exact path='/newTask' component={NewTask}/>
+                        <Redirect to="/tasks"/>
+                    </Switch>
+                );
+            case 'ROLE_MANAGER':
+                return (
+                    <Switch>
+                        <Route exact path='/home' component={Home}/>
+                        <Route exact path='/cells' component={CellsList}/>
+                        <Route exact path='/products' component={ProductsList}/>
+                        <Route exact path='/stocks' component={StocksList}/>
+                        <Route exact path='/tasks' component={TasksList}/>
+                        <Route exact path='/reports' component={ReportsList}/>
+                        <Redirect to="/tasks"/>
+                    </Switch>
+                );
+            case 'ROLE_WORKER':
+                return (
+                    <Switch>
+                        <Route exact path='/home' component={Home}/>
+                        <Route exact path='/cells' component={CellsList}/>
+                        <Route exact path='/products' component={ProductsList}/>
+                        <Route exact path='/stocks' component={StocksList}/>
+                        <Route exact path='/tasks' component={TasksList}/>
+                        <Redirect to="/tasks"/>
+                    </Switch>
+                );
+            case 'unauthorized':
+                return (<Switch><Route exact path='/login' component={Login}/><Route exact path='/'
+                                                                                     component={Login}/><Redirect
+                    to="/login"/></Switch>);
         }
     }
 
@@ -80,17 +86,7 @@ class App extends Component {
                 <Router history={history}>
                     <div>
                         <Header history={history}/>
-                            {this.router(history)}
-                            {/*<Route exact path='/admin/users' component={UsersList}/>*/}
-                            {/*<Route exact path='/login' component={Login}/>*/}
-                            {/*<Route exact path='/' component={Login}/>*/}
-                            {/*<Route exact path='/home' component={Home}/>*/}
-                            {/*<Route exact path='/register' component={Register}/>*/}
-                            {/*<Route exact path='/cells' component={CellsList}/>*/}
-                            {/*<Route exact path='/products' component={ProductsList}/>*/}
-                            {/*<Route exact path='/stocks' component={StocksList}/>*/}
-                            {/*<Route exact path='/tasks' component={TasksList}/>*/}
-                            {/*<Route exact path='/reports' component={ReportsList}/>*/}
+                        {this.router(history)}
                     </div>
                 </Router>
             </Provider>
