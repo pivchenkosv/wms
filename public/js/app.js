@@ -6523,7 +6523,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    /*div.show-button:hover input {*/\n        /*display: block;*/\n    /*}*/\n\n    /*div.show-button input {*/\n        /*position:absolute;*/\n        /*display:none;*/\n    /*}*/\n\n    /*div.show-button input.update {*/\n        /*top:0;*/\n        /*left:0;*/\n    /*}*/\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: none;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n}\n", ""]);
+exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    /*div.show-button:hover input {*/\n        /*display: block;*/\n    /*}*/\n\n    /*div.show-button input {*/\n        /*position:absolute;*/\n        /*display:none;*/\n    /*}*/\n\n    /*div.show-button input.update {*/\n        /*top:0;*/\n        /*left:0;*/\n    /*}*/\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: none;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n\n    table.dataTable thead .sorting:after,\n    table.dataTable thead .sorting:before,\n    table.dataTable thead .sorting_asc:after,\n    table.dataTable thead .sorting_asc:before,\n    table.dataTable thead .sorting_asc_disabled:after,\n    table.dataTable thead .sorting_asc_disabled:before,\n    table.dataTable thead .sorting_desc:after,\n    table.dataTable thead .sorting_desc:before,\n    table.dataTable thead .sorting_desc_disabled:after,\n    table.dataTable thead .sorting_desc_disabled:before {\n        bottom: .5em;\n    }\n}\n", ""]);
 
 // exports
 
@@ -82605,13 +82605,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -82628,6 +82630,18 @@ function (_Component) {
     _classCallCheck(this, ReportsList);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ReportsList).call(this));
+
+    _defineProperty(_assertThisInitialized(_this), "onSort", function (event, sortKey) {
+      var reports = _this.state.reports;
+      reports.sort(function (a, b) {
+        return a[sortKey].toString().localeCompare(b[sortKey]);
+      });
+
+      _this.setState({
+        reports: reports
+      });
+    });
+
     _this.state = {
       reports: [] //viewForm: false,
 
@@ -82644,6 +82658,8 @@ function (_Component) {
         _this2.setState({
           reports: response.data
         });
+
+        console.log(response);
       });
     }
   }, {
@@ -82667,14 +82683,29 @@ function (_Component) {
       }, "Reports")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        onClick: function onClick(event) {
+          return _this3.onSort(event, 'id');
+        },
         className: "badge-pill col-1"
       }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        onClick: function onClick(event) {
+          return _this3.onSort(event, 'created_by');
+        },
         className: "badge-pill col-2"
       }, "created by"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        onClick: function onClick(event) {
+          return _this3.onSort(event, 'created_at');
+        },
         className: "badge-pill col-3"
       }, "created at"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        onClick: function onClick(event) {
+          return _this3.onSort(event, 'action');
+        },
         className: "badge-pill col-4"
       }, "action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        onClick: function onClick(event) {
+          return _this3.onSort(event, 'task_id');
+        },
         className: "badge-pill col-2"
       }, "task_id")), reports.map(function (report) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {

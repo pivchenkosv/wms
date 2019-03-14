@@ -16,7 +16,15 @@ class ReportsList extends Component {
             this.setState({
                 reports: response.data
             })
+            console.log(response);
         })
+    }
+
+    onSort = (event, sortKey) => {
+
+        const {reports} = this.state;
+        reports.sort((a,b) => a[sortKey].toString().localeCompare(b[sortKey]))
+        this.setState({reports: reports})
     }
 
     render() {
@@ -30,11 +38,11 @@ class ReportsList extends Component {
                                 <div className='col-sm-8'>Reports</div>
                             </tr>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-                                <td className='badge-pill col-1'>id</td>
-                                <td className='badge-pill col-2'>created by</td>
-                                <td className='badge-pill col-3'>created at</td>
-                                <td className='badge-pill col-4'>action</td>
-                                <td className='badge-pill col-2'>task_id</td>
+                                <td onClick={event => this.onSort(event, 'id')} className='badge-pill col-1'>id</td>
+                                <td onClick={event => this.onSort(event, 'created_by')} className='badge-pill col-2'>created by</td>
+                                <td onClick={event => this.onSort(event, 'created_at')} className='badge-pill col-3'>created at</td>
+                                <td onClick={event => this.onSort(event, 'action')} className='badge-pill col-4'>action</td>
+                                <td onClick={event => this.onSort(event, 'task_id')} className='badge-pill col-2'>task_id</td>
                             </tr>
                             {reports.map(report => (
                                 <tr className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'

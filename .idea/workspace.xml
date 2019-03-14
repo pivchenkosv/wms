@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6ee742c-a7b2-421a-9931-c9fbd6147599" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegistersUsers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CellController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CellController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StockController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StockController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Cell.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Cell.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CellSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CellSelector.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CellsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CellsList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/NewTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/NewTask.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/StocksList.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StocksList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/ReportsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ReportsList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/TasksList.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/TasksList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/UsersList.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UsersList.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,14 +44,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TaskController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="134" column="17" lean-forward="true" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="17" />
+            <state relative-caret-position="329">
+              <caret line="92" column="74" selection-start-line="92" selection-start-column="74" selection-end-line="92" selection-end-column="74" />
               <folding>
                 <element signature="e#40#65#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/js/components/ReportsList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/js/components/Style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="538">
+              <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -87,7 +93,7 @@
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CellController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="564">
-              <caret line="50" column="44" lean-forward="true" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
+              <caret line="50" column="44" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
               <folding>
                 <element signature="e#40#53#0#PHP" expanded="true" />
               </folding>
@@ -206,11 +212,9 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/config/mail.php" />
         <option value="$PROJECT_DIR$/resources/js/components/ProductsList.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/ReportsList.js" />
         <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/resources/js/components/StocksList.js" />
         <option value="$PROJECT_DIR$/resources/js/components/Login.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/Style.css" />
         <option value="$PROJECT_DIR$/resources/js/components/UsersList.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php" />
@@ -227,6 +231,8 @@
         <option value="$PROJECT_DIR$/resources/js/components/App.js" />
         <option value="$PROJECT_DIR$/resources/js/components/Header.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/Style.css" />
+        <option value="$PROJECT_DIR$/resources/js/components/ReportsList.js" />
       </list>
     </option>
   </component>
@@ -520,16 +526,15 @@
       <workItem from="1552377988487" duration="13039000" />
       <workItem from="1552453018970" duration="9715000" />
       <workItem from="1552475190052" duration="12852000" />
-      <workItem from="1552557092500" duration="18437000" />
+      <workItem from="1552557092500" duration="20443000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="355490000" />
+    <option name="totallyTimeSpent" value="357496000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3065855" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -722,16 +727,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/ReportsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="47" column="41" selection-start-line="47" selection-start-column="41" selection-end-line="47" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -877,13 +872,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/Style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="42" column="26" selection-start-line="42" selection-start-column="26" selection-end-line="42" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/Login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -947,7 +935,7 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CellController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="564">
-          <caret line="50" column="44" lean-forward="true" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
+          <caret line="50" column="44" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
           <folding>
             <element signature="e#40#53#0#PHP" expanded="true" />
           </folding>
@@ -956,10 +944,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TaskController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="134" column="17" lean-forward="true" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="17" />
+        <state relative-caret-position="329">
+          <caret line="92" column="74" selection-start-line="92" selection-start-column="74" selection-end-line="92" selection-end-column="74" />
           <folding>
             <element signature="e#40#65#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/ReportsList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
