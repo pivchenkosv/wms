@@ -49,7 +49,7 @@ class UsersList extends Component {
     componentDidMount () {
         axios.get('/api/admin/users').then(response => {
             this.setState({
-                users: response.data
+                users: response.data.data
             })
         })
     }

@@ -6523,7 +6523,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    /*div.show-button:hover input {*/\n        /*display: block;*/\n    /*}*/\n\n    /*div.show-button input {*/\n        /*position:absolute;*/\n        /*display:none;*/\n    /*}*/\n\n    /*div.show-button input.update {*/\n        /*top:0;*/\n        /*left:0;*/\n    /*}*/\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n}\n", ""]);
+exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    /*div.show-button:hover input {*/\n        /*display: block;*/\n    /*}*/\n\n    /*div.show-button input {*/\n        /*position:absolute;*/\n        /*display:none;*/\n    /*}*/\n\n    /*div.show-button input.update {*/\n        /*top:0;*/\n        /*left:0;*/\n    /*}*/\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: none;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n}\n", ""]);
 
 // exports
 
@@ -79946,6 +79946,10 @@ function (_Component) {
             exact: true,
             path: "/reports",
             component: _ReportsList__WEBPACK_IMPORTED_MODULE_11__["default"]
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+            exact: true,
+            path: "/newTask",
+            component: _NewTask__WEBPACK_IMPORTED_MODULE_17__["default"]
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
             to: "/tasks"
           }));
@@ -80078,7 +80082,7 @@ function (_Component) {
         }
       }).then(function (response) {
         _this2.setState({
-          cellProducts: response.data
+          cellProducts: response.data.data
         });
       });
     }
@@ -80208,7 +80212,7 @@ function (_Component) {
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/fromCell").then(function (response) {
         _this2.setState({
-          cells: response.data
+          cells: response.data.data
         });
 
         console.log(response);
@@ -80377,7 +80381,7 @@ function (_Component) {
         console.log(response.data);
 
         _this.setState({
-          cells: response.data,
+          cells: response.data.data,
           cell: null
         });
       }).catch(function (response) {
@@ -80443,11 +80447,10 @@ function (_Component) {
       if (_this.state.cell.id !== 0) {
         params.append('id', _this.state.cell.id);
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/delCell', params).then(function (response) {
-          console.log('fulfilled', response);
           console.log(response.data);
 
           _this.setState({
-            cells: response.data,
+            cells: response.data.data,
             cell: null
           });
         }).catch(function (response) {
@@ -80643,7 +80646,7 @@ function (_Component) {
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/cells').then(function (response) {
         _this2.setState({
-          cells: response.data
+          cells: response.data.data
         });
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/stocks').then(function (response) {
@@ -80818,7 +80821,6 @@ function (_React$Component) {
 
       switch (user.role) {
         case 'ROLE_ADMIN':
-        case 'ROLE_MANAGER':
           {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               className: "nav-item dropdown"
@@ -80842,6 +80844,69 @@ function (_React$Component) {
                 return history.push('/admin/users');
               }
             }, "Users"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              href: "#",
+              onClick: function onClick() {
+                return history.push('reports');
+              }
+            }, "Reports"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/tasks');
+              }
+            }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/cells');
+              }
+            }, "Cells"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/stocks');
+              }
+            }, "Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              href: "#",
+              onClick: function onClick() {
+                return history.push('/products');
+              }
+            }, "Products"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              onClick: this.logout
+            }, "Logout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+              id: "logout-form",
+              action: "/logout",
+              method: "POST",
+              style: {
+                display: 'none'
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              name: "_token",
+              value: $('meta[name="csrf-token"]').attr('content')
+            }))));
+          }
+
+        case 'ROLE_MANAGER':
+          {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              className: "nav-item dropdown"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              id: "navbarDropdown",
+              className: "nav-link dropdown-toggle",
+              href: "#",
+              role: "button",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }, user.name, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              className: "caret"
+            })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "dropdown-menu dropdown-menu-right",
+              "aria-labelledby": "navbarDropdown"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               className: "dropdown-item",
               href: "#",
               onClick: function onClick() {
@@ -81184,12 +81249,19 @@ function (_Component) {
           console.log('should be redirected');
           window.location.reload();
         }
+
+        _this2.setState({
+          error: null
+        });
       }).catch(function (response) {
-        console.log(response);
-        console.log(response.data);
-      });
-      return this.setState({
-        error: ''
+        console.log('rejected: ', response);
+        console.log(response.response.data.message);
+
+        _this2.setState({
+          error: response.response.data.message
+        }, function () {
+          $("div.failure").fadeIn(300).delay(1500).fadeOut(400);
+        });
       });
     }
   }, {
@@ -81221,7 +81293,13 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2"
+      }, "Login"), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-8 alert-box failure"
+      }, this.state.error) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
@@ -81424,7 +81502,7 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "cancel", function () {
+    _defineProperty(_assertThisInitialized(_this), "cancel", function (message) {
       _this.props.unsetTask();
 
       _this.props.history.push('/tasks');
@@ -81440,12 +81518,22 @@ function (_Component) {
 
       params.append('assigned_user', _this.state.task.assigned_user);
       params.append('description', _this.state.task.description);
-      var d = _this.state.task.at;
+      var d = new Date(_this.state.task.at);
       d.setHours(d.getHours() + 3);
       params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
       params.append('subtasks', JSON.stringify(_this.state.subtasks));
       axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('api/editTask', params).then(function (response) {
-        console.log('response', response); //window.location.reload()
+        _this.setState({
+          message: 'Success!'
+        }, function () {
+          $("div.success").fadeIn(300).delay(1500).fadeOut(400);
+        });
+
+        setTimeout(function () {
+          return _this.cancel();
+        }, 2500); // this.delay(this.cancel(), 2500);
+
+        console.log('response', response);
       }).catch(function (response) {
         console.log(response);
         console.log(response.data);
@@ -81597,7 +81685,8 @@ function (_Component) {
       selected: {
         subtask: null,
         column: null
-      }
+      },
+      message: null
     };
     return _this;
   }
@@ -81657,7 +81746,15 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-3"
       }, "New Task"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-8"
+      }, this.state.message ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "alert-box success"
+      }, this.state.message) : ''))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         id: "newTask",
@@ -82730,7 +82827,7 @@ function (_Component) {
             console.log(response.data);
 
             _this.setState({
-              stocks: response.data,
+              stocks: response.data.data,
               selectedStock: null
             });
           }).catch(function (response) {
@@ -82895,7 +82992,7 @@ function (_Component) {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "list-group list-group-flush"
-      }, stocks.map(function (stockInfo) {
+      }, stocks ? stocks.map(function (stockInfo) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -82917,7 +83014,7 @@ function (_Component) {
             width: '20%'
           }
         }, stockInfo.cells.in_use));
-      })))))));
+      }) : ''))))));
     }
   }]);
 
@@ -83153,9 +83250,10 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TasksList).call(this, props));
 
-    _defineProperty(_assertThisInitialized(_this), "handleFormUnmount", function () {
+    _defineProperty(_assertThisInitialized(_this), "handleFormUnmount", function (message) {
       _this.setState({
-        task: null
+        task: null,
+        message: message
       });
     });
 
@@ -83241,10 +83339,38 @@ function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "taskInfo", function (task) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
+        onClick: function onClick() {
+          return _this.showTaskInfo(task);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        id: task.id,
+        className: "badge badge-pill"
+      }, task.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        id: task.id,
+        className: "badge badge-pill"
+      }, task.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        id: task.id,
+        className: "badge badge-pill"
+      }, task.at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        id: task.id,
+        className: "badge badge-pill"
+      }, task.assigned_user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        id: task.id,
+        className: "badge badge-pill"
+      }, task.status), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        id: task.id,
+        className: "badge badge-pill"
+      }, task.created_at));
+    });
+
     _this.state = {
       tasks: [],
       task: null,
-      store: null //viewForm: false,
+      store: null,
+      message: null //viewForm: false,
 
     };
     return _this;
@@ -83280,7 +83406,8 @@ function (_Component) {
       var tasks = this.state.tasks;
       var _this$props = this.props,
           location = _this$props.location,
-          history = _this$props.history;
+          history = _this$props.history,
+          user = _this$props.user;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83303,31 +83430,12 @@ function (_Component) {
         className: "badge-pill col-2"
       }, "status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "badge-pill col-2"
-      }, "created at")), tasks.map(function (task) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-          className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
-          onClick: function onClick() {
-            return _this3.showTaskInfo(task);
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          id: task.id,
-          className: "badge badge-pill"
-        }, task.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          id: task.id,
-          className: "badge badge-pill"
-        }, task.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          id: task.id,
-          className: "badge badge-pill"
-        }, task.at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          id: task.id,
-          className: "badge badge-pill"
-        }, task.assigned_user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          id: task.id,
-          className: "badge badge-pill"
-        }, task.status), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          id: task.id,
-          className: "badge badge-pill"
-        }, task.created_at));
+      }, "created at")), user.role === 'ROLE_WORKER' ? tasks.filter(function (task) {
+        return task.assigned_user === user.id;
+      }).map(function (task) {
+        return _this3.taskInfo(task);
+      }) : tasks.map(function (task) {
+        return _this3.taskInfo(task);
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-4"
       }, this.state.task ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Task__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -83473,8 +83581,10 @@ function (_Component) {
       var id = new URLSearchParams();
       id.append('id', _this.state.userInfo.id);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/deleteUser', id).then(function (response) {
-        _this.props.rerenderUsersList(response.data);
+        _this.props.rerenderUsersList(response.data.data);
       });
+
+      _this.props.unmountForm();
     });
 
     console.log(props);
@@ -83711,7 +83821,7 @@ function (_Component) {
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/admin/users').then(function (response) {
         _this2.setState({
-          users: response.data
+          users: response.data.data
         });
       });
     }

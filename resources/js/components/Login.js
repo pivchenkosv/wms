@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {Redirect, withRouter} from 'react-router-dom';
 import {setUser} from "../actions/users";
-import { connect } from 'react-redux';
-import { hashHistory } from 'react-router';
+import {connect} from 'react-redux';
+import {hashHistory} from 'react-router';
 import useLocalStorage from 'react-use-localstorage';
 
 class Login extends Component {
@@ -39,25 +39,28 @@ class Login extends Component {
         const params = new URLSearchParams();
         params.append('email', this.state.email);
         params.append('password', this.state.password);
-        params.append('_token',$('meta[name="csrf-token"]').attr('content'));
+        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
         axios.post('api/login', params, {
-            headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         }).then(response => {
-            if (response.data.success){
+            if (response.data.success) {
                 this.props.setUser(response.data.user);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
             }
             console.log(response);
             console.log(response.data);
-            if (this.props.user){
+            if (this.props.user) {
                 console.log('should be redirected');
                 window.location.reload()
             }
+            this.setState({error: null})
         }).catch(response => {
-            console.log(response);
-            console.log(response.data);
+            console.log('rejected: ', response);
+            console.log(response.response.data.message);
+            this.setState({error: response.response.data.message}, function () {
+                $( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+            })
         })
-        return this.setState({error: ''});
     }
 
     handleUserChange(evt) {
@@ -80,17 +83,29 @@ class Login extends Component {
                     <div className="row justify-content-center">
                         <div className="col-md-8">
                             <div className="card">
-                                <div className="card-header">Login</div>
+                                <div className="card-header">
+                                    <div className='row'>
+                                        <div className="col-2">
+                                            Login
+                                        </div>
+                                        {this.state.error ?
+                                            <div className='col-8 alert-box failure'>
+                                                {this.state.error}
+                                            </div> : ''}
+                                    </div>
+                                </div>
                                 <div className="card-body">
                                     <form onSubmit={this.handleSubmit}>
-                                        <input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')} />
+                                        <input type="hidden" name="_token"
+                                               value={$('meta[name="csrf-token"]').attr('content')}/>
                                         <div className="form-group">
                                             <label htmlFor="email" className="col-md-12 col-form-label text-md-left">E-Mail
                                                 Address</label>
                                             <div className="col-md-12">
                                                 <input id="email" type="email"
                                                        className="form-control"
-                                                       name="email" value={this.state.email} onChange={this.handleUserChange} required autoFocus/>
+                                                       name="email" value={this.state.email}
+                                                       onChange={this.handleUserChange} required autoFocus/>
                                             </div>
                                         </div>
                                         <div className="form-group">
@@ -99,16 +114,18 @@ class Login extends Component {
                                             <div className="col-md-12">
                                                 <input id="password" type="password"
                                                        className="form-control"
-                                                       name="password" value={this.state.password} onChange={this.handlePassChange} required/>
+                                                       name="password" value={this.state.password}
+                                                       onChange={this.handlePassChange} required/>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <div className="col-md-8 offset-md-2">
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" name="remember" id="remember"/>
-                                                        <label className="form-check-label" htmlFor="remember">
-                                                            Remember Me
-                                                        </label>
+                                                    <input className="form-check-input" type="checkbox" name="remember"
+                                                           id="remember"/>
+                                                    <label className="form-check-label" htmlFor="remember">
+                                                        Remember Me
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>

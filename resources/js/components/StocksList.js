@@ -74,7 +74,7 @@ class StocksList extends Component {
                     console.log('fulfilled', response);
                     console.log(response.data);
                     this.setState({
-                        stocks: response.data,
+                        stocks: response.data.data,
                         selectedStock: null
                     })
                 }).catch(response => {
@@ -174,7 +174,7 @@ class StocksList extends Component {
 
                             <div className='card-body'>
                                 <ul className='list-group list-group-flush'>
-                                    {stocks.map(stockInfo => (
+                                    { stocks ? stocks.map(stockInfo => (
                                         <div
                                             className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
                                             <span id={stockInfo.stock.id} className='badge badge-pill'
@@ -195,7 +195,7 @@ class StocksList extends Component {
                                                 {stockInfo.cells.in_use}
                                             </span>
                                         </div>
-                                    ))}
+                                    )) : ''}
                                 </ul>
                             </div>
                         </div>

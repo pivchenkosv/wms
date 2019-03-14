@@ -12,11 +12,12 @@ class TasksList extends Component {
             tasks: [],
             task: null,
             store: null,
+            message: null,
             //viewForm: false,
         }
     }
 
-    componentDidMount () {
+    componentDidMount() {
         axios.get('/api/tasks').then(response => {
             this.setState({
                 tasks: response.data
@@ -24,8 +25,8 @@ class TasksList extends Component {
         })
     }
 
-    handleFormUnmount = () => {
-        this.setState({task: null});
+    handleFormUnmount = (message) => {
+        this.setState({task: null, message: message});
     }
 
     handleDelete = (evt) => {
@@ -75,7 +76,8 @@ class TasksList extends Component {
                     <tr className='card-header'>
                         <th className='row'>
                             <div className='col-sm-6'>Tasks</div>
-                            <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2' disabled={!this.state.task} style={{marginRight: "5px"}}
+                            <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2'
+                                    disabled={!this.state.task} style={{marginRight: "5px"}}
                                     onClick={this.handleDelete}>
                                 Delete
                             </button>
@@ -91,7 +93,8 @@ class TasksList extends Component {
                     <tr className='card-header'>
                         <th className='row'>
                             <div className='col-sm-6'>Tasks</div>
-                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5' disabled={!this.state.task} style={{marginRight: "5px"}}
+                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5'
+                                    disabled={!this.state.task} style={{marginRight: "5px"}}
                                     onClick={this.handleComplete}>
                                 Submit task completed
                             </button>
@@ -101,9 +104,37 @@ class TasksList extends Component {
         }
     }
 
+    taskInfo = (task) => {
+        return (
+            <tr
+                className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                onClick={() => this.showTaskInfo(task)}
+            >
+                <td id={task.id} className='badge badge-pill'>
+                    {task.id}
+                </td>
+                <td id={task.id} className='badge badge-pill'>
+                    {task.description}
+                </td>
+                <td id={task.id} className='badge badge-pill'>
+                    {task.at}
+                </td>
+                <td id={task.id} className='badge badge-pill'>
+                    {task.assigned_user}
+                </td>
+                <td id={task.id} className='badge badge-pill'>
+                    {task.status}
+                </td>
+                <td id={task.id} className='badge badge-pill'>
+                    {task.created_at}
+                </td>
+            </tr>
+        );
+    }
+
     render() {
         const {tasks} = this.state
-        const {location, history} = this.props;
+        const {location, history, user} = this.props;
         return (
             <div className='container py-4'>
                 <div className='row justify-content-left'>
@@ -111,42 +142,23 @@ class TasksList extends Component {
                         <table className='card'>
                             {this.tableHeader(history)}
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-                                    <th className='badge-pill col-1'>id</th>
-                                    <th className='badge-pill col-3'>description</th>
-                                    <th className='badge-pill col-2'>at</th>
-                                    <th className='badge-pill col-2'>assigned worker</th>
-                                    <th className='badge-pill col-2'>status</th>
-                                    <th className='badge-pill col-2'>created at</th>
+                                <th className='badge-pill col-1'>id</th>
+                                <th className='badge-pill col-3'>description</th>
+                                <th className='badge-pill col-2'>at</th>
+                                <th className='badge-pill col-2'>assigned worker</th>
+                                <th className='badge-pill col-2'>status</th>
+                                <th className='badge-pill col-2'>created at</th>
                             </tr>
-                                    {tasks.map(task=> (
-                                        <tr
-                                            className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                                            onClick={() => this.showTaskInfo(task)}
-                                        >
-                                            <td id={task.id} className='badge badge-pill'>
-                                                {task.id}
-                                            </td>
-                                            <td id={task.id} className='badge badge-pill'>
-                                                {task.description}
-                                            </td>
-                                            <td id={task.id} className='badge badge-pill'>
-                                                {task.at}
-                                            </td>
-                                            <td id={task.id} className='badge badge-pill'>
-                                                {task.assigned_user}
-                                            </td>
-                                            <td id={task.id} className='badge badge-pill'>
-                                                {task.status}
-                                            </td>
-                                            <td id={task.id} className='badge badge-pill'>
-                                                {task.created_at}
-                                            </td>
-                                        </tr>
-                                    ))}
+                            {user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.id).map(task => (
+                                this.taskInfo(task)
+                            )) : tasks.map(task => (
+                                this.taskInfo(task)
+                            ))}
                         </table>
                     </div>
                     <div className="col-md-4">
-                        {(this.state.task) ? <Task taskId={this.state.task.id} unmountForm={this.handleFormUnmount}/> : ''}
+                        {(this.state.task) ?
+                            <Task taskId={this.state.task.id} unmountForm={this.handleFormUnmount}/> : ''}
                     </div>
                 </div>
             </div>

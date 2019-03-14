@@ -17,28 +17,16 @@ class AdminController extends Controller
     {
         $users = User::all();
 
-        return $users->toJson();
-    }
-
-    public function show($id)
-    {
-        $user = User::all()->find($id);
-
-        return $user->toJson();
+        return response()->json(['success' => true, 'data' => $users]);
     }
 
     public function delete(Request $request){
-        $id = $request->input('id');
-        User::destroy($id);
+        if ($request->has('id')) {
+            User::destroy($request->input('id'));
+        }
 
-        $user = User::all();
+        $users = User::all();
 
-        return $user->toJson();
-    }
-
-    public function showCells()
-    {
-        $cells = Cell::all();
-        return $cells->toJson();
+        return response()->json(['success' => true, 'data' => $users]);
     }
 }

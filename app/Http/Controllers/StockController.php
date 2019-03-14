@@ -25,27 +25,6 @@ class StockController extends Controller
         return response(['success' => true, 'data' => $stocks]);
     }
 
-//    public function save(Request $request)
-//    {
-//        if (!$request->has('id')){
-//            $stock = new Stock;
-//            $stock->location = $request->input('location');
-//        } else {
-//            $id = $request->input('id');
-//            $updatedLocation = $request->input('location');
-//            $stock = Stock::find($id);
-//            $stock->location = $updatedLocation;
-//        }
-//        $stock->save();
-//        $stocks = Stock::all();
-//        foreach ($stocks as $key => $stock) {
-//            $stock = array('stock' => $stock, 'cells' => array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
-//            //$stock = (object)array_merge( (array)$stock, array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
-//            $stocks[$key] = $stock;
-//        }
-//        return $stocks->toJson();
-//    }
-
     public function save(Request $request, Stock $stock)
     {
         if ($request->has('id')) {
