@@ -21,7 +21,7 @@ class CellsList extends Component {
     componentDidMount() {
         axios.get('/api/cells').then(response => {
             this.setState({
-                cells: response.data
+                cells: response.data.data
             })
         })
         axios.get('/api/stocks').then(response => {
@@ -47,7 +47,7 @@ class CellsList extends Component {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
-                cells: response.data,
+                cells: response.data.data,
                 cell: null
             })
         }).catch(response => {
@@ -116,10 +116,9 @@ class CellsList extends Component {
         if (this.state.cell.id !== 0) {
             params.append('id', this.state.cell.id);
             axios.post('/api/delCell', params).then(response => {
-                console.log('fulfilled', response);
-                console.log(response.data);
+                console.log(response.data)
                 this.setState({
-                    cells: response.data,
+                    cells: response.data.data,
                     cell: null
                 })
             }).catch(response => {

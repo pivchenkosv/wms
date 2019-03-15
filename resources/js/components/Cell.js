@@ -19,7 +19,7 @@ class Cell extends Component {
             }
         }).then(response => {
             this.setState({
-                cellProducts: response.data
+                cellProducts: response.data.data
             })
         })
     }

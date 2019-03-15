@@ -29,7 +29,8 @@ class NewTask extends Component {
             selected: {
                 subtask: null,
                 column: null
-            }
+            },
+            message: null,
         }
     }
 
@@ -103,13 +104,19 @@ class NewTask extends Component {
 
     }
 
-    cancel = () => {
+    cancel = (message) => {
         this.props.unsetTask();
         this.props.history.push('/tasks');
     }
 
     handleSubmit = (evt) => {
         evt.preventDefault();
+
+        const button = document.getElementById('createButton');
+        button.disabled = true;
+        // button.innerHTML =  '<button class="btn btn-primary" type="button" disabled style={{marginRight: "5px"}}>'
+        button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...'
+        // button.innerHTML += '</button>';
 
         const params = new URLSearchParams();
         if (this.state.task.id !== 0) {
@@ -118,15 +125,23 @@ class NewTask extends Component {
         params.append('assigned_user', this.state.task.assigned_user);
         params.append('description', this.state.task.description);
 
-        let d = this.state.task.at;
+        let d = new Date(this.state.task.at);
         d.setHours(d.getHours() + 3);
 
         params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
         params.append('subtasks', JSON.stringify(this.state.subtasks))
 
         axios.post('api/editTask', params).then(response => {
+
+            this.setState({message: 'Success!'}, function () {
+                $("div.success").fadeIn(300).delay(1500).fadeOut(400);
+            })
+
+            setTimeout(() => this.cancel(), 2500);
+            // this.delay(this.cancel(), 2500);
+
             console.log('response', response);
-            //window.location.reload()
+
         }).catch(response => {
             console.log(response);
             console.log(response.data);
@@ -218,7 +233,8 @@ class NewTask extends Component {
                     {subtask.product_id}
                 </td>
                 {(this.state.selected && this.state.selected.column === "quantity" && this.state.selected.subtask.id === subtask.id) ?
-                    <input id={subtask.id} className="col-3" name="quantity" type="number" value={subtask.quantity} min="1" max="20"
+                    <input id={subtask.id} className="col-3" name="quantity" type="number" value={subtask.quantity}
+                           min="1" max="20"
                            style={{fontSize: "11px"}} onChange={this.inputChange}/> :
                     <td onClick={() => this.selectCell(subtask, "quantity")}
                         className='badge badge-pill col-3'>
@@ -236,14 +252,27 @@ class NewTask extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-left'>
                     <div className="card">
-                        <div className="card-header">New Task</div>
+                        <div className="card-header">
+                            <div className='row'>
+                                <div className='col-3'>
+                                    New Task
+                                </div>
+                                <div className='col-8'>
+                                    {this.state.message ?
+                                        <div className='alert-box success'>
+                                            {this.state.message}
+                                        </div> : ''}
+                                </div>
+                            </div>
+                        </div>
                         <div className="card-body">
                             <form id="newTask" onSubmit={this.handleSubmit}>
                                 <div className="row">
                                     <label htmlFor="user" className="col-form-label text-md-left"
                                            style={{marginLeft: "15px", marginRight: "15px"}}>For user: </label>
                                     <input id="user" type="text" className="col-md-2 left"
-                                           name="assigned_user" value={this.state.task.assigned_user} onChange={this.handleChange}/>
+                                           name="assigned_user" value={this.state.task.assigned_user}
+                                           onChange={this.handleChange}/>
                                 </div>
                                 <div className="row">
                                     <label htmlFor="description" className="col-12 text-md-left">Description: </label>
@@ -291,8 +320,8 @@ class NewTask extends Component {
                                     </table>
                                 </div>
                                 <div className="container flex-md-row" style={{marginTop: "10px"}}>
-                                    <button className="btn btn-primary" style={{marginRight: "5px"}}>
-                                        Create New Task
+                                    <button id="createButton" className="btn btn-primary" style={{marginRight: "5px"}}>
+                                    Create Task
                                     </button>
                                     <button type="button" className="btn btn-danger" onClick={this.cancel}>Cancel
                                     </button>

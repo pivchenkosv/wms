@@ -14,7 +14,7 @@ class CellSelector extends Component {
     componentDidMount() {
         axios.get("/api/fromCell").then(response => {
             this.setState({
-                cells: response.data
+                cells: response.data.data
             })
             console.log(response);
         })

@@ -112,6 +112,46 @@ class TaskController extends Controller
 
         $this->makeReport($task, 'TASK_COMPLETED');
 
+        $subtasks = Subtask::where('task_id', $id)->get();
+
+        if ($subtasks) {
+            foreach ($subtasks as $subtask) {
+                //decrease product quantity in cell_product table
+                $productQuantity = DB::table('cell_product')
+                    ->where('cell_id', $subtask->from_cell)
+                    ->where('product_id', $subtask->product_id)
+                    ->pluck('quantity')
+                    ->get(0);
+                DB::table('cell_product')
+                    ->where('cell_id', $subtask->from_cell)
+                    ->where('product_id', $subtask->product_id)
+                    ->update(['quantity' => $productQuantity - $subtask->quantity]);
+
+                if ($productQuantity === $subtask->quantity) {
+                    DB::table('cell_product')
+                        ->where('cell_id', $subtask->from_cell)
+                        ->where('product_id', $subtask->product_id)
+                        ->delete();
+                }
+
+                //increase product quantity in cell_product table
+                $productQuantity = DB::table('cell_product')
+                    ->where('cell_id', $subtask->to_cell)
+                    ->where('product_id', $subtask->product_id)
+                    ->pluck('quantity')
+                    ->get(0);
+                DB::table('cell_product')
+                    ->when($productQuantity, function ($query, $productQuantity) use ($subtask) {
+                        return $query
+                            ->where('cell_id', $subtask->to_cell)
+                            ->where('product_id', $subtask->product_id)
+                            ->update(['product_id' => $subtask->product_id, 'cell_id' => $subtask->to_cell, 'quantity' => $productQuantity + $subtask->quantity]);
+                    }, function ($query) use ($subtask) {
+                        return $query->insert(['product_id' => $subtask->product_id, 'cell_id' => $subtask->to_cell, 'quantity' => $subtask->quantity]);
+                    });
+            }
+        }
+
         $tasks = Task::where('status', '!=', 'REMOVED')->get();
         return response()->json($tasks);
     }

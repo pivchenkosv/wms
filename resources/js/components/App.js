@@ -58,6 +58,7 @@ class App extends Component {
                         <Route exact path='/stocks' component={StocksList}/>
                         <Route exact path='/tasks' component={TasksList}/>
                         <Route exact path='/reports' component={ReportsList}/>
+                        <Route exact path='/newTask' component={NewTask}/>
                         <Redirect to="/tasks"/>
                     </Switch>
                 );
