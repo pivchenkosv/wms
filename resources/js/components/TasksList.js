@@ -13,6 +13,7 @@ class TasksList extends Component {
             task: null,
             store: null,
             message: null,
+            table: null
             //viewForm: false,
         }
     }
@@ -21,8 +22,23 @@ class TasksList extends Component {
         axios.get('/api/tasks').then(response => {
             this.setState({
                 tasks: response.data
+            }, () => {
+                let table = $('#tasks').DataTable({
+                    "paging": false,
+                    "searching": true,
+                    "dom" : "t"
+                });
+                this.setState({table: table})
             })
         })
+    }
+
+    search = () => {
+        $(document).ready(() => {
+            $('#customSearchBox').keyup(() => {
+                this.state.table.search($('#search').val()).draw();
+            })
+        });
     }
 
     handleFormUnmount = (message) => {
@@ -75,16 +91,26 @@ class TasksList extends Component {
                 return (
                     <tr className='card-header'>
                         <th className='row'>
-                            <div className='col-sm-6'>Tasks</div>
+                            <div className='col-sm-2'>Tasks</div>
+                            <div id="customSearchBox" className="dataTables_filter col-sm-4 ">
+                                <input
+                                    id="search"
+                                    type="search"
+                                    className="form-control form-control-sm"
+                                    placeholder="Search"
+                                    aria-controls="tasks"
+                                    onKeyUp={this.search}
+                                />
+                            </div>
                             <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2'
                                     disabled={!this.state.task} style={{marginRight: "5px"}}
                                     onClick={this.handleDelete}>
                                 Delete
                             </button>
-                            <a className='btn btn-primary btn-sm mb-3 col-sm-3'
+                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-3'
                                onClick={() => this.createNewTask(history)}>
                                 Create/Update task
-                            </a>
+                            </button>
                         </th>
                     </tr>
                 );
@@ -110,22 +136,22 @@ class TasksList extends Component {
                 className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                 onClick={() => this.showTaskInfo(task)}
             >
-                <td id={task.id} className='badge badge-pill'>
+                <td id={task.id} className='badge badge-pill col-1'>
                     {task.id}
                 </td>
-                <td id={task.id} className='badge badge-pill'>
+                <td id={task.id} className='badge badge-pill col-3'>
                     {task.description}
                 </td>
-                <td id={task.id} className='badge badge-pill'>
+                <td id={task.id} className='badge badge-pill col-2'>
                     {task.at}
                 </td>
-                <td id={task.id} className='badge badge-pill'>
+                <td id={task.id} className='badge badge-pill col-2'>
                     {task.assigned_user}
                 </td>
-                <td id={task.id} className='badge badge-pill'>
+                <td id={task.id} className='badge badge-pill col-2'>
                     {task.status}
                 </td>
-                <td id={task.id} className='badge badge-pill'>
+                <td id={task.id} className='badge badge-pill col-2'>
                     {task.created_at}
                 </td>
             </tr>
@@ -139,21 +165,25 @@ class TasksList extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-left'>
                     <div className='col-md-8'>
-                        <table className='card'>
+                        <table id="tasks" className='card' width="100%">
                             {this.tableHeader(history)}
+                            <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-                                <th className='badge-pill col-1'>id</th>
-                                <th className='badge-pill col-3'>description</th>
-                                <th className='badge-pill col-2'>at</th>
-                                <th className='badge-pill col-2'>assigned worker</th>
-                                <th className='badge-pill col-2'>status</th>
-                                <th className='badge-pill col-2'>created at</th>
+                                <th className='badge badge-pill col-1'>id</th>
+                                <th className='badge badge-pill col-3'>description</th>
+                                <th className='badge badge-pill col-2'>at</th>
+                                <th className='badge badge-pill col-2'>assigned worker</th>
+                                <th className='badge badge-pill col-2'>status</th>
+                                <th className='badge badge-pill col-2'>created at</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             {user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.id).map(task => (
                                 this.taskInfo(task)
                             )) : tasks.map(task => (
                                 this.taskInfo(task)
                             ))}
+                            </tbody>
                         </table>
                     </div>
                     <div className="col-md-4">
@@ -165,6 +195,10 @@ class TasksList extends Component {
         );
     }
 }
+
+// $(document).ready(function() {
+//     var table = $('#tasks').DataTable();
+// } );
 
 const mapStateToProps = (store, ownProps) => {
     console.log('mapStateToProps when remove');

@@ -6523,7 +6523,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    /*div.show-button:hover input {*/\n        /*display: block;*/\n    /*}*/\n\n    /*div.show-button input {*/\n        /*position:absolute;*/\n        /*display:none;*/\n    /*}*/\n\n    /*div.show-button input.update {*/\n        /*top:0;*/\n        /*left:0;*/\n    /*}*/\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: none;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n\n    table.dataTable thead .sorting:after,\n    table.dataTable thead .sorting:before,\n    table.dataTable thead .sorting_asc:after,\n    table.dataTable thead .sorting_asc:before,\n    table.dataTable thead .sorting_asc_disabled:after,\n    table.dataTable thead .sorting_asc_disabled:before,\n    table.dataTable thead .sorting_desc:after,\n    table.dataTable thead .sorting_desc:before,\n    table.dataTable thead .sorting_desc_disabled:after,\n    table.dataTable thead .sorting_desc_disabled:before {\n        bottom: .5em;\n    }\n}\n", ""]);
+exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    /*div.show-button:hover input {*/\n        /*display: block;*/\n    /*}*/\n\n    /*div.show-button input {*/\n        /*position:absolute;*/\n        /*display:none;*/\n    /*}*/\n\n    /*div.show-button input.update {*/\n        /*top:0;*/\n        /*left:0;*/\n    /*}*/\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: none;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n\n    table.dataTable thead .sorting::after,\n    table.dataTable thead .sorting_asc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting_desc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting {\n        background-image: url(https://datatables.net/media/images/sort_both.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_asc {\n        background-image: url(https://datatables.net/media/images/sort_asc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_desc {\n        background-image: url(https://datatables.net/media/images/sort_desc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n}\n", ""]);
 
 // exports
 
@@ -82631,19 +82631,17 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ReportsList).call(this));
 
-    _defineProperty(_assertThisInitialized(_this), "onSort", function (event, sortKey) {
-      var reports = _this.state.reports;
-      reports.sort(function (a, b) {
-        return a[sortKey].toString().localeCompare(b[sortKey]);
-      });
-
-      _this.setState({
-        reports: reports
+    _defineProperty(_assertThisInitialized(_this), "search", function () {
+      $(document).ready(function () {
+        $('#customSearchBox').keyup(function () {
+          _this.state.table.search($('#search').val()).draw();
+        });
       });
     });
 
     _this.state = {
-      reports: [] //viewForm: false,
+      reports: [],
+      table: null //viewForm: false,
 
     };
     return _this;
@@ -82657,6 +82655,16 @@ function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/reports').then(function (response) {
         _this2.setState({
           reports: response.data
+        }, function () {
+          var table = $('#reports').DataTable({
+            "paging": true,
+            "searching": true,
+            "dom": "t"
+          });
+
+          _this2.setState({
+            table: table
+          });
         });
 
         console.log(response);
@@ -82675,39 +82683,37 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        id: "reports",
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-8"
-      }, "Reports")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "col-sm-4"
+      }, "Reports"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "customSearchBox",
+        className: "dataTables_filter col-sm-8"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "search",
+        type: "search",
+        className: "form-control form-control-sm",
+        placeholder: "Search",
+        "aria-controls": "tasks",
+        onKeyUp: this.search
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        onClick: function onClick(event) {
-          return _this3.onSort(event, 'id');
-        },
-        className: "badge-pill col-1"
+        className: "badge badge-pill col-1"
       }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        onClick: function onClick(event) {
-          return _this3.onSort(event, 'created_by');
-        },
-        className: "badge-pill col-2"
+        className: "badge badge-pill col-2"
       }, "created by"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        onClick: function onClick(event) {
-          return _this3.onSort(event, 'created_at');
-        },
-        className: "badge-pill col-3"
+        className: "badge badge-pill col-3"
       }, "created at"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        onClick: function onClick(event) {
-          return _this3.onSort(event, 'action');
-        },
-        className: "badge-pill col-4"
+        className: "badge badge-pill col-4"
       }, "action"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        onClick: function onClick(event) {
-          return _this3.onSort(event, 'task_id');
-        },
-        className: "badge-pill col-2"
-      }, "task_id")), reports.map(function (report) {
+        className: "badge badge-pill col-2"
+      }, "task_id"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, reports.map(function (report) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
           onClick: function onClick() {
@@ -82715,21 +82721,21 @@ function (_Component) {
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge-pill col-1"
+          className: "badge badge-pill col-1"
         }, report.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge-pill col-2"
+          className: "badge badge-pill col-2"
         }, report.created_by), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge-pill col-3"
+          className: "badge badge-pill col-3"
         }, report.created_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge-pill col-4"
+          className: "badge badge-pill col-4"
         }, report.action), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           id: report.id,
-          className: "badge-pill col-2"
+          className: "badge badge-pill col-2"
         }, report.task_id));
-      })))));
+      }))))));
     }
   }]);
 
@@ -83281,6 +83287,14 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TasksList).call(this, props));
 
+    _defineProperty(_assertThisInitialized(_this), "search", function () {
+      $(document).ready(function () {
+        $('#customSearchBox').keyup(function () {
+          _this.state.table.search($('#search').val()).draw();
+        });
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "handleFormUnmount", function (message) {
       _this.setState({
         task: null,
@@ -83335,8 +83349,18 @@ function (_Component) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
             className: "row"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "col-sm-6"
-          }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "col-sm-2"
+          }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            id: "customSearchBox",
+            className: "dataTables_filter col-sm-4 "
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            id: "search",
+            type: "search",
+            className: "form-control form-control-sm",
+            placeholder: "Search",
+            "aria-controls": "tasks",
+            onKeyUp: _this.search
+          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             className: "btn btn-danger btn-sm mb-3 col-sm-2",
             disabled: !_this.state.task,
@@ -83344,7 +83368,8 @@ function (_Component) {
               marginRight: "5px"
             },
             onClick: _this.handleDelete
-          }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            type: "button",
             className: "btn btn-primary btn-sm mb-3 col-sm-3",
             onClick: function onClick() {
               return _this.createNewTask(history);
@@ -83378,22 +83403,22 @@ function (_Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill"
+        className: "badge badge-pill col-1"
       }, task.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill"
+        className: "badge badge-pill col-3"
       }, task.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill"
+        className: "badge badge-pill col-2"
       }, task.at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill"
+        className: "badge badge-pill col-2"
       }, task.assigned_user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill"
+        className: "badge badge-pill col-2"
       }, task.status), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill"
+        className: "badge badge-pill col-2"
       }, task.created_at));
     });
 
@@ -83401,7 +83426,8 @@ function (_Component) {
       tasks: [],
       task: null,
       store: null,
-      message: null //viewForm: false,
+      message: null,
+      table: null //viewForm: false,
 
     };
     return _this;
@@ -83415,6 +83441,16 @@ function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/tasks').then(function (response) {
         _this2.setState({
           tasks: response.data
+        }, function () {
+          var table = $('#tasks').DataTable({
+            "paging": false,
+            "searching": true,
+            "dom": "t"
+          });
+
+          _this2.setState({
+            table: table
+          });
         });
       });
     }
@@ -83446,28 +83482,30 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "card"
-      }, this.tableHeader(history), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        id: "tasks",
+        className: "card",
+        width: "100%"
+      }, this.tableHeader(history), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge-pill col-1"
+        className: "badge badge-pill col-1"
       }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge-pill col-3"
+        className: "badge badge-pill col-3"
       }, "description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge-pill col-2"
+        className: "badge badge-pill col-2"
       }, "at"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge-pill col-2"
+        className: "badge badge-pill col-2"
       }, "assigned worker"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge-pill col-2"
+        className: "badge badge-pill col-2"
       }, "status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge-pill col-2"
-      }, "created at")), user.role === 'ROLE_WORKER' ? tasks.filter(function (task) {
+        className: "badge badge-pill col-2"
+      }, "created at"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, user.role === 'ROLE_WORKER' ? tasks.filter(function (task) {
         return task.assigned_user === user.id;
       }).map(function (task) {
         return _this3.taskInfo(task);
       }) : tasks.map(function (task) {
         return _this3.taskInfo(task);
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-4"
       }, this.state.task ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Task__WEBPACK_IMPORTED_MODULE_3__["default"], {
         taskId: this.state.task.id,
@@ -83477,7 +83515,10 @@ function (_Component) {
   }]);
 
   return TasksList;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // $(document).ready(function() {
+//     var table = $('#tasks').DataTable();
+// } );
+
 
 var mapStateToProps = function mapStateToProps(store, ownProps) {
   console.log('mapStateToProps when remove');
@@ -83868,59 +83909,52 @@ function (_Component) {
         className: "row justify-content-left"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-md-8"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
         className: "card"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
         className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-sm-8"
       }, "Users Table"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         className: "btn btn-primary btn-sm mb-3 col-sm-3",
         onClick: this.createNewUser
-      }, "Create new user account"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "list-group-item d-flex justify-content-between align-items-left"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "id"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "name"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "email"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "role"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-        className: "badge badge-pill"
-      }, "created at"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
-        className: "list-group list-group-flush"
-      }, users.map(function (user) {
-        return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-          to: "#",
+      }, "Create new user account"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
+        className: "card-header list-group-item list-group-item-action d-flex"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+        className: "badge badge-pill col-1"
+      }, "id"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+        className: "badge badge-pill col-2"
+      }, "name"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+        className: "badge badge-pill col-3"
+      }, "email"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+        className: "badge badge-pill col-3"
+      }, "role"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+        className: "badge badge-pill col-3"
+      }, "created at")), users.map(function (user) {
+        return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
           className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
           onClick: function onClick() {
             return _this3.showUserInfo(user);
           }
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
           id: user.id,
-          className: "badge badge-pill"
-        }, user.id), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+          className: "badge badge-pill col-1"
+        }, user.id), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
           id: user.id,
-          className: "badge badge-pill"
-        }, user.name), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+          className: "badge badge-pill col-2"
+        }, user.name), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
           id: user.id,
-          className: "badge badge-primary badge-pill"
-        }, user.email), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+          className: "badge badge-primary badge-pill col-3"
+        }, user.email), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
           id: user.id,
-          className: "badge badge-pill"
-        }, user.role), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+          className: "badge badge-pill col-3"
+        }, user.role), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
           id: user.id,
-          className: "badge badge-pill"
+          className: "badge badge-pill col-3"
         }, user.created_at));
-      }))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         id: "user",
         className: "col-md-4"
       }, this.state.user ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_User__WEBPACK_IMPORTED_MODULE_4__["default"], {

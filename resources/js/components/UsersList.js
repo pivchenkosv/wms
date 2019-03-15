@@ -18,7 +18,7 @@ class UsersList extends Component {
         this.createNewUser = this.createNewUser.bind(this);
     }
 
-    handleFormUnmount(){
+    handleFormUnmount() {
         this.setState({user: null});
     }
 
@@ -37,16 +37,18 @@ class UsersList extends Component {
 
     createNewUser() {
         this.setState({user: null}, function () {
-            this.setState({user: {
+            this.setState({
+                user: {
                     id: null,
                     name: '',
                     email: '',
                     role: '',
-                }});
+                }
+            });
         });
     };
 
-    componentDidMount () {
+    componentDidMount() {
         axios.get('/api/admin/users').then(response => {
             this.setState({
                 users: response.data.data
@@ -60,59 +62,53 @@ class UsersList extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-left'>
                     <div className='col-md-8'>
-                        <div className='card'>
-                            <div className='card-header'>
-                                <div className='row'>
+                        <table className='card'>
+                            <tr className='card-header'>
+                                <td className='row'>
                                     <div className='col-sm-8'>Users Table</div>
-                                    <button className='btn btn-primary btn-sm mb-3 col-sm-3' onClick={this.createNewUser}>
+                                    <button className='btn btn-primary btn-sm mb-3 col-sm-3'
+                                            onClick={this.createNewUser}>
                                         Create new user account
                                     </button>
-                                </div>
-                            </div>
-                            <div className='card-header'>
-                                <div className='list-group-item d-flex justify-content-between align-items-left'>
-                                    <span className='badge badge-pill'>id</span>
-                                    <span className='badge badge-pill'>name</span>
-                                    <span className='badge badge-pill'>email</span>
-                                    <span className='badge badge-pill'>role</span>
-                                    <span className='badge badge-pill'>created at</span>
-                                </div>
-                            </div>
-
-                            <div className='card-body'>
-                                <ul className='list-group list-group-flush'>
-                                    {users.map(user => (
-                                        <Link
-                                            to="#"
-                                            className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                                            onClick={() => this.showUserInfo(user)}
-                                        >
-                                            <span id={user.id} className='badge badge-pill'>
+                                </td>
+                            </tr>
+                            <tr className='card-header list-group-item list-group-item-action d-flex'>
+                                <td className='badge badge-pill col-1'>id</td>
+                                <td className='badge badge-pill col-2'>name</td>
+                                <td className='badge badge-pill col-3'>email</td>
+                                <td className='badge badge-pill col-3'>role</td>
+                                <td className='badge badge-pill col-3'>created at</td>
+                            </tr>
+                            {users.map(user => (
+                                <tr
+                                    className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                                    onClick={() => this.showUserInfo(user)}
+                                >
+                                            <td id={user.id} className='badge badge-pill col-1'>
                                                 {user.id}
-                                            </span>
-                                            <span id={user.id} className='badge badge-pill'>
+                                            </td>
+                                    <td id={user.id} className='badge badge-pill col-2'>
                                                 {user.name}
-                                            </span>
+                                            </td>
 
-                                            <span id={user.id} className='badge badge-primary badge-pill'>
+                                    <td id={user.id} className='badge badge-primary badge-pill col-3'>
                                                 {user.email}
-                                            </span>
-                                            <span id={user.id} className='badge badge-pill'>
+                                            </td>
+                                    <td id={user.id} className='badge badge-pill col-3'>
                                                 {user.role}
-                                            </span>
-                                            <span id={user.id} className='badge badge-pill'>
+                                            </td>
+                                    <td id={user.id} className='badge badge-pill col-3'>
                                                 {user.created_at}
-                                            </span>
+                                            </td>
 
-                                        </Link>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
+                                </tr>
+                            ))}
+                        </table>
                     </div>
                     <div id="user" className="col-md-4">
                         {(this.state.user) ?
-                            <User user={this.state.user} unmountForm = {this.handleFormUnmount} rerenderUsersList = {this.rerenderList}/> : ''}
+                            <User user={this.state.user} unmountForm={this.handleFormUnmount}
+                                  rerenderUsersList={this.rerenderList}/> : ''}
                     </div>
                 </div>
             </div>
