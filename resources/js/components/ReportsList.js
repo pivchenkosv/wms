@@ -18,9 +18,16 @@ class ReportsList extends Component {
                 reports: response.data
             }, () => {
                 let table = $('#reports').DataTable({
+                    // language: {
+                    //     paginate: {
+                    //         next: '<span class="glyphicon glyphicon-menu-right">Next</span>',
+                    //         previous: '<span class="glyphicon glyphicon-menu-left">Prev</span>'
+                    //     }
+                    // },
+                    // "bPaginate": true,
                     "paging": true,
                     "searching": true,
-                    "dom": "t"
+                    "dom": "lrtip"
                 });
                 this.setState({table: table})
             })

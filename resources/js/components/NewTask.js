@@ -112,6 +112,12 @@ class NewTask extends Component {
     handleSubmit = (evt) => {
         evt.preventDefault();
 
+        const button = document.getElementById('createButton');
+        button.disabled = true;
+        // button.innerHTML =  '<button class="btn btn-primary" type="button" disabled style={{marginRight: "5px"}}>'
+        button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...'
+        // button.innerHTML += '</button>';
+
         const params = new URLSearchParams();
         if (this.state.task.id !== 0) {
             params.append('id', this.state.task.id);
@@ -314,8 +320,8 @@ class NewTask extends Component {
                                     </table>
                                 </div>
                                 <div className="container flex-md-row" style={{marginTop: "10px"}}>
-                                    <button className="btn btn-primary" style={{marginRight: "5px"}}>
-                                        Create New Task
+                                    <button id="createButton" className="btn btn-primary" style={{marginRight: "5px"}}>
+                                    Create Task
                                     </button>
                                     <button type="button" className="btn btn-danger" onClick={this.cancel}>Cancel
                                     </button>

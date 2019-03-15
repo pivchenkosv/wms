@@ -81510,6 +81510,11 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (evt) {
       evt.preventDefault();
+      var button = document.getElementById('createButton');
+      button.disabled = true; // button.innerHTML =  '<button class="btn btn-primary" type="button" disabled style={{marginRight: "5px"}}>'
+
+      button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...'; // button.innerHTML += '</button>';
+
       var params = new URLSearchParams();
 
       if (_this.state.task.id !== 0) {
@@ -81841,11 +81846,12 @@ function (_Component) {
           marginTop: "10px"
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "createButton",
         className: "btn btn-primary",
         style: {
           marginRight: "5px"
         }
-      }, "Create New Task"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Create Task"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         className: "btn btn-danger",
         onClick: this.cancel
@@ -82657,9 +82663,16 @@ function (_Component) {
           reports: response.data
         }, function () {
           var table = $('#reports').DataTable({
+            // language: {
+            //     paginate: {
+            //         next: '<span class="glyphicon glyphicon-menu-right">Next</span>',
+            //         previous: '<span class="glyphicon glyphicon-menu-left">Prev</span>'
+            //     }
+            // },
+            // "bPaginate": true,
             "paging": true,
             "searching": true,
-            "dom": "t"
+            "dom": "lrtip"
           });
 
           _this2.setState({
@@ -83403,22 +83416,22 @@ function (_Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill col-1"
+        className: "badge-pill col-1"
       }, task.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill col-3"
+        className: "badge-pill col-3"
       }, task.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill col-2"
+        className: "badge-pill col-2"
       }, task.at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill col-2"
+        className: "badge-pill col-2"
       }, task.assigned_user), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill col-2"
+        className: "badge-pill col-2"
       }, task.status), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         id: task.id,
-        className: "badge badge-pill col-2"
+        className: "badge-pill col-2"
       }, task.created_at));
     });
 
@@ -83488,17 +83501,17 @@ function (_Component) {
       }, this.tableHeader(history), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         className: "card-header list-group-item list-group-item-action d-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-1"
+        className: "col-1"
       }, "id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-3"
+        className: "col-3"
       }, "description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-2"
+        className: "col-2"
       }, "at"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-2"
+        className: "col-2"
       }, "assigned worker"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-2"
+        className: "col-2"
       }, "status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-        className: "badge badge-pill col-2"
+        className: "col-2"
       }, "created at"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, user.role === 'ROLE_WORKER' ? tasks.filter(function (task) {
         return task.assigned_user === user.id;
       }).map(function (task) {

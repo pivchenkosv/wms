@@ -136,22 +136,22 @@ class TasksList extends Component {
                 className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                 onClick={() => this.showTaskInfo(task)}
             >
-                <td id={task.id} className='badge badge-pill col-1'>
+                <td id={task.id} className='badge-pill col-1'>
                     {task.id}
                 </td>
-                <td id={task.id} className='badge badge-pill col-3'>
+                <td id={task.id} className='badge-pill col-3'>
                     {task.description}
                 </td>
-                <td id={task.id} className='badge badge-pill col-2'>
+                <td id={task.id} className='badge-pill col-2'>
                     {task.at}
                 </td>
-                <td id={task.id} className='badge badge-pill col-2'>
+                <td id={task.id} className='badge-pill col-2'>
                     {task.assigned_user}
                 </td>
-                <td id={task.id} className='badge badge-pill col-2'>
+                <td id={task.id} className='badge-pill col-2'>
                     {task.status}
                 </td>
-                <td id={task.id} className='badge badge-pill col-2'>
+                <td id={task.id} className='badge-pill col-2'>
                     {task.created_at}
                 </td>
             </tr>
@@ -169,12 +169,12 @@ class TasksList extends Component {
                             {this.tableHeader(history)}
                             <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-                                <th className='badge badge-pill col-1'>id</th>
-                                <th className='badge badge-pill col-3'>description</th>
-                                <th className='badge badge-pill col-2'>at</th>
-                                <th className='badge badge-pill col-2'>assigned worker</th>
-                                <th className='badge badge-pill col-2'>status</th>
-                                <th className='badge badge-pill col-2'>created at</th>
+                                <th className='col-1'>id</th>
+                                <th className='col-3'>description</th>
+                                <th className='col-2'>at</th>
+                                <th className='col-2'>assigned worker</th>
+                                <th className='col-2'>status</th>
+                                <th className='col-2'>created at</th>
                             </tr>
                             </thead>
                             <tbody>
