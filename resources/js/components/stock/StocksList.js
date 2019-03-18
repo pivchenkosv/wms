@@ -53,7 +53,7 @@ class StocksList extends Component {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
-                stocks: response.data,
+                stocks: response.data.data,
                 selectedStock: null
             })
         }).catch(response => {
@@ -101,8 +101,6 @@ class StocksList extends Component {
         selectedStock.stock.location = value;
         this.setState({
             selectedStock: selectedStock
-        }, function () {
-            console.log(this.state)
         })
     };
 
@@ -126,7 +124,7 @@ class StocksList extends Component {
             );
         } else {
             return (
-                <span id={stock.id} className='badge badge-pill editable'
+                <span className='badge badge-pill editable'
                       onClick={() => this.setState({selectedStock: stock})} style={{width: '50%'}}>
                         {stock.stock.location}
                     </span>
@@ -176,6 +174,7 @@ class StocksList extends Component {
                                 <ul className='list-group list-group-flush'>
                                     { stocks ? stocks.map(stockInfo => (
                                         <div
+                                            key={stockInfo.stock.id}
                                             className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
                                             <span id={stockInfo.stock.id} className='badge badge-pill'
                                                   style={{width: '10%'}}>

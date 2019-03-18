@@ -1,8 +1,9 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
-import {unsetUser} from "../actions/users";
+import {setUser, unsetUser} from "../actions/users";
 import useLocalStorage from 'react-use-localstorage';
+import axios from "axios";
 
 class Header extends React.Component {
 
@@ -13,16 +14,26 @@ class Header extends React.Component {
     logout = (event) => {
         event.preventDefault();
         localStorage.clear();
-        document.getElementById('logout-form').submit();
+        const params = new URLSearchParams();
+        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        axios.post('/logout', params).then(response => {
+            this.props.unsetUser().then(() => {
+            })
+        })
+
+        // this.props.history.push('/login')
+        window.location.reload()
+        // document.getElementById('logout-form').submit();
     }
 
     Dropdown() {
-        const user = JSON.parse(localStorage.getItem('user')) || null;
+        const {user} = this.props
         const {history} = this.props
         if (user === null)
             return (
                 <li className="nav-item">
                     <a className="nav-link" href="/login">Login</a>
+                    {/*<a className="nav-link" onClick={this.logout}>Login</a>*/}
                 </li>
             );
         switch (user.role) {
@@ -57,10 +68,6 @@ class Header extends React.Component {
                                onClick={this.logout}>
                                 Logout
                             </a>
-                            <form id="logout-form" action="/logout" method="POST"
-                                  style={{display: 'none'}}>
-                                <input name='_token' value={$('meta[name="csrf-token"]').attr('content')}/>
-                            </form>
                         </div>
                     </li>
                 )
@@ -93,10 +100,6 @@ class Header extends React.Component {
                                onClick={this.logout}>
                                 Logout
                             </a>
-                            <form id="logout-form" action="/logout" method="POST"
-                                  style={{display: 'none'}}>
-                                <input name='_token' value={$('meta[name="csrf-token"]').attr('content')}/>
-                            </form>
                         </div>
                     </li>
                 );
@@ -126,19 +129,17 @@ class Header extends React.Component {
                                onClick={this.logout}>
                                 Logout
                             </a>
-                            <form id="logout-form" action="/logout" method="POST"
-                                  style={{display: 'none'}}>
-                                <input name='_token' value={$('meta[name="csrf-token"]').attr('content')}/>
-                            </form>
                         </div>
                     </li>
                 );
             }
             default:
                 return (
-                    <li className="nav-item">
-                        <a className="nav-link" href="/login">Login</a>
-                    </li>
+                    <div>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/login">Login</a>
+                        </li>
+                    </div>
                 );
 
         }
@@ -178,6 +179,7 @@ const mapDispatchToProps = dispatch => {
     console.log('mapDispatchToProps when remove');
     return {
         unsetUser: user => unsetUser(user)(dispatch),
+        setUser: user => setUser(user)(dispatch),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header))

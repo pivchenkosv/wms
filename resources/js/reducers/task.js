@@ -5,10 +5,8 @@ import {
 
 
 const TaskReducer =  (state = {}, action) => {
-    console.log('something should happen')
     switch (action.type) {
         case SET_TASK: {
-            //const task = action.data || null;
             return {
                 task: action.data,
             };

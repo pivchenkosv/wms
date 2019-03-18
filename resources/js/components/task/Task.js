@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import './Style.css';
+import '../Style.css';
 
 class Task extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class Task extends Component {
     componentDidMount() {
         axios.get("/api/taskInfo", {
             params: {
-                taskId : this.state.taskId,
+                taskId: this.state.taskId,
             }
         }).then(response => {
             this.setState({
@@ -49,24 +49,22 @@ class Task extends Component {
                 <div className='card-body'>
                     <ul className='list-group list-group-flush'>
                         {subtasks ? subtasks.map(subtask => (
-                            <div>
-                                <div
-                                    className='list-group-item list-group-item-action justify-content-between align-items-left'
-                                >
-                                            <span id={subtask.id} className='badge badge-pill col-3' >
-                                                {subtask.from_cell}
-                                            </span>
-                                    <span id={subtask.id} className='badge badge-pill col-3' >
-                                                {subtask.to_cell}
-                                            </span>
-
-                                    <span id={subtask.id} className='badge badge-pill col-3' >
-                                                {subtask.product_id}
-                                            </span>
-                                    <span id={subtask.id} className='badge badge-pill col-3' >
-                                                {subtask.quantity}
-                                            </span>
-                                </div>
+                            <div
+                                key={subtask.id}
+                                className='list-group-item list-group-item-action justify-content-between align-items-left'
+                            >
+                                <span className='badge badge-pill col-3'>
+                                    {subtask.from_cell}
+                                </span>
+                                <span className='badge badge-pill col-3'>
+                                    {subtask.to_cell}
+                                </span>
+                                <span className='badge badge-pill col-3'>
+                                    {subtask.product_id}
+                                </span>
+                                <span className='badge badge-pill col-3'>
+                                    {subtask.quantity}
+                                </span>
                             </div>
                         )) : ''}
                     </ul>

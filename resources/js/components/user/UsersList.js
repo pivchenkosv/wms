@@ -62,16 +62,19 @@ class UsersList extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-left'>
                     <div className='col-md-8'>
-                        <table className='card'>
-                            <tr className='card-header'>
-                                <td className='row'>
+                        <div className='card'>
+                            <div className='card-header'>
+                                <div className='row'>
                                     <div className='col-sm-8'>Users Table</div>
                                     <button className='btn btn-primary btn-sm mb-3 col-sm-3'
                                             onClick={this.createNewUser}>
                                         Create new user account
                                     </button>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
+                        </div>
+                        <table className='card'>
+                            <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
                                 <td className='badge badge-pill col-1'>id</td>
                                 <td className='badge badge-pill col-2'>name</td>
@@ -79,30 +82,33 @@ class UsersList extends Component {
                                 <td className='badge badge-pill col-3'>role</td>
                                 <td className='badge badge-pill col-3'>created at</td>
                             </tr>
+                            </thead>
+                            <tbody>
                             {users.map(user => (
-                                <tr
+                                <tr key={user.id}
                                     className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                                     onClick={() => this.showUserInfo(user)}
                                 >
-                                            <td id={user.id} className='badge badge-pill col-1'>
-                                                {user.id}
-                                            </td>
-                                    <td id={user.id} className='badge badge-pill col-2'>
-                                                {user.name}
-                                            </td>
+                                    <td className='badge badge-pill col-1'>
+                                        {user.id}
+                                    </td>
+                                    <td className='badge badge-pill col-2'>
+                                        {user.name}
+                                    </td>
 
-                                    <td id={user.id} className='badge badge-primary badge-pill col-3'>
-                                                {user.email}
-                                            </td>
-                                    <td id={user.id} className='badge badge-pill col-3'>
-                                                {user.role}
-                                            </td>
-                                    <td id={user.id} className='badge badge-pill col-3'>
-                                                {user.created_at}
-                                            </td>
+                                    <td className='badge badge-primary badge-pill col-3'>
+                                        {user.email}
+                                    </td>
+                                    <td className='badge badge-pill col-3'>
+                                        {user.role}
+                                    </td>
+                                    <td className='badge badge-pill col-3'>
+                                        {user.created_at}
+                                    </td>
 
                                 </tr>
                             ))}
+                            </tbody>
                         </table>
                     </div>
                     <div id="user" className="col-md-4">

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {Redirect, withRouter} from 'react-router-dom';
-import {setUser} from "../actions/users";
+import {setUser} from "../../actions/users";
 import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
 import useLocalStorage from 'react-use-localstorage';
@@ -52,6 +52,7 @@ class Login extends Component {
             if (this.props.user) {
                 console.log('should be redirected');
                 window.location.reload()
+                // this.props.history.push('/tasks')
             }
             this.setState({error: null})
         }).catch(response => {
@@ -162,5 +163,5 @@ const mapDispatchToProps = (dispatch) => {
         setUser: (user) => setUser(user)(dispatch),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login))
 

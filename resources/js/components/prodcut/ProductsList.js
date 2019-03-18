@@ -134,16 +134,11 @@ class ProductsList extends Component {
         if (user.role !=='ROLE_WORKER' && this.state.product && this.state.product.id === product.id) {
 
             return (
-                <td
+                <tr
+                    key={product.id}
                     className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                     onClick={() => this.editProduct(product)}
                 >
-                    {/*<input id={stock.stock.id} name="location" autoFocus onFocus={() => this.setState({selectedStock: stock})}*/}
-                    {/*value={this.state.selectedStock.stock.location} style={{width: '80%'}}*/}
-                    {/*onChange={this.inputChange}/>*/}
-                    {/*<span id={product.id} className='badge badge-pill col-2'>*/}
-                    {/*{product.id}*/}
-                    {/*</span>*/}
                     {this.isValueChanged(product)}
                     <input id={product.id} name="name"
                            value={this.state.product.name}
@@ -157,11 +152,12 @@ class ProductsList extends Component {
                            max="20"
                            className="col-2" onChange={this.inputChange}/>
 
-                </td>
+                </tr>
             );
         } else {
             return (
                 <tr
+                    key={product.id}
                     className='card-body list-group-item list-group-item-action d-flex'
                     onClick={() => this.editProduct(product)}
                 >
@@ -190,9 +186,9 @@ class ProductsList extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-center'>
                     <div className='col-md-8'>
-                        <table className='card'>
-                            <tr className='card-header'>
-                                <th className='row'>
+                        <div className='card'>
+                            <div className='card-header'>
+                                <div className='row'>
                                     <div className='col-sm-6'>Products Table</div>
                                     {user.role !== 'ROLE_WORKER' ?
                                         <div className="col-sm-6">
@@ -208,30 +204,26 @@ class ProductsList extends Component {
                                             </button>
                                         </div> : ''
                                     }
-                                </th>
-                            </tr>
+                                </div>
+                            </div>
+                        </div>
+                        <table className='card'>
+                            <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-
-                                {/*className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>*/}
                                 <th className='badge-pill col-2'>id</th>
                                 <th className='badge-pill col-4'>name</th>
                                 <th className='badge-pill col-4'>description</th>
                                 <th className='badge-pill col-2'>volume</th>
                             </tr>
+                            </thead>
 
-                            {/*<tr className='card-body'>*/}
-                            {/*<ul className='list-group list-group-flush'>*/}
+                            <tbody>
                             {products.map(product => (
                                 this.selected(product)
                             ))}
-                            {/*</ul>*/}
-                            {/*</tr>*/}
+                            </tbody>
                         </table>
                     </div>
-                    {/*<div id="user" className="col-md-4">*/}
-                    {/*{(this.state.user) ?*/}
-                    {/*<User user={this.state.user} unmountForm = {this.handleFormUnmount} rerenderUsersList = {this.rerenderList}/> : ''}*/}
-                    {/*</div>*/}
                 </div>
             </div>
         );

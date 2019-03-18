@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import './Style.css';
+import '../Style.css';
 
 class Cell extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class Cell extends Component {
     componentDidMount() {
         axios.get("/api/cellInfo", {
             params: {
-                cellId : this.state.cellId,
+                cellId: this.state.cellId,
             }
         }).then(response => {
             this.setState({
@@ -45,27 +45,24 @@ class Cell extends Component {
                     </div>
                 </div>
 
-                <div className='card-body'>
-                    <ul className='list-group list-group-flush'>
-                        {cellProducts ? cellProducts.map(product => (
-                            <div>
-                                <div
-                                    className='list-group-item list-group-item-action justify-content-between align-items-left'
-                                >
-                                            <span id={product.id} className='badge badge-pill col-4' >
-                                                {product.name}
-                                            </span>
-                                    <span id={product.id} className='badge badge-pill col-4' >
-                                                {product.quantity}
-                                            </span>
+                <div>
+                    {cellProducts ? cellProducts.map(product => (
+                        <div
+                            key={product.name}
+                            className='list-group-item list-group-item-action justify-content-between align-items-left'
+                        >
+                                <span className='badge badge-pill col-4'>
+                                    {product.name}
+                                </span>
+                            <span className='badge badge-pill col-4'>
+                                    {product.quantity}
+                                </span>
 
-                                    <span id={product.id} className='badge badge-pill col-4' >
-                                                {product.volume}
-                                            </span>
-                                </div>
-                            </div>
-                        )) : ''}
-                    </ul>
+                            <span className='badge badge-pill col-4'>
+                                    {product.volume}
+                                </span>
+                        </div>
+                    )) : ''}
                 </div>
             </div>
         )

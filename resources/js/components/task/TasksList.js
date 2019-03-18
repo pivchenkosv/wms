@@ -3,7 +3,7 @@ import axios from "axios";
 import {Link, withRouter} from "react-router-dom";
 import Task from "./Task";
 import {connect} from "react-redux";
-import {setTask, unsetTask} from "../actions/task";
+import {setTask, unsetTask} from "../../actions/task";
 
 class TasksList extends Component {
     constructor(props) {
@@ -89,8 +89,8 @@ class TasksList extends Component {
             case "ROLE_ADMIN":
             case "ROLE_MANAGER":
                 return (
-                    <tr className='card-header'>
-                        <th className='row'>
+                    <div className='card-header'>
+                        <div className='row'>
                             <div className='col-sm-2'>Tasks</div>
                             <div id="customSearchBox" className="dataTables_filter col-sm-4 ">
                                 <input
@@ -111,8 +111,8 @@ class TasksList extends Component {
                                onClick={() => this.createNewTask(history)}>
                                 Create/Update task
                             </button>
-                        </th>
-                    </tr>
+                        </div>
+                    </div>
                 );
             case "ROLE_WORKER":
                 return (
@@ -133,25 +133,26 @@ class TasksList extends Component {
     taskInfo = (task) => {
         return (
             <tr
+                key={task.id}
                 className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                 onClick={() => this.showTaskInfo(task)}
             >
-                <td id={task.id} className='badge-pill col-1'>
+                <td className='badge-pill col-1'>
                     {task.id}
                 </td>
-                <td id={task.id} className='badge-pill col-3'>
+                <td className='badge-pill col-3'>
                     {task.description}
                 </td>
-                <td id={task.id} className='badge-pill col-2'>
+                <td className='badge-pill col-2'>
                     {task.at}
                 </td>
-                <td id={task.id} className='badge-pill col-2'>
+                <td className='badge-pill col-2'>
                     {task.assigned_user}
                 </td>
-                <td id={task.id} className='badge-pill col-2'>
+                <td className='badge-pill col-2'>
                     {task.status}
                 </td>
-                <td id={task.id} className='badge-pill col-2'>
+                <td className='badge-pill col-2'>
                     {task.created_at}
                 </td>
             </tr>
@@ -165,8 +166,8 @@ class TasksList extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-left'>
                     <div className='col-md-8'>
+                        <div className='card' width="100%"> {this.tableHeader(history)}</div>
                         <table id="tasks" className='card' width="100%">
-                            {this.tableHeader(history)}
                             <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
                                 <th className='col-1'>id</th>

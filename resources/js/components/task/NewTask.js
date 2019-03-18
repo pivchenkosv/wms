@@ -3,12 +3,12 @@ import DatePicker from "react-datepicker/es";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import {connect} from "react-redux";
-import {setTask, unsetTask} from "../actions/task";
+import {setTask, unsetTask} from "../../actions/task";
 import axios from "axios";
 import {withRouter} from "react-router-dom";
-import CellSelector from "./CellSelector";
+import CellSelector from "../cell/CellSelector";
 import update from 'react-addons-update';
-import ProductSelector from "./ProductSelector";
+import ProductSelector from "../prodcut/ProductSelector";
 
 class NewTask extends Component {
 
@@ -194,6 +194,10 @@ class NewTask extends Component {
     }
 
     renderInfoTable = () => {
+        const { selected } = this.state;
+        if (!selected) {
+            return null;
+        }
         switch (this.state.selected.column) {
             case "from_cell":
             case  "to_cell":
@@ -218,6 +222,7 @@ class NewTask extends Component {
         // this.setState({stock: stock})
         return (
             <tr
+                key={subtask.id}
                 className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
             >
                 <td className='badge badge-pill col-3'
@@ -284,9 +289,8 @@ class NewTask extends Component {
                                 <div className="row">
                                     <label htmlFor="description"
                                            className="col-2 col-form-label text-md-left">At: </label>
-                                    {/*<textarea id="description" className="form-control " rows="3" cols="20" style={{resize: "none", marginLeft: "15px", marginRight: "15px"}}></textarea>*/}
                                     <DatePicker
-                                        selected={this.state.task.at}
+                                        selected={new Date(this.state.task.at)}
                                         onChange={this.handleDateChange}
                                         showTimeSelect
                                         timeFormat="HH:mm"
@@ -296,27 +300,32 @@ class NewTask extends Component {
                                     />
                                 </div>
                                 <div className="container" style={{marginTop: "10px"}}>
-                                    <table className="card">
-                                        <tr className='card-header'>
-                                            <td className='row'>
+                                    <div className='card'>
+                                        <div className='card-header'>
+                                            <div className='row'>
                                                 <div className='col-sm-10'><span>Specify cells, where products should be replaced from/to</span>
                                                 </div>
                                                 <button type="button" className='btn btn-success btn-circle'
-                                                    // href = "/newTask"
                                                         onClick={this.createNewSubtask}>
                                                     +
                                                 </button>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table className="card">
+                                        <thead>
                                         <tr className="list-group-item list-group-item-action d-flex justify-content-between align-items-left">
                                             <td className='badge badge-pill col-3'>from cell</td>
                                             <td className='badge badge-pill col-3'>to cell</td>
                                             <td className='badge badge-pill col-3'>product id</td>
                                             <td className='badge badge-pill col-3'>quantity</td>
                                         </tr>
+                                        </thead>
+                                        <tbody>
                                         {subtasks ? subtasks.map(subtask => (
                                             this.selected(subtask)
                                         )) : ''}
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div className="container flex-md-row" style={{marginTop: "10px"}}>
@@ -330,7 +339,7 @@ class NewTask extends Component {
                         </div>
                     </div>
                     <div id="additional" className="col-6">
-                        {(this.state.selected) ? this.renderInfoTable() : ''}
+                        {this.renderInfoTable()}
                     </div>
                 </div>
             </div>

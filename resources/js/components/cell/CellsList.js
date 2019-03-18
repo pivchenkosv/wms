@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {Link, withRouter} from "react-router-dom";
 import Cell from "./Cell";
-import Style from "./Style.css"
-import StocksList from "./StocksList";
+import Style from "../Style.css"
+import StocksList from "../stock/StocksList";
 import {connect} from "react-redux";
 
 class CellsList extends Component {
@@ -141,49 +141,51 @@ class CellsList extends Component {
 
     stocksList = () => {
 
-            return (
-                <div className='card'>
-                    <div className='card-header'>
-                        <span className='col-sm-6'>Select Stock</span>
+        return (
+            <div className='card'>
+                <div className='card-header'>
+                    <span className='col-sm-6'>Select Stock</span>
+                </div>
+                <div className='card-header'>
+                    <div className='list-group-item d-flex justify-content-between align-items-left'>
+                        <span className='badge badge-pill' style={{width: '10%'}}>id</span>
+                        <span className='badge badge-pill' style={{width: '50%'}}>Location</span>
+                        <span className='badge badge-pill' style={{width: '20%'}}>Total cells count</span>
+                        <span className='badge badge-pill' style={{width: '20%'}}>Cells in use</span>
                     </div>
-                    <div className='card-header'>
-                        <div className='list-group-item d-flex justify-content-between align-items-left'>
-                            <span className='badge badge-pill' style={{width: '10%'}}>id</span>
-                            <span className='badge badge-pill' style={{width: '50%'}}>Location</span>
-                            <span className='badge badge-pill' style={{width: '20%'}}>Total cells count</span>
-                            <span className='badge badge-pill' style={{width: '20%'}}>Cells in use</span>
-                        </div>
-                    </div>
+                </div>
 
-                    <div className='card-body'>
-                        <ul className='list-group list-group-flush'>
-                            {this.state.stocks.map(stockInfo => (
-                                <div
-                                    className='list-group-item list-group-item-action d-flex justify-content-between align-items-left' onClick={() => this.setStockId(stockInfo.stock.id)}>
+                <div className='card-body list-group list-group-flush'>
+
+                        {this.state.stocks.map(stockInfo => (
+                            <div
+                                key={stockInfo.stock.id}
+                                className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                                onClick={() => this.setStockId(stockInfo.stock.id)}>
                                             <span id={stockInfo.stock.id} className='badge badge-pill'
                                                   style={{width: '10%'}}>
                                                 {stockInfo.stock.id}
                                             </span>
-                                    <span id={stockInfo.stock.id} className='badge badge-pill'
-                                          style={{width: '50%'}}>
+                                <span className='badge badge-pill'
+                                      style={{width: '50%'}}>
                                         {stockInfo.stock.location}
                                     </span>
 
-                                    <span id={stockInfo.stock.id} className='badge badge-pill'
-                                          style={{width: '20%'}}>
+                                <span className='badge badge-pill'
+                                      style={{width: '20%'}}>
                                                 {stockInfo.cells.quantity}
                                             </span>
-                                    <span id={stockInfo.stock.id} className='badge badge-pill'
-                                          style={{width: '20%'}}>
+                                <span className='badge badge-pill'
+                                      style={{width: '20%'}}>
                                                 {stockInfo.cells.in_use}
                                             </span>
-                                </div>
-                            ))}
-                        </ul>
-                    </div>
+                            </div>
+                        ))}
+
                 </div>
-            );
-        }
+            </div>
+        );
+    }
 
     selected = (cell) => {
         const {user} = this.props
@@ -257,8 +259,8 @@ class CellsList extends Component {
                                     <div className='col-sm-8'>Cells</div>
                                     {user.role !== 'ROLE_WORKER' ?
                                         <button className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                        onClick={this.createNewCell}>
-                                        Create new cell
+                                                onClick={this.createNewCell}>
+                                            Create new cell
                                         </button> : ''
                                     }
                                 </div>
@@ -274,18 +276,17 @@ class CellsList extends Component {
                             <div className='card-body'>
                                 <ul className='list-group list-group-flush'>
                                     {cells.map(cell => (
-                                        <div>
-                                            <div
-                                                className='list-group-item list-group-item-action justify-content-between align-items-left'
-                                                onClick={() => this.showCellInfo(cell)}
-                                            >
+                                        <div
+                                            key={cell.id}
+                                            className='list-group-item list-group-item-action justify-content-between align-items-left'
+                                            onClick={() => this.showCellInfo(cell)}
+                                        >
                                                 <span id={cell.id} className='badge col-2'>
                                                     {cell.id}
                                                 </span>
-                                                {this.selected(cell)}
-                                                <div className="dropdown-content">
+                                            {this.selected(cell)}
+                                            <div className="dropdown-content">
 
-                                                </div>
                                             </div>
                                         </div>
                                     ))}
