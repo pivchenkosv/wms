@@ -14,7 +14,6 @@ class TasksList extends Component {
             store: null,
             message: null,
             table: null
-            //viewForm: false,
         }
     }
 
@@ -161,7 +160,7 @@ class TasksList extends Component {
 
     render() {
         const {tasks} = this.state
-        const {location, history, user} = this.props;
+        const {history, user} = this.props;
         return (
             <div className='container py-4'>
                 <div className='row justify-content-left'>
@@ -197,13 +196,7 @@ class TasksList extends Component {
     }
 }
 
-// $(document).ready(function() {
-//     var table = $('#tasks').DataTable();
-// } );
-
 const mapStateToProps = (store, ownProps) => {
-    console.log('mapStateToProps when remove');
-    console.log(store)
     return {
         task: store.task.task,
         store: store,
@@ -212,7 +205,6 @@ const mapStateToProps = (store, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log('mapDispatchToProps when add');
     return {
         setTask: (task) => setTask(task)(dispatch),
         unsetTask: () => unsetTask()(dispatch),

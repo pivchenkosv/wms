@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {Link, withRouter} from "react-router-dom";
 import Cell from "./Cell";
-import Style from "../Style.css"
-import StocksList from "../stock/StocksList";
 import {connect} from "react-redux";
 
 class CellsList extends Component {
@@ -13,7 +11,7 @@ class CellsList extends Component {
             cells: [],
             cell: null,
             showStocks: false,
-            stocks: null
+            stocks: []
             //viewForm: false,
         }
     }
@@ -142,60 +140,60 @@ class CellsList extends Component {
     stocksList = () => {
 
         return (
-            <div className='card'>
-                <div className='card-header'>
-                    <span className='col-sm-6'>Select Stock</span>
-                </div>
-                <div className='card-header'>
-                    <div className='list-group-item d-flex justify-content-between align-items-left'>
-                        <span className='badge badge-pill' style={{width: '10%'}}>id</span>
-                        <span className='badge badge-pill' style={{width: '50%'}}>Location</span>
-                        <span className='badge badge-pill' style={{width: '20%'}}>Total cells count</span>
-                        <span className='badge badge-pill' style={{width: '20%'}}>Cells in use</span>
+            <div>
+                <div className='card card-header'>
+                    <div className='row'>
+                        <span className='col-sm-6'>Select Stock</span>
                     </div>
                 </div>
+                <table className='card'>
+                    <thead>
+                    <tr className='card-header list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
+                        <th className='badge badge-pill col-2' style={{width: '10%'}}>id</th>
+                        <th className='badge badge-pill col-6' style={{width: '50%'}}>Location</th>
+                        <th className='badge badge-pill col-2' style={{width: '20%'}}>Total cells count</th>
+                        <th className='badge badge-pill col-2' style={{width: '20%'}}>Cells in use</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.stocks.map(stockInfo => (
+                        <tr
+                            key={stockInfo.stock.id}
+                            className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                            onClick={() => this.setStockId(stockInfo.stock.id)}>
+                            <td id={stockInfo.stock.id} className='badge-pill'
+                                style={{width: '10%'}}>
+                                {stockInfo.stock.id}
+                            </td>
+                            <td className='badge-pill'
+                                style={{width: '50%'}}>
+                                {stockInfo.stock.location}
+                            </td>
 
-                <div className='card-body list-group list-group-flush'>
+                            <td className='badge-pill'
+                                style={{width: '20%'}}>
+                                {stockInfo.cells.quantity}
+                            </td>
+                            <td className='badge-pill'
+                                style={{width: '20%'}}>
+                                {stockInfo.cells.in_use}
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
 
-                        {this.state.stocks.map(stockInfo => (
-                            <div
-                                key={stockInfo.stock.id}
-                                className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                                onClick={() => this.setStockId(stockInfo.stock.id)}>
-                                            <span id={stockInfo.stock.id} className='badge badge-pill'
-                                                  style={{width: '10%'}}>
-                                                {stockInfo.stock.id}
-                                            </span>
-                                <span className='badge badge-pill'
-                                      style={{width: '50%'}}>
-                                        {stockInfo.stock.location}
-                                    </span>
 
-                                <span className='badge badge-pill'
-                                      style={{width: '20%'}}>
-                                                {stockInfo.cells.quantity}
-                                            </span>
-                                <span className='badge badge-pill'
-                                      style={{width: '20%'}}>
-                                                {stockInfo.cells.in_use}
-                                            </span>
-                            </div>
-                        ))}
-
-                </div>
             </div>
         );
     }
 
     selected = (cell) => {
         const {user} = this.props
-        // this.setState({stock: stock})
+
         if (user.role !== 'ROLE_WORKER' && this.state.cell && this.state.cell.id === cell.id) {
             return (
                 <div className="col-8 badge">
-                    {/*<input id={stock.stock.id} name="location" autoFocus onFocus={() => this.setState({selectedStock: stock})}*/}
-                    {/*value={this.state.selectedStock.stock.location} style={{width: '80%'}}*/}
-                    {/*onChange={this.inputChange}/>*/}
                     <button className="btn badge col-4"
                             style={{width: '20%', align: "right", fontSize: "11px"}}
                             onClick={this.toggleStocks}
@@ -203,7 +201,7 @@ class CellsList extends Component {
                         {this.state.cell.stock_id}
                     </button>
                     <div className="col-3 badge">
-                        <input id={cell.id} name="volume" type="number" value={this.state.cell.volume} min="1" max="20"
+                        <input name="volume" type="number" value={this.state.cell.volume} min="1" max="20"
                                style={{width: "100%", fontSize: "11px"}} onChange={this.inputChange}/>
                     </div>
                     <div className="col-5 badge">
@@ -213,7 +211,6 @@ class CellsList extends Component {
                             <option value="BUSY">Busy</option>
                             <option value="RESERVED">Reserved</option>
                         </select>
-                        {/*<input id={cell.id} name="status" type="number" value={this.state.cell.status} min="1" max="20" style={{width: "100%", height: "30px"}}/>*/}
                     </div>
                     <button className="btn btn-primary badge col-4"
                             style={{width: '20%', align: "right", fontSize: "11px"}}
@@ -231,13 +228,13 @@ class CellsList extends Component {
         } else {
             return (
                 <div className="col-8 badge">
-                    <span id={cell.id} className='badge col-3' style={{fontSize: "11px"}}>
+                    <span className='badge col-3' style={{fontSize: "11px"}}>
                         {cell.stock_id}
                     </span>
-                    <span id={cell.id} className='badge col-4' style={{fontSize: "11px"}}>
+                    <span className='badge col-4' style={{fontSize: "11px"}}>
                         {cell.volume}
                     </span>
-                    <span id={cell.id} className='badge badge-primary col-5' style={{fontSize: "11px"}}>
+                    <span className='badge badge-primary col-5' style={{fontSize: "11px"}}>
                         {cell.status}
                     </span>
                 </div>
@@ -281,7 +278,7 @@ class CellsList extends Component {
                                             className='list-group-item list-group-item-action justify-content-between align-items-left'
                                             onClick={() => this.showCellInfo(cell)}
                                         >
-                                                <span id={cell.id} className='badge col-2'>
+                                                <span className='badge col-2'>
                                                     {cell.id}
                                                 </span>
                                             {this.selected(cell)}
@@ -309,9 +306,7 @@ class CellsList extends Component {
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
-    console.log('mapStateToProps when remove');
-    console.log(store)
+const mapStateToProps = (store) => {
     return {
         user: store.user
     }

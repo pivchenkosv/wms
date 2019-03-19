@@ -30,7 +30,7 @@ class App extends Component {
         dispatch(setUser(user))
     }
 
-    router(history) {
+    router() {
         let {user} = store.getState();
         console.log('user ', user);
         let userRole = user ? user.role : 'unauthorized';
@@ -52,7 +52,7 @@ class App extends Component {
                 <Router history={history}>
                     <div>
                         <Header history={history}/>
-                        {this.router(history)}
+                        {this.router()}
                     </div>
                 </Router>
             </Provider>

@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Redirect, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {setUser} from "../../actions/users";
 import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
-import useLocalStorage from 'react-use-localstorage';
 
 class Login extends Component {
     constructor() {
@@ -52,7 +51,6 @@ class Login extends Component {
             if (this.props.user) {
                 console.log('should be redirected');
                 window.location.reload()
-                // this.props.history.push('/tasks')
             }
             this.setState({error: null})
         }).catch(response => {
@@ -149,7 +147,7 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
+const mapStateToProps = (store) => {
     console.log('mapStateToProps when remove');
     console.log(store)
     return {

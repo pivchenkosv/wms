@@ -7,14 +7,14 @@ class ProductSelector extends Component {
         super(props);
         console.log(props);
         this.state = {
-            products: null,
+            products: [],
         }
     }
 
     componentDidMount() {
         axios.get("/api/products").then(response => {
             this.setState({
-                products: response.data
+                products: response.data.data
             })
             console.log(response);
         })
@@ -30,37 +30,40 @@ class ProductSelector extends Component {
         const {products} = this.state
         return (
             <div>
-                <table className='card'>
-                    <div className='card-header'>
-                        <div className='row'>
-                            <div className='col-sm-8'>Cells</div>
-                        </div>
+                <div className='card card-header'>
+                    <div className='row'>
+                        <div className='col-sm-8'>Products</div>
                     </div>
+                </div>
+                <table className='card'>
+                    <thead>
                     <tr className='card-header list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
                         <th className='badge-pill col-3'>id</th>
                         <th className='badge-pill col-3'>name</th>
                         <th className='badge-pill col-3'>description</th>
                         <th className='badge-pill col-3'>volume</th>
                     </tr>
-
-                    {products ? products.map(product => (
-                        <tr className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                    </thead>
+                    <tbody>
+                    {products.map(product => (
+                        <tr key={product.id}
+                            className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                             onClick={() => this.returnSelected(product)}>
-                            <th id={product.id} className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
                                 {product.id}
                             </th>
-                            <th id={product.id} className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
                                 {product.name}
                             </th>
-                            <th id={product.id} className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
                                 {product.description}
                             </th>
-                            <th id={product.id} className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
                                 {product.volume}
                             </th>
                         </tr>
-                    )) : ''}
-
+                    ))}
+                    </tbody>
                 </table>
             </div>
         )

@@ -1,9 +1,9 @@
 import React from 'react'
-import {Link, withRouter} from 'react-router-dom'
+import {Link, Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {setUser, unsetUser} from "../actions/users";
-import useLocalStorage from 'react-use-localstorage';
 import axios from "axios";
+import {ROUTES} from "./routes";
 
 class Header extends React.Component {
 
@@ -33,116 +33,32 @@ class Header extends React.Component {
             return (
                 <li className="nav-item">
                     <a className="nav-link" href="/login">Login</a>
-                    {/*<a className="nav-link" onClick={this.logout}>Login</a>*/}
+                    {/*<a className="nav-link" onClick={this.logout}>Logout</a>*/}
                 </li>
             );
-        switch (user.role) {
-            case 'ROLE_ADMIN': {
-                return (
-                    <li className="nav-item dropdown">
-                        <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {user.name} <span className="caret"></span>
-                        </a>
+        let userRole = user ? user.role : 'unauthorized';
+        const routesData = ROUTES[userRole]
+        return (
+            <li className="nav-item dropdown">
+                <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {user.name} <span className="caret"></span>
+                </a>
 
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/admin/users')}>
-                                Users
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('reports')}>
-                                Reports
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
-                                Tasks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
-                                Cells
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
-                                Stocks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
-                                Products
-                            </a>
-                            <a className="dropdown-item"
-                               onClick={this.logout}>
-                                Logout
-                            </a>
-                        </div>
-                    </li>
-                )
-            }
-            case 'ROLE_MANAGER': {
-                return (
-                    <li className="nav-item dropdown">
-                        <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {user.name} <span className="caret"></span>
-                        </a>
-
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#" onClick={() => history.push('reports')}>
-                                Reports
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
-                                Tasks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
-                                Cells
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
-                                Stocks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
-                                Products
-                            </a>
-                            <a className="dropdown-item"
-                               onClick={this.logout}>
-                                Logout
-                            </a>
-                        </div>
-                    </li>
-                );
-            }
-            case 'ROLE_WORKER': {
-                return (
-                    <li className="nav-item dropdown">
-                        <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {user.name} <span className="caret"></span>
-                        </a>
-
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
-                                Tasks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
-                                Cells
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
-                                Stocks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
-                                Products
-                            </a>
-                            <a className="dropdown-item"
-                               onClick={this.logout}>
-                                Logout
-                            </a>
-                        </div>
-                    </li>
-                );
-            }
-            default:
-                return (
-                    <div>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/login">Login</a>
-                        </li>
-                    </div>
-                );
-
-        }
+                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    {routesData ? routesData.routes.map((item, index) => (
+                        item.name ?
+                        <a key={index} className="dropdown-item" href="#" onClick={() => history.push(item.path)}>
+                            {item.name}
+                        </a> : null
+                        )) : ''}
+                    <a className="dropdown-item" href="#"
+                       onClick={this.logout}>
+                        Logout
+                    </a>
+                </div>
+            </li>
+        )
     }
 
     render() {

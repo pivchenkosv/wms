@@ -1,7 +1,5 @@
 import axios from 'axios'
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
-import ReactDOM from "react-dom";
 import User from "./User";
 import {connect} from "react-redux";
 
@@ -11,7 +9,6 @@ class UsersList extends Component {
         this.state = {
             users: [],
             user: null,
-            //viewForm: false,
         }
         this.showUserInfo = this.showUserInfo.bind(this);
         this.handleFormUnmount = this.handleFormUnmount.bind(this);
@@ -27,9 +24,6 @@ class UsersList extends Component {
     }
 
     showUserInfo(user) {
-        // this.setState({viewForm: false},function () {
-        //     this.setState({viewForm: true});
-        // });
         this.setState({user: null}, function () {
             this.setState({user: user});
         });
@@ -122,9 +116,7 @@ class UsersList extends Component {
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
-    console.log('mapStateToProps when remove');
-    console.log(store)
+const mapStateToProps = (store) => {
     return {
         user: store.user
     }

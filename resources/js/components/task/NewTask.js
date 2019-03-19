@@ -7,7 +7,6 @@ import {setTask, unsetTask} from "../../actions/task";
 import axios from "axios";
 import {withRouter} from "react-router-dom";
 import CellSelector from "../cell/CellSelector";
-import update from 'react-addons-update';
 import ProductSelector from "../prodcut/ProductSelector";
 
 class NewTask extends Component {
@@ -83,8 +82,6 @@ class NewTask extends Component {
                     created_by: null,
                 },
                 subtasks: [...this.state.subtasks, newSubtask],
-            }, () => {
-                console.log('new state:', this.state);
             })
         }
     }
@@ -114,9 +111,7 @@ class NewTask extends Component {
 
         const button = document.getElementById('createButton');
         button.disabled = true;
-        // button.innerHTML =  '<button class="btn btn-primary" type="button" disabled style={{marginRight: "5px"}}>'
-        button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...'
-        // button.innerHTML += '</button>';
+        button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp Loading...'
 
         const params = new URLSearchParams();
         if (this.state.task.id !== 0) {
@@ -138,13 +133,9 @@ class NewTask extends Component {
             })
 
             setTimeout(() => this.cancel(), 2500);
-            // this.delay(this.cancel(), 2500);
-
-            console.log('response', response);
 
         }).catch(response => {
-            console.log(response);
-            console.log(response.data);
+            console.log('rejected', response);
         })
     }
 
@@ -219,7 +210,7 @@ class NewTask extends Component {
     };
 
     selected = (subtask) => {
-        // this.setState({stock: stock})
+
         return (
             <tr
                 key={subtask.id}
@@ -348,15 +339,12 @@ class NewTask extends Component {
 }
 
 const mapStateToProps = (store, ownProps) => {
-    console.log('mapStateToProps when remove new task');
-    console.log(store)
     return {
         task: store.task.task
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log('mapDispatchToProps when add new task');
     return {
         setTask: (task) => setTask(task)(dispatch),
         unsetTask: () => unsetTask()(dispatch),

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 class ProductsList extends Component {
@@ -15,7 +15,7 @@ class ProductsList extends Component {
     componentDidMount() {
         axios.get('/api/products').then(response => {
             this.setState({
-                products: response.data
+                products: response.data.data
             })
         })
     }
@@ -32,7 +32,7 @@ class ProductsList extends Component {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
-                products: response.data,
+                products: response.data.data,
                 product: null
             })
         }).catch(response => {
@@ -54,15 +54,12 @@ class ProductsList extends Component {
         if (this.state.product.id !== 0) {
             params.append('id', this.state.product.id);
             axios.post('/api/delProduct', params).then(response => {
-                console.log('fulfilled', response);
-                console.log(response.data);
                 this.setState({
-                    products: response.data,
+                    products: response.data.data,
                     product: null
                 })
             }).catch(response => {
                 console.log('rejected', response);
-                console.log(response.data);
             })
 
         } else {
@@ -72,8 +69,6 @@ class ProductsList extends Component {
                 return {
                     products,
                 };
-            }, function () {
-                console.log(this.state);
             });
         }
     }
@@ -130,7 +125,7 @@ class ProductsList extends Component {
 
     selected = (product) => {
         const {user} = this.props
-        // this.setState({stock: stock})
+
         if (user.role !=='ROLE_WORKER' && this.state.product && this.state.product.id === product.id) {
 
             return (
@@ -140,15 +135,15 @@ class ProductsList extends Component {
                     onClick={() => this.editProduct(product)}
                 >
                     {this.isValueChanged(product)}
-                    <input id={product.id} name="name"
+                    <input name="name"
                            value={this.state.product.name}
                            className="col-4"
                            onChange={this.inputChange}/>
-                    <input id={product.id} name="description"
+                    <input name="description"
                            className="col-4"
                            value={this.state.product.description}
                            onChange={this.inputChange}/>
-                    <input id={product.id} name="volume" type="number" value={this.state.product.volume} min="1"
+                    <input name="volume" type="number" value={this.state.product.volume} min="1"
                            max="20"
                            className="col-2" onChange={this.inputChange}/>
 
@@ -161,16 +156,16 @@ class ProductsList extends Component {
                     className='card-body list-group-item list-group-item-action d-flex'
                     onClick={() => this.editProduct(product)}
                 >
-                    <td id={product.id} className='badge-pill col-2'>
+                    <td className='badge-pill col-2'>
                         {product.id}
                     </td>
-                    <td id={product.id} className='badge-pill col-4'>
+                    <td className='badge-pill col-4'>
                         {product.name}
                     </td>
-                    <td id={product.id} className='badge-pill col-4'>
+                    <td className='badge-pill col-4'>
                         {product.description}
                     </td>
-                    <td id={product.id} className='badge-pill col-2'>
+                    <td className='badge-pill col-2'>
                         {product.volume}
                     </td>
                 </tr>
@@ -230,9 +225,7 @@ class ProductsList extends Component {
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
-    console.log('mapStateToProps when remove');
-    console.log(store)
+const mapStateToProps = (store) => {
     return {
         user: store.user
     }

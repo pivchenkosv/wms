@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
 
 class ReportsList extends Component {
     constructor() {
@@ -8,14 +7,13 @@ class ReportsList extends Component {
         this.state = {
             reports: [],
             table: null,
-            //viewForm: false,
         }
     }
 
     componentDidMount() {
         axios.get('/api/reports').then(response => {
             this.setState({
-                reports: response.data
+                reports: response.data.data
             }, () => {
                 let table = $('#reports').DataTable({
                     "paging": true,
@@ -72,19 +70,19 @@ class ReportsList extends Component {
                                 <tr className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                                     onClick={() => this.showUserInfo(report)}
                                 >
-                                    <td id={report.id} className='badge badge-pill col-1'>
+                                    <td className='badge badge-pill col-1'>
                                         {report.id}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-2'>
+                                    <td className='badge badge-pill col-2'>
                                         {report.created_by}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-3'>
+                                    <td className='badge badge-pill col-3'>
                                         {report.created_at}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-4'>
+                                    <td className='badge badge-pill col-4'>
                                         {report.action}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-2'>
+                                    <td className='badge badge-pill col-2'>
                                         {report.task_id}
                                     </td>
                                 </tr>
@@ -92,10 +90,6 @@ class ReportsList extends Component {
                             </tbody>
                         </table>
                     </div>
-                    {/*<div id="user" className="col-md-4">*/}
-                    {/*{(this.state.user) ?*/}
-                    {/*<User user={this.state.user} unmountForm = {this.handleFormUnmount} rerenderUsersList = {this.rerenderList}/> : ''}*/}
-                    {/*</div>*/}
                 </div>
             </div>
         );

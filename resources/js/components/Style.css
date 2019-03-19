@@ -54,7 +54,7 @@
         color: #a94442;
         background-color: #f2dede;
         border-color: #ebccd1;
-        display: none;
+        display: inline-block;
     }
 
     .warning {

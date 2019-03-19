@@ -4,27 +4,26 @@ import '../Style.css';
 
 class User extends Component {
     user;
+
     constructor(props) {
         super(props);
         console.log(props);
         this.user = this.props.user;
         this.state = {
             userInfo: this.props.user,
+            errors: null,
         }
-        //this.handleUserChange = this.handleUserChange.bind(this);
-        //this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleRoleChange = this.handleRoleChange.bind(this);
     }
 
     isUserChanged = () => {
         return (this.state.userInfo.name === this.props.user.name &&
-                this.state.userInfo.email === this.props.user.email &&
-                this.state.userInfo.role === this.props.user.role);
+            this.state.userInfo.email === this.props.user.email &&
+            this.state.userInfo.role === this.props.user.role);
     };
 
     selected = (event) => {
-        if (this.state.userInfo.role === event.target.value)
-        {
+        if (this.state.userInfo.role === event.target.value) {
             event.target.selected = 'selected';
             return 'selected';
         }
@@ -34,10 +33,11 @@ class User extends Component {
         const {name, value} = event.target;
         console.log(this.props);
         this.setState({
-        userInfo: {
-            ...this.state.userInfo,
-            [name]: value,
-        }})
+            userInfo: {
+                ...this.state.userInfo,
+                [name]: value,
+            }
+        })
     };
 
     handleRoleChange(evt) {
@@ -57,22 +57,26 @@ class User extends Component {
         evt.preventDefault();
         const params = new URLSearchParams();
         if (this.state.userInfo.id !== null)
-            params.append('id' ,this.state.userInfo.id);
+            params.append('id', this.state.userInfo.id);
         params.append('name', this.state.userInfo.name);
         params.append('email', this.state.userInfo.email);
         params.append('role', this.state.userInfo.role);
         params.append('password', '12345678');
         params.append('password_confirmation', '12345678');
-        params.append('_token',$('meta[name="csrf-token"]').attr('content'));
+        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
         axios.post('/api/register', params, {
-            headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         }).then(response => {
             console.log('fulfilled', response);
             console.log(response.data);
             this.props.rerenderUsersList(response.data);
         }).catch(response => {
             console.log('rejected', response);
-            console.log(response.data);
+            // this.setState({errors: response.response.data.errors})
+            this.setState({errors: response.response.data}, function () {
+                console.log('state ', this.state)
+                $("div.failure").fadeIn(300).delay(1500).fadeOut(400);
+            })
         })
     };
 
@@ -93,7 +97,10 @@ class User extends Component {
             <div className="card">
                 <div className="card-header">
                     <div className="row">
-                        <div className='col-sm-10'>{userInfo.id ?  `UserID: ${userInfo.id}` : '' }</div>
+                        <div className='col-sm-10'>
+                            {userInfo.id ? `UserID: ${userInfo.id}` : 'New User'}
+                        </div>
+
                         <div className='col-sm-2'>
                             <button onClick={unmountForm}>&#x274C;</button>
                         </div>
@@ -115,8 +122,7 @@ class User extends Component {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="email" className="col-form-label text-md-left">E-mail
-                                Address</label>
+                            <label htmlFor="email" className="col-form-label text-md-left">E-mail Address</label>
 
 
                             <input id="email" type="email"
@@ -124,11 +130,15 @@ class User extends Component {
                                    name="email" value={userInfo.email} onChange={this.inputChange}
                                    required/>
 
+                            <div className='col-sm-12 center alert-box failure mt-2'>
+                                {this.state.errors ? this.state.errors.errors.email[0] : ''}
+                            </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="roles" className="col-form-label text-md-left">Role</label>
 
-                            <select id="roles" value={userInfo.role} className="col-md-12" onChange={this.handleRoleChange}>
+                            <select id="roles" value={userInfo.role} className="col-md-12"
+                                    onChange={this.handleRoleChange}>
                                 <option id="WORKER" value="ROLE_WORKER">Warehouse worker</option>
                                 <option id="MANAGER" value="ROLE_MANAGER">Warehouse manager</option>
                                 <option id="ADMIN" value="ROLE_ADMIN">Admin</option>
@@ -136,13 +146,15 @@ class User extends Component {
                         </div>
                         <div className="form-group row mb-4">
                             <div className="col-md-8 ">
-                                <button id="save" type="submit" className="btn btn-primary" disabled={this.isUserChanged()}>
+                                <button id="save" type="submit" className="btn btn-primary"
+                                        disabled={this.isUserChanged()}>
                                     Save
                                 </button>
                                 {userInfo.id ?
-                                    <button id="delete" type="submit" className="btn btn-primary btn-danger mar" onClick={this.deleteUser}>
+                                    <button id="delete" type="submit" className="btn btn-primary btn-danger mar"
+                                            onClick={this.deleteUser}>
                                         Delete User
-                                    </button> : '' }
+                                    </button> : ''}
                             </div>
                         </div>
                     </form>

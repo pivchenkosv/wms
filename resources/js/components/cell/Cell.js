@@ -8,7 +8,7 @@ class Cell extends Component {
         console.log(props);
         this.state = {
             cellId: this.props.cellId,
-            cellProducts: null,
+            cellProducts: [],
         }
     }
 
@@ -33,7 +33,7 @@ class Cell extends Component {
                     <div className="row">
                         <div className='col-sm-10'>{`Cell id: ` + this.state.cellId}</div>
                         <div className='col-sm-2'>
-                            <button onClick={this.props.unmountForm}>&#x274C;</button>
+                            <button onClick={unmountForm}>&#x274C;</button>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ class Cell extends Component {
                 </div>
 
                 <div>
-                    {cellProducts ? cellProducts.map(product => (
+                    {cellProducts.map(product => (
                         <div
                             key={product.name}
                             className='list-group-item list-group-item-action justify-content-between align-items-left'
@@ -62,7 +62,7 @@ class Cell extends Component {
                                     {product.volume}
                                 </span>
                         </div>
-                    )) : ''}
+                    ))}
                 </div>
             </div>
         )
