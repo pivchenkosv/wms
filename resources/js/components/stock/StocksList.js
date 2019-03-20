@@ -21,7 +21,7 @@ class StocksList extends Component {
     }
 
     isValueChanged = (stock) => {
-        return (stock.location === this.state.selectedStock.location);
+        return (stock.stock.location === this.state.selectedStock.stock.location);
     };
 
     createNewStock = () => {
@@ -100,22 +100,32 @@ class StocksList extends Component {
         selectedStock.stock.location = value;
         this.setState({
             selectedStock: selectedStock
-        })
+            })
+    };
+
+    editStock(stock) {
+        if (!this.state.selectedStock || stock.stock.id !== this.state.selectedStock.stock.id)
+            this.setState({selectedStock: null}, function () {
+                this.setState({selectedStock: stock}, function () {
+                    console.log('state.stock ', this.state.selectedStock)
+                    console.log('stock ', stock);
+                });
+
+            });
     };
 
     selected = (stock) => {
-        const {user} = this.props
+        const {user} = this.props.user
+        console.log(stock)
 
         if (user.role !== 'ROLE_WORKER' && this.state.selectedStock && this.state.selectedStock.stock.id === stock.stock.id) {
 
             return (
-                <td className="row col-6">
-                    <input name="location" autoFocus
-                           onFocus={() => this.setState({selectedStock: stock})}
-                           value={this.state.selectedStock.stock.location} style={{width: '80%'}}
+                <td className="col-6 badge-pill">
+                    <input name="location" className='col-10' autoFocus
+                           value={this.state.selectedStock.stock.location}
                            onChange={this.inputChange}/>
-                    <button className="btn btn-primary" style={{width: '20%'}}
-                            disabled={this.isValueChanged(stock.stock)}
+                    <button className="btn btn-primary col-2 p-1 align-baseline"
                             onClick={this.handleSubmit}>
                         Save
                     </button>
@@ -123,8 +133,7 @@ class StocksList extends Component {
             );
         } else {
             return (
-                <td className='badge-pill'
-                    onClick={() => this.setState({selectedStock: stock})} style={{width: '50%'}}>
+                <td className='col-6 badge-pill'>
                     {stock.stock.location}
                 </td>
             );
@@ -134,7 +143,7 @@ class StocksList extends Component {
     render() {
 
         const {stocks} = this.state
-        const {user} = this.props
+        const {user} = this.props.user
 
         return (
             <div className='container py-4'>
@@ -150,8 +159,8 @@ class StocksList extends Component {
                                                     onClick={this.createNewStock}>
                                                 Add new stock info
                                             </button>
-                                            <button className='btn btn-danger btn-sm mb-3 col-sm-5'
-                                                    onClick={this.deleteStock} style={{margin: '0 0 0 5px'}}
+                                            <button className='btn btn-danger btn-sm mb-3 col-sm-5 ml-1'
+                                                    onClick={this.deleteStock}
                                                     disabled={!this.state.selectedStock}>
                                                 RemoveStock
                                             </button>
@@ -174,20 +183,18 @@ class StocksList extends Component {
                             {stocks.map(stockInfo => (
                                 <tr
                                     key={stockInfo.stock.id}
-                                    className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
-                                    <td className='badge-pill col-2'
-                                        style={{width: '10%'}}>
+                                    className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                                    onClick={() => {this.editStock(stockInfo)}}>
+                                    <td className='badge-pill col-2'>
                                         {stockInfo.stock.id}
                                     </td>
 
                                     {this.selected(stockInfo)}
 
-                                    <td className='badge-pill col-2'
-                                        style={{width: '20%'}}>
+                                    <td className='badge-pill col-2'>
                                         {stockInfo.cells.quantity}
                                     </td>
-                                    <td className='badge-pill col-2'
-                                        style={{width: '20%'}}>
+                                    <td className='badge-pill col-2'>
                                         {stockInfo.cells.in_use}
                                     </td>
                                 </tr>

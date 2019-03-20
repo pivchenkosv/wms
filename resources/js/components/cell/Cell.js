@@ -28,42 +28,46 @@ class Cell extends Component {
         const {cellProducts} = this.state;
         const {unmountForm} = this.props;
         return (
-            <div className="card">
-                <div className="card-header">
+            <div>
+                <div className="card card-header">
                     <div className="row">
                         <div className='col-sm-10'>{`Cell id: ` + this.state.cellId}</div>
                         <div className='col-sm-2'>
-                            <button onClick={unmountForm}>&#x274C;</button>
+                            <button className='btn btn-danger py-0 px-1 float-right text-size'
+                                    onClick={unmountForm}>{'\u2718'}</button>
                         </div>
                     </div>
                 </div>
-                <div className='card-header'>
-                    <div className='list-group-item d-flex justify-content-between align-items-left'>
-                        <span className='badge badge-pill col-4'>Product Name</span>
-                        <span className='badge badge-pill col-4'>Quantity</span>
-                        <span className='badge badge-pill col-4'>Volume</span>
-                    </div>
-                </div>
+                <table className='card'>
+                    <thead>
+                    <tr className='card-header list-group-item d-flex justify-content-between align-items-left'>
+                        <th className='badge badge-pill col-4'>Product Name</th>
+                        <th className='badge badge-pill col-4'>Quantity</th>
+                        <th className='badge badge-pill col-4'>Volume</th>
+                    </tr>
+                    </thead>
 
-                <div>
-                    {cellProducts.map(product => (
-                        <div
-                            key={product.name}
-                            className='list-group-item list-group-item-action justify-content-between align-items-left'
-                        >
-                                <span className='badge badge-pill col-4'>
+
+                    <tbody>
+                        {cellProducts.map(product => (
+                            <tr
+                                key={product.name}
+                                className='list-group-item list-group-item-action justify-content-between align-items-left'
+                            >
+                                <td className='badge badge-pill col-4'>
                                     {product.name}
-                                </span>
-                            <span className='badge badge-pill col-4'>
+                                </td>
+                                <td className='badge badge-pill col-4'>
                                     {product.quantity}
-                                </span>
+                                </td>
 
-                            <span className='badge badge-pill col-4'>
+                                <td className='badge badge-pill col-4'>
                                     {product.volume}
-                                </span>
-                        </div>
-                    ))}
-                </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         )
     }

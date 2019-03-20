@@ -49,16 +49,16 @@ class ProductSelector extends Component {
                         <tr key={product.id}
                             className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                             onClick={() => this.returnSelected(product)}>
-                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3 text-size'>
                                 {product.id}
                             </th>
-                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3 text-size'>
                                 {product.name}
                             </th>
-                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3 text-size'>
                                 {product.description}
                             </th>
-                            <th className='badge-pill col-3' style={{fontSize: "11px"}}>
+                            <th className='badge-pill col-3 text-size'>
                                 {product.volume}
                             </th>
                         </tr>

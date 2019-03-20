@@ -66,7 +66,7 @@ class CellController extends Controller
             ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
             ->select('cells.*', DB::raw('cells.volume - SUM(cell_product.quantity * products.volume) as available_volume'))
             ->groupBy('cells.id')->get();
-//        return $cells->toJson();
+
         return response()->json(['success' => true, 'data' => $cells]);
     }
 }

@@ -88,16 +88,14 @@ class ProductsList extends Component {
             product.description == this.state.product.description &&
             product.volume == this.state.product.volume) {
             return (
-                <button className="btn btn-primary badge col-1"
-                        style={{marginRight: "5%", fontSize: "11px"}}
+                <button className="btn btn-primary badge col-1 mr-2 text-size"
                         onClick={() => this.setState({product: null})}>
                     {'\u2718'}
                 </button>
             );
         } else {
             return (
-                <button className="btn btn-primary badge col-1"
-                        style={{marginRight: "5%", fontSize: "11px"}}
+                <button className="btn btn-primary badge col-1 mr-2 text-size"
                         onClick={this.handleSubmit}>
                     {'\u2714'}
                 </button>
@@ -124,7 +122,7 @@ class ProductsList extends Component {
     }
 
     selected = (product) => {
-        const {user} = this.props
+        const {user} = this.props.user
 
         if (user.role !=='ROLE_WORKER' && this.state.product && this.state.product.id === product.id) {
 
@@ -176,7 +174,7 @@ class ProductsList extends Component {
 
     render() {
         const {products} = this.state
-        const {user} = this.props
+        const {user} = this.props.user
         return (
             <div className='container py-4'>
                 <div className='row justify-content-center'>
@@ -187,10 +185,10 @@ class ProductsList extends Component {
                                     <div className='col-sm-6'>Products Table</div>
                                     {user.role !== 'ROLE_WORKER' ?
                                         <div className="col-sm-6">
-                                            <button className='btn btn-primary btn-sm mb-3 col-sm-4'
+                                            <button className='btn btn-primary btn-sm mb-3 col-sm-4 mr-1'
                                                     onClick={this.handleDelete}
                                                     disabled={!this.state.product}
-                                                    style={{marginRight: "1%"}}>
+                                            >
                                                 Delete selected
                                             </button>
                                             <button className='btn btn-primary btn-sm mb-3 col-sm-6'

@@ -82,7 +82,7 @@ class TasksList extends Component {
 
     tableHeader = (history) => {
 
-        const {user} = this.props
+        const {user} = this.props.user
 
         switch (user.role) {
             case "ROLE_ADMIN":
@@ -101,8 +101,8 @@ class TasksList extends Component {
                                     onKeyUp={this.search}
                                 />
                             </div>
-                            <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2'
-                                    disabled={!this.state.task} style={{marginRight: "5px"}}
+                            <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2 mr-1'
+                                    disabled={!this.state.task}
                                     onClick={this.handleDelete}>
                                 Delete
                             </button>
@@ -118,8 +118,8 @@ class TasksList extends Component {
                     <tr className='card-header'>
                         <th className='row'>
                             <div className='col-sm-6'>Tasks</div>
-                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5'
-                                    disabled={!this.state.task} style={{marginRight: "5px"}}
+                            <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5 mr-1'
+                                    disabled={!this.state.task}
                                     onClick={this.handleComplete}>
                                 Submit task completed
                             </button>
@@ -165,7 +165,7 @@ class TasksList extends Component {
             <div className='container py-4'>
                 <div className='row justify-content-left'>
                     <div className='col-md-8'>
-                        <div className='card' width="100%"> {this.tableHeader(history)}</div>
+                        <div className='card'> {this.tableHeader(history)}</div>
                         <table id="tasks" className='card' width="100%">
                             <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>

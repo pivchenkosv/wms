@@ -20,14 +20,11 @@ class Header extends React.Component {
             this.props.unsetUser().then(() => {
             })
         })
-
-        // this.props.history.push('/login')
         window.location.reload()
-        // document.getElementById('logout-form').submit();
     }
 
     Dropdown() {
-        const {user} = this.props
+        const {user} = this.props.user
         const {history} = this.props
         if (user === null)
             return (

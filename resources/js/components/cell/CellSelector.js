@@ -47,19 +47,19 @@ class CellSelector extends Component {
                     {cells.map(cell => (
                         <tr className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                             onClick={() => this.returnSelected(cell)}>
-                                    <th className='badge col-1' style={{fontSize: "11px"}}>
+                                    <th className='badge col-1 text-size'>
                                         {cell.id}
                                     </th>
-                            <th className='badge col-1' style={{fontSize: "11px"}}>
+                            <th className='badge col-1 text-size'>
                                         {cell.stock_id}
                                     </th>
-                            <th className='badge col-3' style={{fontSize: "11px"}}>
+                            <th className='badge col-3 text-size'>
                                 {cell.available_volume ? cell.available_volume : cell.volume}
                             </th>
-                            <th className='badge col-3' style={{fontSize: "11px"}}>
+                            <th className='badge col-3 text-size'>
                                         {cell.volume}
                                     </th>
-                            <th className='badge badge-primary col-4' style={{fontSize: "11px"}}>
+                            <th className='badge badge-primary col-4 text-size'>
                                         {cell.status}
                                     </th>
                         </tr>

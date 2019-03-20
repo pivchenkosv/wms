@@ -147,8 +147,6 @@ class NewTask extends Component {
                     subtask: subtask,
                     column: column
                 }
-            }, () => {
-                console.log(this.state)
             })
         })
     }
@@ -229,9 +227,9 @@ class NewTask extends Component {
                     {subtask.product_id}
                 </td>
                 {(this.state.selected && this.state.selected.column === "quantity" && this.state.selected.subtask.id === subtask.id) ?
-                    <input id={subtask.id} className="col-3" name="quantity" type="number" value={subtask.quantity}
+                    <input id={subtask.id} className="col-3 text-size" name="quantity" type="number" value={subtask.quantity}
                            min="1" max="20"
-                           style={{fontSize: "11px"}} onChange={this.inputChange}/> :
+                           onChange={this.inputChange}/> :
                     <td onClick={() => this.selectCell(subtask, "quantity")}
                         className='badge badge-pill col-3'>
                         {subtask.quantity}
@@ -264,17 +262,15 @@ class NewTask extends Component {
                         <div className="card-body">
                             <form id="newTask" onSubmit={this.handleSubmit}>
                                 <div className="row">
-                                    <label htmlFor="user" className="col-form-label text-md-left"
-                                           style={{marginLeft: "15px", marginRight: "15px"}}>For user: </label>
+                                    <label htmlFor="user" className="col-form-label text-md-left mx-3">For user: </label>
                                     <input id="user" type="text" className="col-md-2 left"
                                            name="assigned_user" value={this.state.task.assigned_user}
                                            onChange={this.handleChange}/>
                                 </div>
                                 <div className="row">
                                     <label htmlFor="description" className="col-12 text-md-left">Description: </label>
-                                    <textarea id="description" className="form-control " rows="3" cols="20"
+                                    <textarea id="description" className="form-control non-resizable" rows="3" cols="20"
                                               name="description" value={this.state.task.description}
-                                              style={{resize: "none", margin: "0 15px 15px 15px"}}
                                               onChange={this.handleChange}/>
                                 </div>
                                 <div className="row">
@@ -290,7 +286,7 @@ class NewTask extends Component {
                                         timeCaption="time"
                                     />
                                 </div>
-                                <div className="container" style={{marginTop: "10px"}}>
+                                <div className="container mt-3">
                                     <div className='card'>
                                         <div className='card-header'>
                                             <div className='row'>
@@ -319,8 +315,8 @@ class NewTask extends Component {
                                         </tbody>
                                     </table>
                                 </div>
-                                <div className="container flex-md-row" style={{marginTop: "10px"}}>
-                                    <button id="createButton" className="btn btn-primary" style={{marginRight: "5px"}}>
+                                <div className="container flex-md-row mt-2">
+                                    <button id="createButton" className="btn btn-primary mr-1">
                                     Create Task
                                     </button>
                                     <button type="button" className="btn btn-danger" onClick={this.cancel}>Cancel

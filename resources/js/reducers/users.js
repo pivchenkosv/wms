@@ -7,9 +7,8 @@ import {
 const UserReducer =  (state = {}, action) => {
     switch (action.type) {
         case SET_USER: {
-            const user = action.data || null;
             return {
-                user: user
+                user: action.data
             };
         }
         case UNSET_USER: {
