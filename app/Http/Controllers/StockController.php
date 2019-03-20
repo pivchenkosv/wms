@@ -36,8 +36,9 @@ class StockController extends Controller
         if ($stock->save()) {
             $stocks = Stock::all();
             if ($stocks) {
-                foreach ($stocks as &$stock) {
+                foreach ($stocks as $key => $stock) {
                     $stock=$this->handle($stock);
+                    $stocks[$key] = $stock;
                 }
             }
 

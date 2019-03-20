@@ -15,31 +15,37 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return $products->toJson();
+        return response()->json(['success' => true, 'data' => $products]);
     }
 
     public function save(Request $request)
     {
-        if (!$request->has('id')){
+        if (!$request->has('id')) {
             $product = new Product;
         } else {
             $id = $request->input('id');
-            $product  = Product::find($id);
+            $product = Product::find($id);
         }
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->volume = $request->input('volume');
-        $product ->save();
-        $products = Product::all();
+        if ($product->save())
+        {
+            $products = Product::all();
+            return response()->json(['success' => true, 'data' => $products]);
+        }
+        return response()->json(['success' => false]);
 
-        return $products->toJson();
     }
 
     public function delete(Request $request)
     {
-        Product::destroy($request->input('id'));
-        $products = Product::all();
+        if (Product::destroy($request->input('id')))
+        {
+            $products = Product::all();
+            return response()->json(['success' => true, 'data' => $products]);
+        }
 
-        return $products->toJson();
+        return response()->json(['success' => false]);
     }
 }

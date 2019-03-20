@@ -1,83 +1,43 @@
 import React, {Component} from 'react'
 
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Redirect, Route, Router, Switch} from 'react-router-dom'
+import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import Header from './Header'
-import UsersList from "./UsersList";
-import Login from "./Login";
-import Home from "./Home";
-import CellsList from "./CellsList";
-import Register from "./Register";
-import ProductsList from "./ProductsList";
-import StocksList from "./StocksList";
-import ReportsList from "./ReportsList";
-import TasksList from "./TasksList";
-import {createStore, combineReducers} from 'redux';
-import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import {connect, Provider} from 'react-redux';
 import reducers from '../reducers';
 import createHistory from 'history/createBrowserHistory';
-import NewTask from "./NewTask";
+
+import {ROUTES} from "./routes";
+
+
+import {setUser, unsetUser} from "../actions/users";
+import {SET_USER} from "../types/users";
 
 const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : f => f;
-
-const store = createStore(reducers, {user: JSON.parse(localStorage.getItem('user'))}, enhancers);
-
+const store = createStore(reducers, enhancers);
 const history = createHistory();
 
 class App extends Component {
 
     constructor(props) {
         super(props)
+        let user = JSON.parse(localStorage.getItem('user'));
+        store.dispatch({type: SET_USER, data: user})
     }
 
-    router(history) {
-        console.log(store.user);
-        let user = JSON.parse(localStorage.getItem('user'));
-        switch (user ? user.role : 'unauthorized') {
-            case 'ROLE_ADMIN':
-                return (
-                    <Switch>
-                        <Route exact path='/admin/users' component={UsersList}/>
-                        <Route exact path='/home' component={Home}/>
-                        <Route exact path='/register' component={Register}/>
-                        <Route exact path='/cells' component={CellsList}/>
-                        <Route exact path='/products' component={ProductsList}/>
-                        <Route exact path='/stocks' component={StocksList}/>
-                        <Route exact path='/tasks' component={TasksList}/>
-                        <Route exact path='/reports' component={ReportsList}/>
-                        <Route exact path='/newTask' component={NewTask}/>
-                        <Redirect to="/tasks"/>
-                    </Switch>
-                );
-            case 'ROLE_MANAGER':
-                return (
-                    <Switch>
-                        <Route exact path='/home' component={Home}/>
-                        <Route exact path='/cells' component={CellsList}/>
-                        <Route exact path='/products' component={ProductsList}/>
-                        <Route exact path='/stocks' component={StocksList}/>
-                        <Route exact path='/tasks' component={TasksList}/>
-                        <Route exact path='/reports' component={ReportsList}/>
-                        <Route exact path='/newTask' component={NewTask}/>
-                        <Redirect to="/tasks"/>
-                    </Switch>
-                );
-            case 'ROLE_WORKER':
-                return (
-                    <Switch>
-                        <Route exact path='/home' component={Home}/>
-                        <Route exact path='/cells' component={CellsList}/>
-                        <Route exact path='/products' component={ProductsList}/>
-                        <Route exact path='/stocks' component={StocksList}/>
-                        <Route exact path='/tasks' component={TasksList}/>
-                        <Redirect to="/tasks"/>
-                    </Switch>
-                );
-            case 'unauthorized':
-                return (<Switch><Route exact path='/login' component={Login}/><Route exact path='/'
-                                                                                     component={Login}/><Redirect
-                    to="/login"/></Switch>);
-        }
+    router() {
+
+        let {user} = store.getState();
+        let userRole = user.user ? user.user.role : 'unauthorized';
+        const routesData = ROUTES[userRole]
+
+        return (
+            <Switch>
+                {routesData.routes.map((item, index) => (<Route exact key={index} {...item} />))}
+                <Redirect to={routesData.redirect}/>
+            </Switch>
+        );
     }
 
     render() {
@@ -87,7 +47,7 @@ class App extends Component {
                 <Router history={history}>
                     <div>
                         <Header history={history}/>
-                        {this.router(history)}
+                        {this.router()}
                     </div>
                 </Router>
             </Provider>
@@ -98,4 +58,18 @@ class App extends Component {
 window.onload = function () {
     ReactDOM.render(<App/>, document.getElementById('content'));
 }
+
+const mapStateToProps = (store, ownProps) => {
+    return {
+        user: store.user
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        unsetUser: user => unsetUser(user)(dispatch),
+        setUser: user => setUser(user)(dispatch),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 

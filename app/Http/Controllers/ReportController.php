@@ -15,6 +15,6 @@ class ReportController extends Controller
     public function index()
     {
         $reports = Report::all();
-        return $reports->toJson();
+        return response()->json(['success' => true, 'data' => $reports]);
     }
 }

@@ -12,19 +12,6 @@
         margin-left: 5px;
     }
 
-    /*div.show-button:hover input {*/
-        /*display: block;*/
-    /*}*/
-
-    /*div.show-button input {*/
-        /*position:absolute;*/
-        /*display:none;*/
-    /*}*/
-
-    /*div.show-button input.update {*/
-        /*top:0;*/
-        /*left:0;*/
-    /*}*/
     .btn-circle {
         width: 40px;
         height: 40px;
@@ -54,7 +41,7 @@
         color: #a94442;
         background-color: #f2dede;
         border-color: #ebccd1;
-        display: none;
+        display: inline-block;
     }
 
     .warning {
@@ -91,4 +78,12 @@
         background-position: center right;
     }
 
+    .text-size {
+        font-size: 11px;
+    }
+
+    .non-resizable {
+        resize: none;
+        margin: 0 15px 15px 15px;
+    }
 }

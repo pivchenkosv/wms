@@ -1,8 +1,9 @@
 import React from 'react'
-import {Link, withRouter} from 'react-router-dom'
+import {Link, Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
-import {unsetUser} from "../actions/users";
-import useLocalStorage from 'react-use-localstorage';
+import {setUser, unsetUser} from "../actions/users";
+import axios from "axios";
+import {ROUTES} from "./routes";
 
 class Header extends React.Component {
 
@@ -13,135 +14,48 @@ class Header extends React.Component {
     logout = (event) => {
         event.preventDefault();
         localStorage.clear();
-        document.getElementById('logout-form').submit();
+        const params = new URLSearchParams();
+        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        axios.post('/logout', params).then(response => {
+            this.props.unsetUser().then(() => {
+            })
+        })
+        window.location.reload()
     }
 
     Dropdown() {
-        const user = JSON.parse(localStorage.getItem('user')) || null;
+        const {user} = this.props.user
         const {history} = this.props
         if (user === null)
             return (
                 <li className="nav-item">
                     <a className="nav-link" href="/login">Login</a>
+                    {/*<a className="nav-link" onClick={this.logout}>Logout</a>*/}
                 </li>
             );
-        switch (user.role) {
-            case 'ROLE_ADMIN': {
-                return (
-                    <li className="nav-item dropdown">
-                        <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {user.name} <span className="caret"></span>
-                        </a>
+        let userRole = user ? user.role : 'unauthorized';
+        const routesData = ROUTES[userRole]
+        return (
+            <li className="nav-item dropdown">
+                <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {user.name} <span className="caret"></span>
+                </a>
 
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/admin/users')}>
-                                Users
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('reports')}>
-                                Reports
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
-                                Tasks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
-                                Cells
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
-                                Stocks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
-                                Products
-                            </a>
-                            <a className="dropdown-item"
-                               onClick={this.logout}>
-                                Logout
-                            </a>
-                            <form id="logout-form" action="/logout" method="POST"
-                                  style={{display: 'none'}}>
-                                <input name='_token' value={$('meta[name="csrf-token"]').attr('content')}/>
-                            </form>
-                        </div>
-                    </li>
-                )
-            }
-            case 'ROLE_MANAGER': {
-                return (
-                    <li className="nav-item dropdown">
-                        <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {user.name} <span className="caret"></span>
-                        </a>
-
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#" onClick={() => history.push('reports')}>
-                                Reports
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
-                                Tasks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
-                                Cells
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
-                                Stocks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
-                                Products
-                            </a>
-                            <a className="dropdown-item"
-                               onClick={this.logout}>
-                                Logout
-                            </a>
-                            <form id="logout-form" action="/logout" method="POST"
-                                  style={{display: 'none'}}>
-                                <input name='_token' value={$('meta[name="csrf-token"]').attr('content')}/>
-                            </form>
-                        </div>
-                    </li>
-                );
-            }
-            case 'ROLE_WORKER': {
-                return (
-                    <li className="nav-item dropdown">
-                        <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {user.name} <span className="caret"></span>
-                        </a>
-
-                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/tasks')}>
-                                Tasks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/cells')}>
-                                Cells
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/stocks')}>
-                                Stocks
-                            </a>
-                            <a className="dropdown-item" href="#" onClick={() => history.push('/products')}>
-                                Products
-                            </a>
-                            <a className="dropdown-item"
-                               onClick={this.logout}>
-                                Logout
-                            </a>
-                            <form id="logout-form" action="/logout" method="POST"
-                                  style={{display: 'none'}}>
-                                <input name='_token' value={$('meta[name="csrf-token"]').attr('content')}/>
-                            </form>
-                        </div>
-                    </li>
-                );
-            }
-            default:
-                return (
-                    <li className="nav-item">
-                        <a className="nav-link" href="/login">Login</a>
-                    </li>
-                );
-
-        }
+                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    {routesData ? routesData.routes.map((item, index) => (
+                        item.name ?
+                        <a key={index} className="dropdown-item" href="#" onClick={() => history.push(item.path)}>
+                            {item.name}
+                        </a> : null
+                        )) : ''}
+                    <a className="dropdown-item" href="#"
+                       onClick={this.logout}>
+                        Logout
+                    </a>
+                </div>
+            </li>
+        )
     }
 
     render() {
@@ -178,6 +92,7 @@ const mapDispatchToProps = dispatch => {
     console.log('mapDispatchToProps when remove');
     return {
         unsetUser: user => unsetUser(user)(dispatch),
+        setUser: user => setUser(user)(dispatch),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header))

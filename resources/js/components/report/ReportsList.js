@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
 
 class ReportsList extends Component {
     constructor() {
@@ -8,27 +7,20 @@ class ReportsList extends Component {
         this.state = {
             reports: [],
             table: null,
-            //viewForm: false,
         }
     }
 
     componentDidMount() {
         axios.get('/api/reports').then(response => {
             this.setState({
-                reports: response.data
+                reports: response.data.data
             }, () => {
                 let table = $('#reports').DataTable({
-                    // language: {
-                    //     paginate: {
-                    //         next: '<span class="glyphicon glyphicon-menu-right">Next</span>',
-                    //         previous: '<span class="glyphicon glyphicon-menu-left">Prev</span>'
-                    //     }
-                    // },
-                    // "bPaginate": true,
                     "paging": true,
                     "searching": true,
-                    "dom": "lrtip"
+                    "dom": "rtip"
                 });
+                $("#reports").css("width","100%")
                 this.setState({table: table})
             })
             console.log(response);
@@ -47,13 +39,13 @@ class ReportsList extends Component {
         const {reports} = this.state
         return (
             <div className='container py-4'>
-                <div className='row justify-content-left'>
+                <div className='row justify-content-center'>
                     <div className='col-md-8'>
-                        <table id='reports' className='card'>
-                            <tr className='card-header list-group-item list-group-item-action d-flex'>
-                                <th className="row">
-                                    <div className='col-sm-4'>Reports</div>
-                                    <div id="customSearchBox" className="dataTables_filter col-sm-8">
+                        <div className='card'>
+                            <div className='card-header'>
+                                <div className="row">
+                                    <div className='col-sm-8'>Reports</div>
+                                    <div id="customSearchBox" className="dataTables_filter col-sm-4">
                                         <input
                                             id="search"
                                             type="search"
@@ -63,8 +55,10 @@ class ReportsList extends Component {
                                             onKeyUp={this.search}
                                         />
                                     </div>
-                                </th>
-                            </tr>
+                                </div>
+                            </div>
+                        </div>
+                        <table id='reports' className='card'>
                             <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
                                 <td className='badge badge-pill col-1'>id</td>
@@ -76,22 +70,22 @@ class ReportsList extends Component {
                             </thead>
                             <tbody>
                             {reports.map(report => (
-                                <tr className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                                    onClick={() => this.showUserInfo(report)}
+                                <tr key={report.id}
+                                    className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                                 >
-                                    <td id={report.id} className='badge badge-pill col-1'>
+                                    <td className='badge badge-pill col-1'>
                                         {report.id}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-2'>
+                                    <td className='badge badge-pill col-2'>
                                         {report.created_by}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-3'>
+                                    <td className='badge badge-pill col-3'>
                                         {report.created_at}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-4'>
+                                    <td className='badge badge-pill col-4'>
                                         {report.action}
                                     </td>
-                                    <td id={report.id} className='badge badge-pill col-2'>
+                                    <td className='badge badge-pill col-2'>
                                         {report.task_id}
                                     </td>
                                 </tr>
@@ -99,10 +93,6 @@ class ReportsList extends Component {
                             </tbody>
                         </table>
                     </div>
-                    {/*<div id="user" className="col-md-4">*/}
-                    {/*{(this.state.user) ?*/}
-                    {/*<User user={this.state.user} unmountForm = {this.handleFormUnmount} rerenderUsersList = {this.rerenderList}/> : ''}*/}
-                    {/*</div>*/}
                 </div>
             </div>
         );

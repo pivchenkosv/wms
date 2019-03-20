@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 class ProductsList extends Component {
@@ -15,7 +15,7 @@ class ProductsList extends Component {
     componentDidMount() {
         axios.get('/api/products').then(response => {
             this.setState({
-                products: response.data
+                products: response.data.data
             })
         })
     }
@@ -32,7 +32,7 @@ class ProductsList extends Component {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
-                products: response.data,
+                products: response.data.data,
                 product: null
             })
         }).catch(response => {
@@ -54,15 +54,12 @@ class ProductsList extends Component {
         if (this.state.product.id !== 0) {
             params.append('id', this.state.product.id);
             axios.post('/api/delProduct', params).then(response => {
-                console.log('fulfilled', response);
-                console.log(response.data);
                 this.setState({
-                    products: response.data,
+                    products: response.data.data,
                     product: null
                 })
             }).catch(response => {
                 console.log('rejected', response);
-                console.log(response.data);
             })
 
         } else {
@@ -72,8 +69,6 @@ class ProductsList extends Component {
                 return {
                     products,
                 };
-            }, function () {
-                console.log(this.state);
             });
         }
     }
@@ -93,16 +88,14 @@ class ProductsList extends Component {
             product.description == this.state.product.description &&
             product.volume == this.state.product.volume) {
             return (
-                <button className="btn btn-primary badge col-1"
-                        style={{marginRight: "5%", fontSize: "11px"}}
+                <button className="btn btn-primary badge col-1 mr-2 text-size"
                         onClick={() => this.setState({product: null})}>
                     {'\u2718'}
                 </button>
             );
         } else {
             return (
-                <button className="btn btn-primary badge col-1"
-                        style={{marginRight: "5%", fontSize: "11px"}}
+                <button className="btn btn-primary badge col-1 mr-2 text-size"
                         onClick={this.handleSubmit}>
                     {'\u2714'}
                 </button>
@@ -129,52 +122,48 @@ class ProductsList extends Component {
     }
 
     selected = (product) => {
-        const {user} = this.props
-        // this.setState({stock: stock})
+        const {user} = this.props.user
+
         if (user.role !=='ROLE_WORKER' && this.state.product && this.state.product.id === product.id) {
 
             return (
-                <td
+                <tr
+                    key={product.id}
                     className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
                     onClick={() => this.editProduct(product)}
                 >
-                    {/*<input id={stock.stock.id} name="location" autoFocus onFocus={() => this.setState({selectedStock: stock})}*/}
-                    {/*value={this.state.selectedStock.stock.location} style={{width: '80%'}}*/}
-                    {/*onChange={this.inputChange}/>*/}
-                    {/*<span id={product.id} className='badge badge-pill col-2'>*/}
-                    {/*{product.id}*/}
-                    {/*</span>*/}
                     {this.isValueChanged(product)}
-                    <input id={product.id} name="name"
+                    <input name="name"
                            value={this.state.product.name}
                            className="col-4"
                            onChange={this.inputChange}/>
-                    <input id={product.id} name="description"
+                    <input name="description"
                            className="col-4"
                            value={this.state.product.description}
                            onChange={this.inputChange}/>
-                    <input id={product.id} name="volume" type="number" value={this.state.product.volume} min="1"
+                    <input name="volume" type="number" value={this.state.product.volume} min="1"
                            max="20"
                            className="col-2" onChange={this.inputChange}/>
 
-                </td>
+                </tr>
             );
         } else {
             return (
                 <tr
+                    key={product.id}
                     className='card-body list-group-item list-group-item-action d-flex'
                     onClick={() => this.editProduct(product)}
                 >
-                    <td id={product.id} className='badge-pill col-2'>
+                    <td className='badge-pill col-2'>
                         {product.id}
                     </td>
-                    <td id={product.id} className='badge-pill col-4'>
+                    <td className='badge-pill col-4'>
                         {product.name}
                     </td>
-                    <td id={product.id} className='badge-pill col-4'>
+                    <td className='badge-pill col-4'>
                         {product.description}
                     </td>
-                    <td id={product.id} className='badge-pill col-2'>
+                    <td className='badge-pill col-2'>
                         {product.volume}
                     </td>
                 </tr>
@@ -185,21 +174,21 @@ class ProductsList extends Component {
 
     render() {
         const {products} = this.state
-        const {user} = this.props
+        const {user} = this.props.user
         return (
             <div className='container py-4'>
                 <div className='row justify-content-center'>
                     <div className='col-md-8'>
-                        <table className='card'>
-                            <tr className='card-header'>
-                                <th className='row'>
+                        <div className='card'>
+                            <div className='card-header'>
+                                <div className='row'>
                                     <div className='col-sm-6'>Products Table</div>
                                     {user.role !== 'ROLE_WORKER' ?
                                         <div className="col-sm-6">
-                                            <button className='btn btn-primary btn-sm mb-3 col-sm-4'
+                                            <button className='btn btn-primary btn-sm mb-3 col-sm-4 mr-1'
                                                     onClick={this.handleDelete}
                                                     disabled={!this.state.product}
-                                                    style={{marginRight: "1%"}}>
+                                            >
                                                 Delete selected
                                             </button>
                                             <button className='btn btn-primary btn-sm mb-3 col-sm-6'
@@ -208,39 +197,33 @@ class ProductsList extends Component {
                                             </button>
                                         </div> : ''
                                     }
-                                </th>
-                            </tr>
+                                </div>
+                            </div>
+                        </div>
+                        <table className='card'>
+                            <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-
-                                {/*className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'>*/}
                                 <th className='badge-pill col-2'>id</th>
                                 <th className='badge-pill col-4'>name</th>
                                 <th className='badge-pill col-4'>description</th>
                                 <th className='badge-pill col-2'>volume</th>
                             </tr>
+                            </thead>
 
-                            {/*<tr className='card-body'>*/}
-                            {/*<ul className='list-group list-group-flush'>*/}
+                            <tbody>
                             {products.map(product => (
                                 this.selected(product)
                             ))}
-                            {/*</ul>*/}
-                            {/*</tr>*/}
+                            </tbody>
                         </table>
                     </div>
-                    {/*<div id="user" className="col-md-4">*/}
-                    {/*{(this.state.user) ?*/}
-                    {/*<User user={this.state.user} unmountForm = {this.handleFormUnmount} rerenderUsersList = {this.rerenderList}/> : ''}*/}
-                    {/*</div>*/}
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
-    console.log('mapStateToProps when remove');
-    console.log(store)
+const mapStateToProps = (store) => {
     return {
         user: store.user
     }

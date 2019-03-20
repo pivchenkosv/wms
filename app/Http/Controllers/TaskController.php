@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Cell;
 use App\Mail\TaskCreated;
+use App\Mail\TaskUpdated;
 use App\Report;
 use App\Subtask;
 use App\Task;
@@ -34,21 +36,20 @@ class TaskController extends Controller
 
     public function save(Request $request)
     {
-        $action = '';
-        if (!$request->has('id')){
+        if (!$request->has('id')) {
             $task = new Task;
             $action = 'TASK_CREATED';
         } else {
             $id = $request->input('id');
-            $task  = Task::find($id);
+            $task = Task::find($id);
             $action = 'TASK_UPDATED';
         }
         $task->assigned_user = $request->input('assigned_user');
         $task->description = $request->input('description');
         $task->at = $request->input('at');
         $task->created_by = Auth::user()->id;
-        $task ->save();
-        //$subtasks = Subtask::where('task_id', $task->id);
+        $task->save();
+
         $subtasks = json_decode($request->input('subtasks'));
         foreach ($subtasks as $st) {
             if ($st->id > 0) {
@@ -65,7 +66,7 @@ class TaskController extends Controller
             $subtask->save();
         }
 
-        $this->notifyWorker($task);
+        $this->notifyWorker($task, $action);
         $this->makeReport($task, $action);
 
         return response()->json(['success' => true, 'data' => $subtasks]);
@@ -74,8 +75,7 @@ class TaskController extends Controller
     public function delete(Request $request)
     {
         $id = $request->input('id');
-//        Subtask::where('task_id', $id)->delete();
-//        Task::destroy($id);
+
         $task = Task::find($id);
         $task->status = 'REMOVED';
         $task->save();
@@ -86,12 +86,18 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
-    public function notifyWorker($task)
+    public function notifyWorker($task, $action)
     {
         $user = User::find($task->assigned_user);
 
-        Mail::to($user->email)->send(new TaskCreated($task, $user->name));
-        return new TaskCreated($task, $user->name);
+        switch ($action) {
+            case 'TASK_CREATED':
+                Mail::to($user->email)->send(new TaskCreated($task, $user->name));
+                break;
+            case 'TASK_UPDATED':
+                Mail::to($user->email)->send(new TaskUpdated($task, $user->name));
+                break;
+        }
     }
 
     private function makeReport($task, $action)
@@ -116,43 +122,54 @@ class TaskController extends Controller
 
         if ($subtasks) {
             foreach ($subtasks as $subtask) {
-                //decrease product quantity in cell_product table
-                $productQuantity = DB::table('cell_product')
-                    ->where('cell_id', $subtask->from_cell)
-                    ->where('product_id', $subtask->product_id)
-                    ->pluck('quantity')
-                    ->get(0);
-                DB::table('cell_product')
-                    ->where('cell_id', $subtask->from_cell)
-                    ->where('product_id', $subtask->product_id)
-                    ->update(['quantity' => $productQuantity - $subtask->quantity]);
-
-                if ($productQuantity === $subtask->quantity) {
-                    DB::table('cell_product')
-                        ->where('cell_id', $subtask->from_cell)
-                        ->where('product_id', $subtask->product_id)
-                        ->delete();
-                }
-
-                //increase product quantity in cell_product table
-                $productQuantity = DB::table('cell_product')
-                    ->where('cell_id', $subtask->to_cell)
-                    ->where('product_id', $subtask->product_id)
-                    ->pluck('quantity')
-                    ->get(0);
-                DB::table('cell_product')
-                    ->when($productQuantity, function ($query, $productQuantity) use ($subtask) {
-                        return $query
-                            ->where('cell_id', $subtask->to_cell)
-                            ->where('product_id', $subtask->product_id)
-                            ->update(['product_id' => $subtask->product_id, 'cell_id' => $subtask->to_cell, 'quantity' => $productQuantity + $subtask->quantity]);
-                    }, function ($query) use ($subtask) {
-                        return $query->insert(['product_id' => $subtask->product_id, 'cell_id' => $subtask->to_cell, 'quantity' => $subtask->quantity]);
-                    });
+                $this->handleSubtask($subtask);
             }
         }
 
         $tasks = Task::where('status', '!=', 'REMOVED')->get();
         return response()->json($tasks);
+    }
+
+    private function handleSubtask($subtask)
+    {
+        $cell = Cell::find($subtask->from_cell);
+        if ($cell->status !== 'RESERVED') {
+            //decrease product quantity in cell_product table
+            $productQuantity = DB::table('cell_product')
+                ->where('cell_id', $subtask->from_cell)
+                ->where('product_id', $subtask->product_id)
+                ->pluck('quantity')
+                ->get(0);
+            DB::table('cell_product')
+                ->where('cell_id', $subtask->from_cell)
+                ->where('product_id', $subtask->product_id)
+                ->update(['quantity' => $productQuantity - $subtask->quantity]);
+
+            if ($productQuantity === $subtask->quantity) {
+                DB::table('cell_product')
+                    ->where('cell_id', $subtask->from_cell)
+                    ->where('product_id', $subtask->product_id)
+                    ->delete();
+            }
+        }
+
+        $cell = Cell::find($subtask->to_cell);
+        if ($cell->status !== 'RESERVED') {
+            //increase product quantity in cell_product table
+            $productQuantity = DB::table('cell_product')
+                ->where('cell_id', $subtask->to_cell)
+                ->where('product_id', $subtask->product_id)
+                ->pluck('quantity')
+                ->get(0);
+            DB::table('cell_product')
+                ->when($productQuantity, function ($query, $productQuantity) use ($subtask) {
+                    return $query
+                        ->where('cell_id', $subtask->to_cell)
+                        ->where('product_id', $subtask->product_id)
+                        ->update(['product_id' => $subtask->product_id, 'cell_id' => $subtask->to_cell, 'quantity' => $productQuantity + $subtask->quantity]);
+                }, function ($query) use ($subtask) {
+                    return $query->insert(['product_id' => $subtask->product_id, 'cell_id' => $subtask->to_cell, 'quantity' => $subtask->quantity]);
+                });
+        }
     }
 }
