@@ -28,7 +28,7 @@ class StockController extends Controller
     public function save(Request $request, Stock $stock)
     {
         if ($request->has('id')) {
-            $stock = Stock::find($request->has('id'));
+            $stock = Stock::find($request->input('id'));
         }
 
         $stock->location = $request->input('location');

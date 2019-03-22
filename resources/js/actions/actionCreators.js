@@ -17,3 +17,13 @@ export function logoutWatcher(token, resolve, reject) {
 export function updateProfile(profile) {
     return { type: 'UPDATE_PROFILE', payload: profile };
 }
+export function loadUsers(users) {
+    return { type: 'LOAD_USERS', data: users };
+}
+export function loadUsersWatcher(resolve, reject) {
+    return {
+        type: 'USERS_WATCHER',
+        resolve: resolve,
+        reject: reject,
+    }
+}

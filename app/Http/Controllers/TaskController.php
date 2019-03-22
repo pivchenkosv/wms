@@ -50,14 +50,18 @@ class TaskController extends Controller
         $task->created_by = Auth::user()->id;
         $task->save();
 
+//        Subtask::where('task_id', $task->id)->delete();
         $subtasks = json_decode($request->input('subtasks'));
+
+        $this->deleteSubtasks($subtasks, $task->id);
+
         foreach ($subtasks as $st) {
+            $subtask = null;
             if ($st->id > 0) {
                 $subtask = Subtask::find($st->id);
             } else {
                 $subtask = new Subtask;
                 $subtask->task_id = $task->id;
-
             }
             $subtask->from_cell = $st->from_cell;
             $subtask->to_cell = $st->to_cell;
@@ -84,6 +88,25 @@ class TaskController extends Controller
 
         $tasks = Task::where('status', '!=', 'REMOVED')->get();
         return response()->json($tasks);
+    }
+
+    public function deleteSubtasks($subtasks, $id) {
+        $subtasksDB = Subtask::where('task_id', $id)->get();
+        foreach ($subtasksDB as $subtaskDB) {
+            if (!$this->isInArray($subtaskDB, $subtasks))
+            {
+                Subtask::destroy($subtaskDB->id);
+            }
+        }
+    }
+
+    private function isInArray($subtaskDB, $subtasks) {
+        foreach ($subtasks as $subtask) {
+            if ($subtask->id === $subtaskDB->id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function notifyWorker($task, $action)

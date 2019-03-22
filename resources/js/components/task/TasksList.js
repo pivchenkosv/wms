@@ -119,7 +119,7 @@ class TasksList extends Component {
                         <th className='row'>
                             <div className='col-sm-6'>Tasks</div>
                             <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-5 mr-1'
-                                    disabled={!this.state.task}
+                                    disabled={!(this.state.task && this.state.task.status !== 'COMPLETED')}
                                     onClick={this.handleComplete}>
                                 Submit task completed
                             </button>
@@ -159,8 +159,9 @@ class TasksList extends Component {
     }
 
     render() {
-        const {tasks} = this.state
+        let {tasks} = this.state
         const {history, user} = this.props;
+        tasks = user.user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.user.id) : tasks
         return (
             <div className='container py-4'>
                 <div className='row justify-content-left'>
@@ -178,9 +179,7 @@ class TasksList extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.id).map(task => (
-                                this.taskInfo(task)
-                            )) : tasks.map(task => (
+                            {tasks.map(task => (
                                 this.taskInfo(task)
                             ))}
                             </tbody>

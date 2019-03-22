@@ -85,7 +85,7 @@ class User extends Component {
         const id = new URLSearchParams();
         id.append('id', this.state.userInfo.id);
         axios.post('/api/deleteUser', id).then(response => {
-            this.props.rerenderUsersList(response.data.data);
+            this.props.rerenderUsersList(response.data);
         })
         this.props.unmountForm()
     }

@@ -9491,7 +9491,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: inline-block;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n\n    table.dataTable thead .sorting::after,\n    table.dataTable thead .sorting_asc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting_desc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting {\n        background-image: url(https://datatables.net/media/images/sort_both.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_asc {\n        background-image: url(https://datatables.net/media/images/sort_asc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_desc {\n        background-image: url(https://datatables.net/media/images/sort_desc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    .text-size {\n        font-size: 11px;\n    }\n\n    .non-resizable {\n        resize: none;\n        margin: 0 15px 15px 15px;\n    }\n}\n", ""]);
+exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: inline-block;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n\n    table.dataTable thead .sorting::after,\n    table.dataTable thead .sorting_asc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting_desc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting {\n        background-image: url(https://datatables.net/media/images/sort_both.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_asc {\n        background-image: url(https://datatables.net/media/images/sort_asc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_desc {\n        background-image: url(https://datatables.net/media/images/sort_desc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    .text-size {\n        font-size: 11px;\n    }\n\n    .non-resizable {\n        resize: none;\n        margin: 0 15px 15px 15px;\n    }\n\n    .hidden {\n        visibility: hidden;\n    }\n}\n", ""]);
 
 // exports
 
@@ -83618,7 +83618,7 @@ module.exports = function(module) {
 /*!************************************************!*\
   !*** ./resources/js/actions/actionCreators.js ***!
   \************************************************/
-/*! exports provided: loginWatcher, logoutWatcher, updateProfile */
+/*! exports provided: loginWatcher, logoutWatcher, updateProfile, loadUsers, loadUsersWatcher */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -83626,6 +83626,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginWatcher", function() { return loginWatcher; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutWatcher", function() { return logoutWatcher; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateProfile", function() { return updateProfile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadUsers", function() { return loadUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadUsersWatcher", function() { return loadUsersWatcher; });
 function loginWatcher(authParams, resolve, reject) {
   return {
     type: 'LOGIN_WATCHER',
@@ -83646,6 +83648,19 @@ function updateProfile(profile) {
   return {
     type: 'UPDATE_PROFILE',
     payload: profile
+  };
+}
+function loadUsers(users) {
+  return {
+    type: 'LOAD_USERS',
+    data: users
+  };
+}
+function loadUsersWatcher(resolve, reject) {
+  return {
+    type: 'USERS_WATCHER',
+    resolve: resolve,
+    reject: reject
   };
 }
 
@@ -86258,6 +86273,7 @@ function (_Component) {
       params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
       params.append('subtasks', JSON.stringify(_this.state.subtasks));
       axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('api/editTask', params).then(function (response) {
+        // console.log(response)
         _this.setState({
           message: 'Success!'
         }, function () {
@@ -86368,7 +86384,13 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "selected", function (subtask) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         key: subtask.id,
-        className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left"
+        className: "list-group-item list-group-item-action d-flex justify-content-between align-items-left",
+        onMouseEnter: function onMouseEnter() {
+          return _this.showDeleteButton(subtask.id);
+        },
+        onMouseLeave: function onMouseLeave() {
+          return _this.hideDeleteButton(subtask.id);
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "badge badge-pill col-3",
         onClick: function onClick() {
@@ -86398,7 +86420,38 @@ function (_Component) {
           return _this.selectCell(subtask, "quantity");
         },
         className: "badge badge-pill col-3"
-      }, subtask.quantity));
+      }, subtask.quantity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        id: 'delete' + subtask.id,
+        className: "btn badge badge-pill col-2 hidden",
+        onClick: function onClick() {
+          return _this.deleteSubtask(subtask);
+        }
+      }, "\u2718"));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showDeleteButton", function (id) {
+      var elementId = 'delete' + id;
+      var cross = document.getElementById(elementId);
+      cross.style.visibility = 'visible';
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "hideDeleteButton", function (id) {
+      var elementId = 'delete' + id;
+      var cross = document.getElementById(elementId);
+      cross.style.visibility = 'hidden';
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "deleteSubtask", function (subtask) {
+      var id = subtask.id;
+
+      var subtasks = _this.state.subtasks.filter(function (subtask) {
+        return subtask.id !== id;
+      });
+
+      _this.setState({
+        subtasks: subtasks
+      });
     });
 
     _this.state = {
@@ -86868,7 +86921,7 @@ function (_Component) {
           }, "Tasks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             type: "button",
             className: "btn btn-primary btn-sm mb-3 col-sm-5 mr-1",
-            disabled: !_this.state.task,
+            disabled: !(_this.state.task && _this.state.task.status !== 'COMPLETED'),
             onClick: _this.handleComplete
           }, "Submit task completed")));
       }
@@ -86947,6 +87000,9 @@ function (_Component) {
       var _this$props = this.props,
           history = _this$props.history,
           user = _this$props.user;
+      tasks = user.user.role === 'ROLE_WORKER' ? tasks.filter(function (task) {
+        return task.assigned_user === user.user.id;
+      }) : tasks;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -86973,11 +87029,7 @@ function (_Component) {
         className: "col-2"
       }, "status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "col-2"
-      }, "created at"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, user.role === 'ROLE_WORKER' ? tasks.filter(function (task) {
-        return task.assigned_user === user.id;
-      }).map(function (task) {
-        return _this3.taskInfo(task);
-      }) : tasks.map(function (task) {
+      }, "created at"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, tasks.map(function (task) {
         return _this3.taskInfo(task);
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-4"
@@ -87365,7 +87417,7 @@ function (_Component) {
       var id = new URLSearchParams();
       id.append('id', _this.state.userInfo.id);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/deleteUser', id).then(function (response) {
-        _this.props.rerenderUsersList(response.data.data);
+        _this.props.rerenderUsersList(response.data);
       });
 
       _this.props.unmountForm();
@@ -87503,6 +87555,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./User */ "./resources/js/components/user/User.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _actions_actionCreators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/actionCreators */ "./resources/js/actions/actionCreators.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87528,6 +87582,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var UsersList =
 /*#__PURE__*/
 function (_Component) {
@@ -87542,7 +87598,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "rerenderList", function (users) {
       _this.setState({
-        users: users
+        users: users.data
       });
     });
 
@@ -87595,11 +87651,21 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/admin/users').then(function (response) {
+      new Promise(function (resolve, reject) {
+        _this2.props.loadUsersWatcher(resolve, reject);
+      }).then(function (response) {
         _this2.setState({
-          users: response.data.data
+          users: _this2.props.users.users
         });
-      });
+
+        console.log('resolved ', response);
+      }).catch(function (response) {
+        console.log('rejected ', response);
+      }); // axios.get('/api/admin/users').then(response => {
+      //     this.setState({
+      //         users: response.data.data
+      //     })
+      // })
     }
   }, {
     key: "render",
@@ -87672,11 +87738,23 @@ function (_Component) {
 
 var mapStateToProps = function mapStateToProps(store) {
   return {
-    user: store.user
+    user: store.user,
+    users: store.users
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps)(UsersList));
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  console.log('mapDispatchToProps when add'); // return {
+  //     setUser: (user) => setUser(user)(dispatch),
+  // }
+
+  return Object(redux__WEBPACK_IMPORTED_MODULE_4__["bindActionCreators"])({
+    loadUsersWatcher: _actions_actionCreators__WEBPACK_IMPORTED_MODULE_5__["loadUsersWatcher"] // add other watcher sagas to this object to map them to props
+
+  }, dispatch);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(UsersList));
 
 /***/ }),
 
@@ -87691,13 +87769,16 @@ var mapStateToProps = function mapStateToProps(store) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./task */ "./resources/js/reducers/task.js");
-/* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./users */ "./resources/js/reducers/users.js");
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user */ "./resources/js/reducers/user.js");
+/* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./users */ "./resources/js/reducers/users.js");
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   task: _task__WEBPACK_IMPORTED_MODULE_1__["default"],
-  user: _users__WEBPACK_IMPORTED_MODULE_2__["default"]
+  user: _user__WEBPACK_IMPORTED_MODULE_2__["default"],
+  users: _users__WEBPACK_IMPORTED_MODULE_3__["default"]
 }));
 
 /***/ }),
@@ -87742,10 +87823,10 @@ var TaskReducer = function TaskReducer() {
 
 /***/ }),
 
-/***/ "./resources/js/reducers/users.js":
-/*!****************************************!*\
-  !*** ./resources/js/reducers/users.js ***!
-  \****************************************/
+/***/ "./resources/js/reducers/user.js":
+/*!***************************************!*\
+  !*** ./resources/js/reducers/user.js ***!
+  \***************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -87773,7 +87854,7 @@ var UserReducer = function UserReducer() {
         };
       }
 
-    case 'UPDATE_PROFILE':
+    case _types_users__WEBPACK_IMPORTED_MODULE_0__["UPDATE_PROFILE"]:
       return {
         user: action.payload
       };
@@ -87784,6 +87865,37 @@ var UserReducer = function UserReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UserReducer);
+
+/***/ }),
+
+/***/ "./resources/js/reducers/users.js":
+/*!****************************************!*\
+  !*** ./resources/js/reducers/users.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _types_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types/users */ "./resources/js/types/users.js");
+
+
+var UsersReducer = function UsersReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _types_users__WEBPACK_IMPORTED_MODULE_0__["LOAD_USERS"]:
+      return {
+        users: action.data
+      };
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (UsersReducer);
 
 /***/ }),
 
@@ -87801,11 +87913,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-saga/effects */ "./node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
 /* harmony import */ var _sessionSaga__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sessionSaga */ "./resources/js/saga/sessionSaga.js");
+/* harmony import */ var _usersSaga__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./usersSaga */ "./resources/js/saga/usersSaga.js");
 
 
 var _marked =
 /*#__PURE__*/
 _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(rootSaga);
+
 
 
  // import watchers from other files
@@ -87816,8 +87930,7 @@ function rootSaga() {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["all"])([Object(_sessionSaga__WEBPACK_IMPORTED_MODULE_2__["loginWatcherSaga"])(), Object(_sessionSaga__WEBPACK_IMPORTED_MODULE_2__["logoutWatcherSaga"])() // add other watchers to the array
-          ]);
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["all"])([Object(_sessionSaga__WEBPACK_IMPORTED_MODULE_2__["loginWatcherSaga"])(), Object(_sessionSaga__WEBPACK_IMPORTED_MODULE_2__["logoutWatcherSaga"])(), Object(_usersSaga__WEBPACK_IMPORTED_MODULE_3__["usersWatcherSaga"])()]);
 
         case 2:
         case "end":
@@ -87920,7 +88033,7 @@ function loginEffectSaga(action) {
         case 14:
           _context.prev = 14;
           _context.t0 = _context["catch"](1);
-          console.log('effect saga rejected');
+          console.log('effect saga rejected login');
           action.reject(_context.t0);
 
         case 18:
@@ -87958,7 +88071,7 @@ function logoutEffectSaga(action) {
         case 12:
           _context2.prev = 12;
           _context2.t0 = _context2["catch"](0);
-          console.log('logoutEffect saga rejected');
+          console.log('logoutEffect saga rejected logout');
           action.reject(_context2.t0);
 
         case 16:
@@ -88009,6 +88122,106 @@ function logoutWatcherSaga() {
 
 /***/ }),
 
+/***/ "./resources/js/saga/usersSaga.js":
+/*!****************************************!*\
+  !*** ./resources/js/saga/usersSaga.js ***!
+  \****************************************/
+/*! exports provided: usersWatcherSaga */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "usersWatcherSaga", function() { return usersWatcherSaga; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_actionCreators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/actionCreators */ "./resources/js/actions/actionCreators.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-saga/effects */ "./node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
+
+
+var _marked =
+/*#__PURE__*/
+_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(usersEffectSaga),
+    _marked2 =
+/*#__PURE__*/
+_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(usersWatcherSaga);
+
+
+
+
+
+
+function usersApi(action) {
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/admin/users'); // .then(response => {
+  //     this.setState({
+  //         users: response.data.data
+  //     })
+  // })
+}
+
+function usersEffectSaga(action) {
+  var _ref, data;
+
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function usersEffectSaga$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          console.log('usersEffectSaga');
+          _context.prev = 1;
+          _context.next = 4;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(usersApi, action);
+
+        case 4:
+          _ref = _context.sent;
+          data = _ref.data;
+          console.log('data ', data);
+          _context.next = 9;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["put"])(Object(_actions_actionCreators__WEBPACK_IMPORTED_MODULE_2__["loadUsers"])(data.data));
+
+        case 9:
+          //
+          // // redirect to home route after successful login
+          // browserHistory.push('/home');
+          console.log('effect saga resolved');
+          action.resolve(data);
+          _context.next = 17;
+          break;
+
+        case 13:
+          _context.prev = 13;
+          _context.t0 = _context["catch"](1);
+          console.log('effect saga rejected users');
+          action.reject(_context.t0);
+
+        case 17:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _marked, null, [[1, 13]]);
+}
+
+function usersWatcherSaga() {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function usersWatcherSaga$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          console.log('usersWatcherSaga');
+          _context2.next = 3;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])('USERS_WATCHER', usersEffectSaga);
+
+        case 3:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, _marked2);
+}
+
+/***/ }),
+
 /***/ "./resources/js/types/task.js":
 /*!************************************!*\
   !*** ./resources/js/types/task.js ***!
@@ -88029,15 +88242,19 @@ var UNSET_TASK = 'UNSET_TASK';
 /*!*************************************!*\
   !*** ./resources/js/types/users.js ***!
   \*************************************/
-/*! exports provided: SET_USER, UNSET_USER */
+/*! exports provided: SET_USER, UNSET_USER, UPDATE_PROFILE, LOAD_USERS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_USER", function() { return SET_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNSET_USER", function() { return UNSET_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_PROFILE", function() { return UPDATE_PROFILE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_USERS", function() { return LOAD_USERS; });
 var SET_USER = 'SET_USER';
 var UNSET_USER = 'UNSET_USER';
+var UPDATE_PROFILE = 'UPDATE_PROFILE';
+var LOAD_USERS = 'LOAD_USERS';
 
 /***/ }),
 

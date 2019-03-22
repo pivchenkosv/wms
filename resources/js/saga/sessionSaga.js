@@ -36,7 +36,7 @@ function* loginEffectSaga(action) {
         console.log('effect saga resolved')
         action.resolve(data)
     } catch (e) {
-        console.log('effect saga rejected')
+        console.log('effect saga rejected login')
         action.reject(e)
     }
 }
@@ -49,7 +49,7 @@ function* logoutEffectSaga(action) {
         window.location.reload()
         yield put(updateProfile(null))
     } catch (e) {
-        console.log('logoutEffect saga rejected')
+        console.log('logoutEffect saga rejected logout')
         action.reject(e)
     }
 }
