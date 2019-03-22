@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, {Component} from 'react'
 import User from "./User";
 import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {loadUsersWatcher, loginWatcher} from "../../actions/actionCreators";
 
 class UsersList extends Component {
     constructor() {
@@ -23,7 +25,7 @@ class UsersList extends Component {
     }
 
     rerenderList = (users) => {
-        this.setState({users: users});
+        this.setState({users: users.data});
     }
 
     showUserInfo(user) {
@@ -46,11 +48,19 @@ class UsersList extends Component {
     };
 
     componentDidMount() {
-        axios.get('/api/admin/users').then(response => {
-            this.setState({
-                users: response.data.data
-            })
+        new Promise((resolve, reject) => {
+            this.props.loadUsersWatcher(resolve, reject);
+        }).then(response => {
+            this.setState({users: this.props.users.users})
+            console.log('resolved ', response)
+        }).catch(response => {
+            console.log('rejected ', response)
         })
+        // axios.get('/api/admin/users').then(response => {
+        //     this.setState({
+        //         users: response.data.data
+        //     })
+        // })
     }
 
     render() {
@@ -121,9 +131,20 @@ class UsersList extends Component {
 
 const mapStateToProps = (store) => {
     return {
-        user: store.user
+        user: store.user,
+        users: store.users,
     }
 }
+const mapDispatchToProps = (dispatch) => {
+    console.log('mapDispatchToProps when add');
+    // return {
+    //     setUser: (user) => setUser(user)(dispatch),
+    // }
+    return bindActionCreators({
+        loadUsersWatcher
+        // add other watcher sagas to this object to map them to props
+    }, dispatch);
+}
 
-export default connect(mapStateToProps)(UsersList)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersList)
 

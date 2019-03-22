@@ -104,7 +104,7 @@ class StocksList extends Component {
     };
 
     editStock(stock) {
-        if (!this.state.selectedStock || stock.stock.id !== this.state.selectedStock.stock.id)
+        if (!this.state.selectedStock || (stock.stock.id !== this.state.selectedStock.stock.id))
             this.setState({selectedStock: null}, function () {
                 this.setState({selectedStock: stock}, function () {
                     console.log('state.stock ', this.state.selectedStock)

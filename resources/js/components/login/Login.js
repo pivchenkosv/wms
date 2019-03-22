@@ -4,6 +4,8 @@ import {withRouter} from 'react-router-dom';
 import {setUser} from "../../actions/users";
 import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
+import {bindActionCreators} from "redux";
+import {loginWatcher} from "../../actions/actionCreators";
 
 class Login extends Component {
     constructor() {
@@ -34,18 +36,20 @@ class Login extends Component {
         if (!this.state.password) {
             return this.setState({error: 'Password is required'});
         }
-        console.log(this.state);
-        const params = new URLSearchParams();
-        params.append('email', this.state.email);
-        params.append('password', this.state.password);
-        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        axios.post('api/login', params, {
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        // const params = new URLSearchParams();
+        // params.append('email', this.state.email);
+        // params.append('password', this.state.password);
+        // params.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        // axios.post('api/login', params, {
+        //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        // })
+        new Promise((resolve, reject) => {
+            this.props.loginWatcher({
+                email: this.state.email,
+                password: this.state.password
+            }, resolve, reject);
         }).then(response => {
-            if (response.data.success) {
-                this.props.setUser(response.data.user);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-            }
+            console.log('resolved', response)
             console.log(response);
             console.log(response.data);
             if (this.props.user) {
@@ -54,6 +58,7 @@ class Login extends Component {
             }
             this.setState({error: null})
         }).catch(response => {
+            console.log('rejected', response)
             console.log('rejected: ', response);
             console.log(response.response.data.message);
             this.setState({error: response.response.data.message}, function () {
@@ -157,9 +162,13 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     console.log('mapDispatchToProps when add');
-    return {
-        setUser: (user) => setUser(user)(dispatch),
-    }
+    // return {
+    //     setUser: (user) => setUser(user)(dispatch),
+    // }
+    return bindActionCreators({
+        loginWatcher
+        // add other watcher sagas to this object to map them to props
+    }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login))
 

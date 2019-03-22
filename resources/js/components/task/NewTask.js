@@ -128,6 +128,7 @@ class NewTask extends Component {
 
         axios.post('api/editTask', params).then(response => {
 
+            // console.log(response)
             this.setState({message: 'Success!'}, function () {
                 $("div.success").fadeIn(300).delay(1500).fadeOut(400);
             })
@@ -213,6 +214,8 @@ class NewTask extends Component {
             <tr
                 key={subtask.id}
                 className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                onMouseEnter={() => this.showDeleteButton(subtask.id)}
+                onMouseLeave={() => this.hideDeleteButton(subtask.id)}
             >
                 <td className='badge badge-pill col-3'
                     onClick={() => this.selectCell(subtask, "from_cell")}>
@@ -235,6 +238,10 @@ class NewTask extends Component {
                         {subtask.quantity}
                     </td>
                 }
+                <button type='button' id={'delete' + subtask.id} className='btn badge badge-pill col-2 hidden'
+                    onClick={() => this.deleteSubtask(subtask)}>
+                    {'\u2718'}
+                </button>
 
             </tr>
         );
@@ -331,6 +338,24 @@ class NewTask extends Component {
                 </div>
             </div>
         );
+    }
+
+    showDeleteButton = (id) => {
+        let elementId = 'delete' + id;
+        let cross = document.getElementById(elementId);
+        cross.style.visibility = 'visible'
+    }
+
+    hideDeleteButton = (id) => {
+        let elementId = 'delete' + id;
+        let cross = document.getElementById(elementId);
+        cross.style.visibility = 'hidden'
+    }
+
+    deleteSubtask = (subtask) => {
+        let id = subtask.id
+        let subtasks = this.state.subtasks.filter(subtask => subtask.id !== id);
+        this.setState({subtasks: subtasks})
     }
 }
 

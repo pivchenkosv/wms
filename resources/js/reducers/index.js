@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
 import TaskReducer from './task';
-import UserReducer from "./users";
+import UserReducer from "./user";
+import UsersReducer from "./users";
 
 export default combineReducers({
     task: TaskReducer,
-    user: UserReducer
+    user: UserReducer,
+    users: UsersReducer
 });

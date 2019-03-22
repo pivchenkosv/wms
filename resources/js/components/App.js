@@ -3,19 +3,24 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import Header from './Header'
-import {createStore} from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
 import reducers from '../reducers';
 import createHistory from 'history/createBrowserHistory';
+import createSagaMiddleware from 'redux-saga';
 
 import {ROUTES} from "./routes";
 
 
 import {setUser, unsetUser} from "../actions/users";
 import {SET_USER} from "../types/users";
+import rootSaga from "../saga/rootSaga";
 
 const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : f => f;
-const store = createStore(reducers, enhancers);
+const sagaMiddleware = createSagaMiddleware();
+let middlewares = applyMiddleware(sagaMiddleware);
+const store = createStore(reducers, compose(middlewares));
+sagaMiddleware.run(rootSaga);
 const history = createHistory();
 
 class App extends Component {

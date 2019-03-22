@@ -1,24 +1,14 @@
-import {
-    SET_USER,
-    UNSET_USER
-} from './../types/users';
+import {LOAD_USERS} from "../types/users";
 
-
-const UserReducer =  (state = {}, action) => {
+const UsersReducer = (state = {}, action ) => {
     switch (action.type) {
-        case SET_USER: {
+        case LOAD_USERS:
             return {
-                user: action.data
-            };
-        }
-        case UNSET_USER: {
-            return {
-                user: null
+                users: action.data
             }
-        }
         default:
             return state;
     }
 }
 
-export default UserReducer;
+export default UsersReducer;

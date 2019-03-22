@@ -28,6 +28,7 @@
     "react": "^16.2.0",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.2.0",
+    "redux-saga": "^1.0.2",
     "resolve-url-loader": "^2.3.1",
     "sass": "^1.15.2",
     "sass-loader": "^7.1.0",
@@ -43,6 +44,6 @@
     "react-router-dom": "^4.3.1",
     "react-use-localstorage": "latest",
     "redux": "^4.0.1",
-      "react-addons-update": "latest"
+    "react-addons-update": "latest"
   }
 }

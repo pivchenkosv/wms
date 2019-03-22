@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {setUser, unsetUser} from "../actions/users";
 import axios from "axios";
 import {ROUTES} from "./routes";
+import {bindActionCreators} from "redux";
+import {loginWatcher, logoutWatcher} from "../actions/actionCreators";
 
 class Header extends React.Component {
 
@@ -13,14 +15,23 @@ class Header extends React.Component {
 
     logout = (event) => {
         event.preventDefault();
-        localStorage.clear();
-        const params = new URLSearchParams();
-        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        axios.post('/logout', params).then(response => {
-            this.props.unsetUser().then(() => {
-            })
+        new Promise((resolve, reject) => {
+            this.props.logoutWatcher({
+                token: $('meta[name="csrf-token"]').attr('content'),
+            }, resolve, reject);
+        }).then(response => {
+            console.log('fulfilled ', response)
+            window.location.reload()
+        }).catch(response => {
+            console.log('rejected ', response)
         })
-        window.location.reload()
+        // localStorage.clear();
+        // const params = new URLSearchParams();
+        // params.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        // axios.post('/logout', params).then(response => {
+        //     this.props.unsetUser().then(() => {
+        //     })
+        // })
     }
 
     Dropdown() {
@@ -45,10 +56,10 @@ class Header extends React.Component {
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     {routesData ? routesData.routes.map((item, index) => (
                         item.name ?
-                        <a key={index} className="dropdown-item" href="#" onClick={() => history.push(item.path)}>
-                            {item.name}
-                        </a> : null
-                        )) : ''}
+                            <a key={index} className="dropdown-item" href="#" onClick={() => history.push(item.path)}>
+                                {item.name}
+                            </a> : null
+                    )) : ''}
                     <a className="dropdown-item" href="#"
                        onClick={this.logout}>
                         Logout
@@ -88,11 +99,21 @@ const mapStateToProps = (store, ownProps) => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    console.log('mapDispatchToProps when remove');
-    return {
-        unsetUser: user => unsetUser(user)(dispatch),
-        setUser: user => setUser(user)(dispatch),
-    }
+// const mapDispatchToProps = dispatch => {
+//     console.log('mapDispatchToProps when remove');
+//     return {
+//         unsetUser: user => unsetUser(user)(dispatch),
+//         setUser: user => setUser(user)(dispatch),
+//     }
+// }
+const mapDispatchToProps = (dispatch) => {
+    console.log('mapDispatchToProps when add');
+    // return {
+    //     setUser: (user) => setUser(user)(dispatch),
+    // }
+    return bindActionCreators({
+        logoutWatcher
+        // add other watcher sagas to this object to map them to props
+    }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header))
