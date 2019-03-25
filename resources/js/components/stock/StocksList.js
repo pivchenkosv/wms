@@ -48,7 +48,7 @@ class StocksList extends Component {
         if (this.state.selectedStock.stock.id !== 0)
             params.append('id', this.state.selectedStock.stock.id);
         params.append('location', this.state.selectedStock.stock.location);
-        axios.post('/api/editStock', params).then(response => {
+        axios.put('/api/editStock', params).then(response => {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
@@ -69,7 +69,7 @@ class StocksList extends Component {
                 alert('First delete all cells related to this stock');
             } else {
                 params.append('id', this.state.selectedStock.stock.id);
-                axios.post('/api/delStock', params).then(response => {
+                axios.delete(`/api/delStock/${this.state.selectedStock.stock.id}`).then(response => {
                     console.log('fulfilled', response);
                     console.log(response.data);
                     this.setState({

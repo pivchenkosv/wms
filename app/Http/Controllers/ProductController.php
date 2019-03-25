@@ -7,10 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -38,9 +35,9 @@ class ProductController extends Controller
 
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-        if (Product::destroy($request->input('id')))
+        if (Product::destroy($id))
         {
             $products = Product::all();
             return response()->json(['success' => true, 'data' => $products]);

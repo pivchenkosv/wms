@@ -17,7 +17,7 @@ function loginApi(authParams) {
 function logoutApi(token) {
     const params = new URLSearchParams();
     params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-    return axios.post('/logout', params)
+    return axios.post('/api/logout', params)
 }
 
 /** saga worker that is responsible for the side effects */

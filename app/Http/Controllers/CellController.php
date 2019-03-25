@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class CellController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    public function __construct() {}
 
     public function showCells()
     {
@@ -48,10 +45,10 @@ class CellController extends Controller
         return response()->json(['success' => false]);
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-        if ($request->has('id')) {
-            Cell::destroy($request->input('id'));
+        if ($id) {
+            Cell::destroy($id);
             $cells = Cell::all();
             return response(['success' => true, 'data' => $cells]);
         }

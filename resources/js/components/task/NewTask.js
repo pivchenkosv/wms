@@ -126,7 +126,7 @@ class NewTask extends Component {
         params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
         params.append('subtasks', JSON.stringify(this.state.subtasks))
 
-        axios.post('api/editTask', params).then(response => {
+        axios.put('api/editTask', params).then(response => {
 
             // console.log(response)
             this.setState({message: 'Success!'}, function () {

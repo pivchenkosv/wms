@@ -40,9 +40,7 @@ class CellsList extends Component {
         params.append('volume', this.state.cell.volume);
         params.append('status', this.state.cell.status);
         params.append('stock_id', this.state.cell.stock_id)
-        axios.post('/api/editCell', params).then(response => {
-            console.log('fulfilled', response);
-            console.log(response.data);
+        axios.put('/api/editCell', params).then(response => {
             this.setState({
                 cells: response.data.data,
                 cell: null
@@ -111,9 +109,7 @@ class CellsList extends Component {
         evt.preventDefault();
         const params = new URLSearchParams();
         if (this.state.cell.id !== 0) {
-            params.append('id', this.state.cell.id);
-            axios.post('/api/delCell', params).then(response => {
-                console.log(response.data)
+            axios.delete(`/api/delCell/${this.state.cell.id}`).then(response => {
                 this.setState({
                     cells: response.data.data,
                     cell: null

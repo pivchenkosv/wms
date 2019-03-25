@@ -28,7 +28,7 @@ class ProductsList extends Component {
         params.append('name', this.state.product.name);
         params.append('description', this.state.product.description);
         params.append('volume', this.state.product.volume)
-        axios.post('/api/editProduct', params).then(response => {
+        axios.put('/api/editProduct', params).then(response => {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
@@ -53,7 +53,7 @@ class ProductsList extends Component {
         const params = new URLSearchParams();
         if (this.state.product.id !== 0) {
             params.append('id', this.state.product.id);
-            axios.post('/api/delProduct', params).then(response => {
+            axios.delete(`/api/delProduct/${this.state.product.id}`).then(response => {
                 this.setState({
                     products: response.data.data,
                     product: null

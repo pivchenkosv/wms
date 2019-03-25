@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -59,13 +56,12 @@ class StockController extends Controller
         );
     }
 
-    public function delStock(Request $request)
+    public function delStock(Request $request, $id)
     {
-        Stock::destroy($request->input('id'));
+        Stock::destroy($id);
         $stocks = Stock::all();
         foreach ($stocks as $key => $stock) {
-            $stock = array('stock' => $stock, 'cells' => array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
-            //$stock = (object)array_merge( (array)$stock, array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
+            $stock = $this->handle($stock);
             $stocks[$key] = $stock;
         }
         return response()->json(['success' => true, 'data' => $stocks]);

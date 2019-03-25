@@ -9491,7 +9491,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: inline-block;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n\n    table.dataTable thead .sorting::after,\n    table.dataTable thead .sorting_asc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting_desc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting {\n        background-image: url(https://datatables.net/media/images/sort_both.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_asc {\n        background-image: url(https://datatables.net/media/images/sort_asc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_desc {\n        background-image: url(https://datatables.net/media/images/sort_desc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    .text-size {\n        font-size: 11px;\n    }\n\n    .non-resizable {\n        resize: none;\n        margin: 0 15px 15px 15px;\n    }\n\n    .hidden {\n        visibility: hidden;\n    }\n}\n", ""]);
+exports.push([module.i, "@media all and (min-width: 480px) {\n    .Login {\n        padding: 60px 0;\n    }\n\n    .Login form {\n        margin: 0 auto;\n        max-width: 320px;\n    }\n\n    .mar {\n        margin-left: 5px;\n    }\n\n    .btn-circle {\n        width: 40px;\n        height: 40px;\n        text-align: center;\n        padding: 6px 0;\n        font-size: 16px;\n        line-height: 1.42;\n        border-radius: 20px;\n    }\n\n    .alert-box {\n        /*padding: 15px;*/\n        /*margin-bottom: 20px;*/\n        /*border: 1px solid transparent;*/\n        border-radius: 4px;\n        text-align: center;\n    }\n\n    .success {\n        color: #3c763d;\n        background-color: #dff0d8;\n        border-color: #d6e9c6;\n        display: none;\n    }\n\n    .failure {\n        color: #a94442;\n        background-color: #f2dede;\n        border-color: #ebccd1;\n        display: inline-block;\n    }\n\n    .warning {\n        color: #8a6d3b;\n        background-color: #fcf8e3;\n        border-color: #faebcc;\n        display: none;\n    }\n\n    table.dataTable thead .sorting::after,\n    table.dataTable thead .sorting_asc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting_desc::after {\n        display:none;\n    }\n\n    table.dataTable thead .sorting {\n        background-image: url(https://datatables.net/media/images/sort_both.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_asc {\n        background-image: url(https://datatables.net/media/images/sort_asc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    table.dataTable thead .sorting_desc {\n        background-image: url(https://datatables.net/media/images/sort_desc.png);\n        background-repeat: no-repeat;\n        background-position: center right;\n    }\n\n    .text-size {\n        font-size: 11px;\n    }\n\n    .non-resizable {\n        resize: none;\n        margin: 0 15px 15px 15px;\n    }\n\n    .hidden {\n        visibility: hidden;\n    }\n\n    #navbar {\n        position: -webkit-sticky;\n        position: sticky; /* Make it stick/fixed */\n        top: 0; /* Stay on top */\n        width: 100%; /* Full width */\n        transition: top 0.3s; /* Transition effect when sliding down (and up) */\n        z-index: 5;\n    }\n}\n", ""]);
 
 // exports
 
@@ -79995,7 +79995,7 @@ if (false) {} else {
 /*!***********************************************************************!*\
   !*** ./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js ***!
   \***********************************************************************/
-/*! exports provided: CANCEL, SAGA_LOCATION, buffers, detach, runSaga, END, isEnd, eventChannel, channel, multicastChannel, stdChannel, default */
+/*! exports provided: default, CANCEL, SAGA_LOCATION, buffers, detach, runSaga, END, isEnd, eventChannel, channel, multicastChannel, stdChannel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84085,7 +84085,8 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-        className: "navbar navbar-expand-md navbar-light navbar-laravel"
+        id: "navbar",
+        className: "navbar navbar-expand-md navbar-light navbar-laravel nav-down"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -84119,6 +84120,20 @@ var mapStateToProps = function mapStateToProps(store, ownProps) {
 //     }
 // }
 
+
+var prevScrollpos = window.pageYOffset;
+
+window.onscroll = function () {
+  var currentScrollPos = window.pageYOffset;
+
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-50px";
+  }
+
+  prevScrollpos = currentScrollPos;
+};
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   console.log('mapDispatchToProps when add'); // return {
@@ -84562,10 +84577,7 @@ function (_Component) {
       params.append('volume', _this.state.cell.volume);
       params.append('status', _this.state.cell.status);
       params.append('stock_id', _this.state.cell.stock_id);
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/editCell', params).then(function (response) {
-        console.log('fulfilled', response);
-        console.log(response.data);
-
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/api/editCell', params).then(function (response) {
         _this.setState({
           cells: response.data.data,
           cell: null
@@ -84631,10 +84643,7 @@ function (_Component) {
       var params = new URLSearchParams();
 
       if (_this.state.cell.id !== 0) {
-        params.append('id', _this.state.cell.id);
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/delCell', params).then(function (response) {
-          console.log(response.data);
-
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete("/api/delCell/".concat(_this.state.cell.id)).then(function (response) {
           _this.setState({
             cells: response.data.data,
             cell: null
@@ -85340,7 +85349,7 @@ function (_Component) {
       params.append('name', _this.state.product.name);
       params.append('description', _this.state.product.description);
       params.append('volume', _this.state.product.volume);
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/editProduct', params).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/api/editProduct', params).then(function (response) {
         console.log('fulfilled', response);
         console.log(response.data);
 
@@ -85360,7 +85369,7 @@ function (_Component) {
 
       if (_this.state.product.id !== 0) {
         params.append('id', _this.state.product.id);
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/delProduct', params).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete("/api/delProduct/".concat(_this.state.product.id)).then(function (response) {
           _this.setState({
             products: response.data.data,
             product: null
@@ -85947,7 +85956,7 @@ function (_Component) {
       var params = new URLSearchParams();
       if (_this.state.selectedStock.stock.id !== 0) params.append('id', _this.state.selectedStock.stock.id);
       params.append('location', _this.state.selectedStock.stock.location);
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/editStock', params).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/api/editStock', params).then(function (response) {
         console.log('fulfilled', response);
         console.log(response.data);
 
@@ -85970,7 +85979,7 @@ function (_Component) {
           alert('First delete all cells related to this stock');
         } else {
           params.append('id', _this.state.selectedStock.stock.id);
-          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/delStock', params).then(function (response) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete("/api/delStock/".concat(_this.state.selectedStock.stock.id)).then(function (response) {
             console.log('fulfilled', response);
             console.log(response.data);
 
@@ -86272,7 +86281,7 @@ function (_Component) {
       d.setHours(d.getHours() + 3);
       params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
       params.append('subtasks', JSON.stringify(_this.state.subtasks));
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('api/editTask', params).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.put('api/editTask', params).then(function (response) {
         // console.log(response)
         _this.setState({
           message: 'Success!'
@@ -86844,7 +86853,7 @@ function (_Component) {
       evt.preventDefault();
       var params = new URLSearchParams();
       params.append('id', _this.state.task.id);
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/delTask', params).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete("/api/delTask/".concat(_this.state.task.id)).then(function (response) {
         _this.setState({
           tasks: response.data
         });
@@ -87416,7 +87425,7 @@ function (_Component) {
       event.preventDefault();
       var id = new URLSearchParams();
       id.append('id', _this.state.userInfo.id);
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/deleteUser', id).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete("/api/deleteUser/".concat(_this.state.userInfo.id)).then(function (response) {
         _this.props.rerenderUsersList(response.data);
       });
 
@@ -87996,7 +88005,7 @@ function loginApi(authParams) {
 function logoutApi(token) {
   var params = new URLSearchParams();
   params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/logout', params);
+  return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/logout', params);
 }
 /** saga worker that is responsible for the side effects */
 
