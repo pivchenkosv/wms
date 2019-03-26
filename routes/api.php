@@ -104,8 +104,12 @@ Route::post('completeTask', [
 //    'as' => 'taskCreated',
 //    'uses' => 'TaskController@notifyWorker'
 //])->middleware('auth');
+//Route::get('reports', [
+//    'as' => 'reports',
+//    'uses' => 'ReportController@index'
+//])->middleware('auth');
 Route::get('reports', [
     'as' => 'reports',
-    'uses' => 'ReportController@index'
+    'uses' => 'ReportController@indexPaginate'
 ])->middleware('auth');
 

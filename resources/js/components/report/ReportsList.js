@@ -6,21 +6,32 @@ class ReportsList extends Component {
         super();
         this.state = {
             reports: [],
+            currentPage: 1,
             table: null,
         }
     }
 
     componentDidMount() {
-        axios.get('/api/reports').then(response => {
+        this.loadReports(1)
+    }
+
+    loadReports = (page) => {
+        if (this.state.table)
+            this.state.table.destroy()
+        axios.get(`/api/reports?page=${page}`).then(response => {
             this.setState({
-                reports: response.data.data
+                reports: response.data.data.data,
+                currentPage: page,
+                lastPage: response.data.data.last_page,
             }, () => {
                 let table = $('#reports').DataTable({
-                    "paging": true,
+                    "paging": false,
                     "searching": true,
-                    "dom": "rtip"
+                    "dom": "t",
+                    "destroy": true
                 });
-                $("#reports").css("width","100%")
+                console.log(this.state)
+                $("#reports").css("width", "100%")
                 this.setState({table: table})
             })
             console.log(response);
@@ -92,6 +103,22 @@ class ReportsList extends Component {
                             ))}
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                                <li className="page-item">
+                                    <button className="page-link"
+                                            disabled={this.state.currentPage === 1}
+                                            onClick={() => this.loadReports(this.state.currentPage - 1)}>Previous
+                                    </button>
+                                </li>
+                                <li className="page-item">
+                                    <button className="page-link"
+                                            disabled={this.state.currentPage === this.state.lastPage}
+                                            onClick={() => this.loadReports(this.state.currentPage + 1)}>Next
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

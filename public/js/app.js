@@ -85650,6 +85650,32 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ReportsList).call(this));
 
+    _defineProperty(_assertThisInitialized(_this), "loadReports", function (page) {
+      if (_this.state.table) _this.state.table.destroy();
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/reports?page=".concat(page)).then(function (response) {
+        _this.setState({
+          reports: response.data.data.data,
+          currentPage: page,
+          lastPage: response.data.data.last_page
+        }, function () {
+          var table = $('#reports').DataTable({
+            "paging": false,
+            "searching": true,
+            "dom": "t",
+            "destroy": true
+          });
+          console.log(_this.state);
+          $("#reports").css("width", "100%");
+
+          _this.setState({
+            table: table
+          });
+        });
+
+        console.log(response);
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "search", function () {
       $(document).ready(function () {
         $('#customSearchBox').keyup(function () {
@@ -85660,6 +85686,7 @@ function (_Component) {
 
     _this.state = {
       reports: [],
+      currentPage: 1,
       table: null
     };
     return _this;
@@ -85668,30 +85695,13 @@ function (_Component) {
   _createClass(ReportsList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/reports').then(function (response) {
-        _this2.setState({
-          reports: response.data.data
-        }, function () {
-          var table = $('#reports').DataTable({
-            "paging": true,
-            "searching": true,
-            "dom": "rtip"
-          });
-          $("#reports").css("width", "100%");
-
-          _this2.setState({
-            table: table
-          });
-        });
-
-        console.log(response);
-      });
+      this.loadReports(1);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var reports = this.state.reports;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
@@ -85747,7 +85757,27 @@ function (_Component) {
         }, report.action), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "badge badge-pill col-2"
         }, report.task_id));
-      }))))));
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        "aria-label": "Page navigation example"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "pagination"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "page-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "page-link",
+        disabled: this.state.currentPage === 1,
+        onClick: function onClick() {
+          return _this2.loadReports(_this2.state.currentPage - 1);
+        }
+      }, "Previous")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "page-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "page-link",
+        disabled: this.state.currentPage === this.state.lastPage,
+        onClick: function onClick() {
+          return _this2.loadReports(_this2.state.currentPage + 1);
+        }
+      }, "Next")))))));
     }
   }]);
 
