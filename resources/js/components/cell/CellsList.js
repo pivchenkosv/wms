@@ -43,11 +43,18 @@ class CellsList extends Component {
         axios.put('/api/editCell', params).then(response => {
             this.setState({
                 cells: response.data.data,
-                cell: null
+                cell: null,
+                message: null,
             })
+            $('div#message').fadeOut(300);
+
         }).catch(response => {
             console.log('rejected', response);
             console.log(response.data);
+            this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
+                let message = $('div#message').addClass('failure');
+                message.fadeIn(300);
+            })
         })
     }
 
@@ -260,13 +267,16 @@ class CellsList extends Component {
                         <div className='card'>
                             <div className='card-header'>
                                 <div className='row'>
-                                    <div className='col-sm-8'>Cells</div>
+                                    <div className='col-sm-2'>Cells</div>
                                     {user.role !== 'ROLE_WORKER' ?
                                         <button className='btn btn-primary btn-sm mb-3 col-sm-3'
                                                 onClick={this.createNewCell}>
                                             Create new cell
                                         </button> : ''
                                     }
+                                    <div id='message' className='alert-box success col-sm-6 mb-3 ml-3'>
+                                        {this.state.message}
+                                    </div>
                                 </div>
                             </div>
                             <div className='card-header'>

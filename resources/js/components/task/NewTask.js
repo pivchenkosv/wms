@@ -30,6 +30,7 @@ class NewTask extends Component {
                 column: null
             },
             message: null,
+            errors: null,
         }
     }
 
@@ -136,7 +137,14 @@ class NewTask extends Component {
             setTimeout(() => this.cancel(), 2500);
 
         }).catch(response => {
-            console.log('rejected', response);
+            console.log('rejected', response.response);
+            this.setState({message: response.response.data.errors.assigned_user[0]}, function () {
+                let message = $('div#message').addClass('failure');
+                message.fadeIn(300).delay(1500).fadeOut(400);
+            })
+            const button = document.getElementById('createButton');
+            button.disabled = false;
+            button.innerHTML = 'Create Task'
         })
     }
 
@@ -259,10 +267,11 @@ class NewTask extends Component {
                                     New Task
                                 </div>
                                 <div className='col-8'>
-                                    {this.state.message ?
-                                        <div className='alert-box success'>
+                                    {
+                                        <div id='message' className='alert-box success'>
                                             {this.state.message}
-                                        </div> : ''}
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -284,6 +293,7 @@ class NewTask extends Component {
                                     <label htmlFor="description"
                                            className="col-2 col-form-label text-md-left">At: </label>
                                     <DatePicker
+                                        minDate={new Date()}
                                         selected={new Date(this.state.task.at)}
                                         onChange={this.handleDateChange}
                                         showTimeSelect

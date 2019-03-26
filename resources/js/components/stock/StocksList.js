@@ -55,7 +55,12 @@ class StocksList extends Component {
                 stocks: response.data.data,
                 selectedStock: null
             })
+            $('div#message').fadeOut(300);
         }).catch(response => {
+            this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
+                let message = $('div#message').addClass('failure');
+                message.fadeIn(300);
+            })
             console.log('rejected', response);
             console.log(response.data);
         })
@@ -152,9 +157,14 @@ class StocksList extends Component {
                         <div className='card'>
                             <div className='card-header'>
                                 <div className='row'>
-                                    <div className='col-sm-6'>Stocks</div>
+                                    <div className='col-sm-7'>
+                                        <span className='col-sm-2'>Stocks</span>
+                                        <div id='message' className='alert-box success col-sm-9 mb-3 ml-3'>
+                                            {this.state.message}
+                                        </div>
+                                    </div>
                                     {user.role !== 'ROLE_WORKER' ?
-                                        <div className="col-sm-6">
+                                        <div className="col-sm-5">
                                             <button className='btn btn-primary btn-sm mb-3 col-sm-6'
                                                     onClick={this.createNewStock}>
                                                 Add new stock info

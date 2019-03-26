@@ -23,6 +23,17 @@ class ProductController extends Controller
             $id = $request->input('id');
             $product = Product::find($id);
         }
+        $request->validate([
+            'name' => ['required'],
+            'volume' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($value <= 0) {
+                        $fail($attribute . ' should be no less than 1.');
+                    }
+                },
+            ]
+        ]);
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->volume = $request->input('volume');

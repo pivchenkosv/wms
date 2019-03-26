@@ -28,6 +28,10 @@ class StockController extends Controller
             $stock = Stock::find($request->input('id'));
         }
 
+        $request->validate([
+           'location' => ['required']
+        ]);
+
         $stock->location = $request->input('location');
 
         if ($stock->save()) {

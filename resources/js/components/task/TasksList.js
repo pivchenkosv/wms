@@ -29,6 +29,9 @@ class TasksList extends Component {
                 });
                 this.setState({table: table})
             })
+        }).catch(reason => {
+            localStorage.clear();
+            window.location.reload()
         })
     }
 

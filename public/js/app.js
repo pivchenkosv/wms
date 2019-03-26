@@ -79995,7 +79995,7 @@ if (false) {} else {
 /*!***********************************************************************!*\
   !*** ./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js ***!
   \***********************************************************************/
-/*! exports provided: default, CANCEL, SAGA_LOCATION, buffers, detach, runSaga, END, isEnd, eventChannel, channel, multicastChannel, stdChannel */
+/*! exports provided: CANCEL, SAGA_LOCATION, buffers, detach, runSaga, END, isEnd, eventChannel, channel, multicastChannel, stdChannel, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84580,11 +84580,21 @@ function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/api/editCell', params).then(function (response) {
         _this.setState({
           cells: response.data.data,
-          cell: null
+          cell: null,
+          message: null
         });
+
+        $('div#message').fadeOut(300);
       }).catch(function (response) {
         console.log('rejected', response);
         console.log(response.data);
+
+        _this.setState({
+          message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]
+        }, function () {
+          var message = $('div#message').addClass('failure');
+          message.fadeIn(300);
+        });
       });
     });
 
@@ -84849,11 +84859,14 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-8"
+        className: "col-sm-2"
       }, "Cells"), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-primary btn-sm mb-3 col-sm-3",
         onClick: this.createNewCell
-      }, "Create new cell") : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Create new cell") : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "message",
+        className: "alert-box success col-sm-6 mb-3 ml-3"
+      }, this.state.message))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "list-group-item justify-content-between"
@@ -85357,9 +85370,18 @@ function (_Component) {
           products: response.data.data,
           product: null
         });
+
+        $('div#message').fadeOut(300);
       }).catch(function (response) {
         console.log('rejected', response);
         console.log(response.data);
+
+        _this.setState({
+          message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]
+        }, function () {
+          var message = $('div#message').addClass('failure');
+          message.fadeIn(300);
+        });
       });
     });
 
@@ -85534,11 +85556,16 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-6"
-      }, "Products Table"), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-6"
+        className: "col-sm-7"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "col-sm-4"
+      }, "Products Table"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "message",
+        className: "alert-box success col-sm-7 mb-3 ml-3"
+      }, this.state.message)), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-sm-5"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary btn-sm mb-3 col-sm-4 mr-1",
+        className: "btn btn-primary btn-sm mb-3 col-sm-5 mr-1",
         onClick: this.handleDelete,
         disabled: !this.state.product
       }, "Delete selected"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -85964,7 +85991,16 @@ function (_Component) {
           stocks: response.data.data,
           selectedStock: null
         });
+
+        $('div#message').fadeOut(300);
       }).catch(function (response) {
+        _this.setState({
+          message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]
+        }, function () {
+          var message = $('div#message').addClass('failure');
+          message.fadeIn(300);
+        });
+
         console.log('rejected', response);
         console.log(response.data);
       });
@@ -86096,9 +86132,14 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-6"
-      }, "Stocks"), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-sm-6"
+        className: "col-sm-7"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "col-sm-2"
+      }, "Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "message",
+        className: "alert-box success col-sm-9 mb-3 ml-3"
+      }, this.state.message)), user.role !== 'ROLE_WORKER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-sm-5"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-primary btn-sm mb-3 col-sm-6",
         onClick: this.createNewStock
@@ -86293,7 +86334,18 @@ function (_Component) {
           return _this.cancel();
         }, 2500);
       }).catch(function (response) {
-        console.log('rejected', response);
+        console.log('rejected', response.response);
+
+        _this.setState({
+          message: response.response.data.errors.assigned_user[0]
+        }, function () {
+          var message = $('div#message').addClass('failure');
+          message.fadeIn(300).delay(1500).fadeOut(400);
+        });
+
+        var button = document.getElementById('createButton');
+        button.disabled = false;
+        button.innerHTML = 'Create Task';
       });
     });
 
@@ -86479,7 +86531,8 @@ function (_Component) {
         subtask: null,
         column: null
       },
-      message: null
+      message: null,
+      errors: null
     };
     return _this;
   }
@@ -86543,9 +86596,10 @@ function (_Component) {
         className: "col-3"
       }, "New Task"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
-      }, this.state.message ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "message",
         className: "alert-box success"
-      }, this.state.message) : ''))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.message)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         id: "newTask",
@@ -86581,6 +86635,7 @@ function (_Component) {
         htmlFor: "description",
         className: "col-2 col-form-label text-md-left"
       }, "At: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_datepicker_es__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        minDate: new Date(),
         selected: new Date(this.state.task.at),
         onChange: this.handleDateChange,
         showTimeSelect: true,
@@ -86987,6 +87042,9 @@ function (_Component) {
             table: table
           });
         });
+      }).catch(function (reason) {
+        localStorage.clear();
+        window.location.reload();
       });
     }
   }, {

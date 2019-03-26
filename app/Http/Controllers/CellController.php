@@ -33,6 +33,18 @@ class CellController extends Controller
             $cell = Cell::find($request->input('id'));
         }
 
+        $request->validate([
+            'stock_id' => ['required', 'exists:stocks,id'],
+            'volume' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($value <= 0) {
+                        $fail($attribute . ' should be no less than 1.');
+                    }
+                },
+            ]
+        ]);
+
         $cell->volume = $request->input('volume');
         $cell->status = $request->input('status');
         $cell->stock_id = $request->input('stock_id');
