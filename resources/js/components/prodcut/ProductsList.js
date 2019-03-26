@@ -28,16 +28,21 @@ class ProductsList extends Component {
         params.append('name', this.state.product.name);
         params.append('description', this.state.product.description);
         params.append('volume', this.state.product.volume)
-        axios.post('/api/editProduct', params).then(response => {
+        axios.put('/api/editProduct', params).then(response => {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
                 products: response.data.data,
                 product: null
             })
+            $('div#message').fadeOut(300);
         }).catch(response => {
             console.log('rejected', response);
             console.log(response.data);
+            this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
+                let message = $('div#message').addClass('failure');
+                message.fadeIn(300);
+            })
         })
     }
 
@@ -53,7 +58,7 @@ class ProductsList extends Component {
         const params = new URLSearchParams();
         if (this.state.product.id !== 0) {
             params.append('id', this.state.product.id);
-            axios.post('/api/delProduct', params).then(response => {
+            axios.delete(`/api/delProduct/${this.state.product.id}`).then(response => {
                 this.setState({
                     products: response.data.data,
                     product: null
@@ -182,10 +187,15 @@ class ProductsList extends Component {
                         <div className='card'>
                             <div className='card-header'>
                                 <div className='row'>
-                                    <div className='col-sm-6'>Products Table</div>
+                                    <div className='col-sm-7'>
+                                        <span className='col-sm-4'>Products Table</span>
+                                        <div id='message' className='alert-box success col-sm-7 mb-3 ml-3'>
+                                            {this.state.message}
+                                        </div>
+                                    </div>
                                     {user.role !== 'ROLE_WORKER' ?
-                                        <div className="col-sm-6">
-                                            <button className='btn btn-primary btn-sm mb-3 col-sm-4 mr-1'
+                                        <div className="col-sm-5">
+                                            <button className='btn btn-primary btn-sm mb-3 col-sm-5 mr-1'
                                                     onClick={this.handleDelete}
                                                     disabled={!this.state.product}
                                             >

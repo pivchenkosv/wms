@@ -29,6 +29,9 @@ class TasksList extends Component {
                 });
                 this.setState({table: table})
             })
+        }).catch(reason => {
+            localStorage.clear();
+            window.location.reload()
         })
     }
 
@@ -48,7 +51,7 @@ class TasksList extends Component {
         evt.preventDefault();
         const params = new URLSearchParams();
         params.append('id', this.state.task.id)
-        axios.post('/api/delTask', params).then(response => {
+        axios.delete(`/api/delTask/${this.state.task.id}`).then(response => {
             this.setState({
                 tasks: response.data
             })

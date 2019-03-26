@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     public function index()
@@ -36,6 +36,30 @@ class TaskController extends Controller
 
     public function save(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'assigned_user' => ['required', 'numeric', 'exists:users,id'],
+            'at' => ['required', 'date', 'after:now'],
+        ]);
+        $validator->validate();
+        $subtasks = json_decode($request->input('subtasks'));
+//        die(var_dump($subtasks));
+        foreach ($subtasks as $subtask) {
+            $subtasksValidator = Validator::make((array)$subtask, [
+                'from_cell' => ['exists:cells,id'],
+                'to_cell' => ['exists:cells,id'],
+                'product_id' => ['exists:products,id'],
+                'quantity' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if ($value <= 0) {
+                            $fail($attribute . ' is invalid.');
+                        }
+                    },
+                ]
+            ]);
+            $subtasksValidator->validate();
+        }
+
         if (!$request->has('id')) {
             $task = new Task;
             $action = 'TASK_CREATED';
@@ -76,10 +100,8 @@ class TaskController extends Controller
         return response()->json(['success' => true, 'data' => $subtasks]);
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-        $id = $request->input('id');
-
         $task = Task::find($id);
         $task->status = 'REMOVED';
         $task->save();
@@ -90,17 +112,18 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
-    public function deleteSubtasks($subtasks, $id) {
+    public function deleteSubtasks($subtasks, $id)
+    {
         $subtasksDB = Subtask::where('task_id', $id)->get();
         foreach ($subtasksDB as $subtaskDB) {
-            if (!$this->isInArray($subtaskDB, $subtasks))
-            {
+            if (!$this->isInArray($subtaskDB, $subtasks)) {
                 Subtask::destroy($subtaskDB->id);
             }
         }
     }
 
-    private function isInArray($subtaskDB, $subtasks) {
+    private function isInArray($subtaskDB, $subtasks)
+    {
         foreach ($subtasks as $subtask) {
             if ($subtask->id === $subtaskDB->id) {
                 return true;

@@ -160,5 +160,13 @@ return array(
     "username" => "pivchenko.stas.1999@gmail.com",
     "password" => "f34205e0-4563-11e9-bc44-035214115a5d",
     "sendmail" => "/usr/sbin/sendmail -bs",
-    "pretend" => false
+    "pretend" => false,
+
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        ],
+    ],
 );

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckRoleAdmin
+class CheckRoleManager
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class CheckRoleAdmin
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if (($user != null) && ($user->role == 'ROLE_ADMIN')) {
+        if (($user != null) && ($user->role == 'ROLE_ADMIN' || $user->role == 'ROLE_MANAGER')) {
             return $next($request);
         }
         if (! $request->expectsJson()) {

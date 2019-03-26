@@ -8,10 +8,6 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'admin']);
-    }
 
     public function index()
     {
@@ -20,11 +16,9 @@ class AdminController extends Controller
         return response()->json(['success' => true, 'data' => $users]);
     }
 
-    public function delete(Request $request){
-        if ($request->has('id')) {
-            User::destroy($request->input('id'));
-        }
+    public function delete(Request $request, $id){
 
+        User::destroy($id);
         $users = User::all();
 
         return response()->json(['success' => true, 'data' => $users]);

@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class CellController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    public function __construct() {}
 
     public function showCells()
     {
@@ -36,6 +33,18 @@ class CellController extends Controller
             $cell = Cell::find($request->input('id'));
         }
 
+        $request->validate([
+            'stock_id' => ['required', 'exists:stocks,id'],
+            'volume' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($value <= 0) {
+                        $fail($attribute . ' should be no less than 1.');
+                    }
+                },
+            ]
+        ]);
+
         $cell->volume = $request->input('volume');
         $cell->status = $request->input('status');
         $cell->stock_id = $request->input('stock_id');
@@ -48,10 +57,10 @@ class CellController extends Controller
         return response()->json(['success' => false]);
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-        if ($request->has('id')) {
-            Cell::destroy($request->input('id'));
+        if ($id) {
+            Cell::destroy($id);
             $cells = Cell::all();
             return response(['success' => true, 'data' => $cells]);
         }

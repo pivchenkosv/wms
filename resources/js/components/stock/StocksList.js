@@ -48,14 +48,19 @@ class StocksList extends Component {
         if (this.state.selectedStock.stock.id !== 0)
             params.append('id', this.state.selectedStock.stock.id);
         params.append('location', this.state.selectedStock.stock.location);
-        axios.post('/api/editStock', params).then(response => {
+        axios.put('/api/editStock', params).then(response => {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
                 stocks: response.data.data,
                 selectedStock: null
             })
+            $('div#message').fadeOut(300);
         }).catch(response => {
+            this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
+                let message = $('div#message').addClass('failure');
+                message.fadeIn(300);
+            })
             console.log('rejected', response);
             console.log(response.data);
         })
@@ -69,7 +74,7 @@ class StocksList extends Component {
                 alert('First delete all cells related to this stock');
             } else {
                 params.append('id', this.state.selectedStock.stock.id);
-                axios.post('/api/delStock', params).then(response => {
+                axios.delete(`/api/delStock/${this.state.selectedStock.stock.id}`).then(response => {
                     console.log('fulfilled', response);
                     console.log(response.data);
                     this.setState({
@@ -152,9 +157,14 @@ class StocksList extends Component {
                         <div className='card'>
                             <div className='card-header'>
                                 <div className='row'>
-                                    <div className='col-sm-6'>Stocks</div>
+                                    <div className='col-sm-7'>
+                                        <span className='col-sm-2'>Stocks</span>
+                                        <div id='message' className='alert-box success col-sm-9 mb-3 ml-3'>
+                                            {this.state.message}
+                                        </div>
+                                    </div>
                                     {user.role !== 'ROLE_WORKER' ?
-                                        <div className="col-sm-6">
+                                        <div className="col-sm-5">
                                             <button className='btn btn-primary btn-sm mb-3 col-sm-6'
                                                     onClick={this.createNewStock}>
                                                 Add new stock info

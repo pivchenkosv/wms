@@ -7,10 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -26,6 +23,17 @@ class ProductController extends Controller
             $id = $request->input('id');
             $product = Product::find($id);
         }
+        $request->validate([
+            'name' => ['required'],
+            'volume' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($value <= 0) {
+                        $fail($attribute . ' should be no less than 1.');
+                    }
+                },
+            ]
+        ]);
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->volume = $request->input('volume');
@@ -38,9 +46,9 @@ class ProductController extends Controller
 
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-        if (Product::destroy($request->input('id')))
+        if (Product::destroy($id))
         {
             $products = Product::all();
             return response()->json(['success' => true, 'data' => $products]);

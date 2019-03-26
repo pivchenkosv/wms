@@ -71,7 +71,7 @@ class Header extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-md navbar-light navbar-laravel">
+            <nav id='navbar' className="navbar navbar-expand-md navbar-light navbar-laravel nav-down">
                 <div className="container">
                     <a className="navbar-brand" href="/">
                         WMS React
@@ -106,6 +106,18 @@ const mapStateToProps = (store, ownProps) => {
 //         setUser: user => setUser(user)(dispatch),
 //     }
 // }
+
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+    } else {
+        document.getElementById("navbar").style.top = "-50px";
+    }
+    prevScrollpos = currentScrollPos;
+}
+
 const mapDispatchToProps = (dispatch) => {
     console.log('mapDispatchToProps when add');
     // return {
