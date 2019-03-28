@@ -1,33 +1,20 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import {withRouter} from 'react-router-dom';
-import {setUser} from "../../actions/users";
 import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
 import {bindActionCreators} from "redux";
 import {loginWatcher} from "../../actions/actionCreators";
 
 class Login extends Component {
-    constructor() {
-        super();
-        this.state = {
+
+    state = {
             email: '',
             password: '',
             error: '',
             toDashboard: false,
-        };
+    };
 
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleUserChange = this.handleUserChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.dismissError = this.dismissError.bind(this);
-    }
-
-    dismissError() {
-        this.setState({error: ''});
-    }
-
-    handleSubmit(evt) {
+    handleSubmit = (evt) => {
         evt.preventDefault();
         if (!this.state.email) {
             return this.setState({error: 'Username is required'});
@@ -36,13 +23,6 @@ class Login extends Component {
         if (!this.state.password) {
             return this.setState({error: 'Password is required'});
         }
-        // const params = new URLSearchParams();
-        // params.append('email', this.state.email);
-        // params.append('password', this.state.password);
-        // params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        // axios.post('api/login', params, {
-        //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        // })
         new Promise((resolve, reject) => {
             this.props.loginWatcher({
                 email: this.state.email,
@@ -50,30 +30,26 @@ class Login extends Component {
             }, resolve, reject);
         }).then(response => {
             console.log('resolved', response)
-            console.log(response);
-            console.log(response.data);
             if (this.props.user) {
                 console.log('should be redirected');
                 window.location.reload()
             }
             this.setState({error: null})
         }).catch(response => {
-            console.log('rejected', response)
             console.log('rejected: ', response);
-            console.log(response.response.data.message);
             this.setState({error: response.response.data.message}, function () {
                 $( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
             })
         })
     }
 
-    handleUserChange(evt) {
+    handleUserChange = (evt) => {
         this.setState({
             email: evt.target.value,
         });
     };
 
-    handlePassChange(evt) {
+    handlePassChange = (evt) => {
         this.setState({
             password: evt.target.value,
         });
@@ -152,23 +128,5 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    console.log('mapStateToProps when remove');
-    console.log(store)
-    return {
-        user: store.user
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    console.log('mapDispatchToProps when add');
-    // return {
-    //     setUser: (user) => setUser(user)(dispatch),
-    // }
-    return bindActionCreators({
-        loginWatcher
-        // add other watcher sagas to this object to map them to props
-    }, dispatch);
-}
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login))
+export default withRouter(Login)
 

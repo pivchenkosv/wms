@@ -1,20 +1,19 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
-import Task from "./Task";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
+
+import Task from "./Task";
 import {setTask, unsetTask} from "../../actions/task";
 
 class TasksList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tasks: [],
-            task: null,
-            store: null,
-            message: null,
-            table: null
-        }
+
+    state = {
+        tasks: [],
+        task: null,
+        store: null,
+        message: null,
+        table: null
     }
 
     componentDidMount() {
@@ -25,7 +24,7 @@ class TasksList extends Component {
                 let table = $('#tasks').DataTable({
                     "paging": false,
                     "searching": true,
-                    "dom" : "t"
+                    "dom": "t"
                 });
                 this.setState({table: table})
             })
@@ -110,7 +109,7 @@ class TasksList extends Component {
                                 Delete
                             </button>
                             <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-3'
-                               onClick={() => this.createNewTask(history)}>
+                                    onClick={() => this.createNewTask(history)}>
                                 Create/Update task
                             </button>
                         </div>
@@ -198,19 +197,4 @@ class TasksList extends Component {
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
-    return {
-        task: store.task.task,
-        store: store,
-        user: store.user
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setTask: (task) => setTask(task)(dispatch),
-        unsetTask: () => unsetTask()(dispatch),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TasksList));
+export default withRouter(TasksList);

@@ -3,12 +3,10 @@ import axios from "axios";
 import '../Style.css';
 
 class User extends Component {
-    user;
 
     constructor(props) {
         super(props);
-        console.log(props);
-        this.user = this.props.user;
+
         this.state = {
             userInfo: this.props.user,
             errors: null,
@@ -16,7 +14,7 @@ class User extends Component {
         this.handleRoleChange = this.handleRoleChange.bind(this);
     }
 
-    isUserChanged = () => {
+    isUserSaved = () => {
         return (this.state.userInfo.name === this.props.user.name &&
             this.state.userInfo.email === this.props.user.email &&
             this.state.userInfo.role === this.props.user.role);
@@ -41,7 +39,7 @@ class User extends Component {
     };
 
     handleRoleChange(evt) {
-        let value = evt.target.options[evt.target.selectedIndex].value;
+        const value = evt.target.options[evt.target.selectedIndex].value;
         console.log(value);
         this.setState({
             userInfo: {
@@ -147,7 +145,7 @@ class User extends Component {
                         <div className="form-group row mb-4">
                             <div className="col-md-8 ">
                                 <button id="save" type="submit" className="btn btn-primary"
-                                        disabled={this.isUserChanged()}>
+                                        disabled={this.isUserSaved()}>
                                     Save
                                 </button>
                                 {userInfo.id ?

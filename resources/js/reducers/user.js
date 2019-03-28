@@ -9,7 +9,7 @@ const UserReducer =  (state = {}, action) => {
     switch (action.type) {
         case SET_USER: {
             return {
-                user: action.data
+                user: action.payload
             };
         }
         case UNSET_USER: {

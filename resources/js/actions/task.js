@@ -5,7 +5,7 @@ import {
 
 export const setTask = (task) => dispatch => {
     console.log('actions/task');
-    dispatch({ type: SET_TASK, data: task });
+    dispatch({ type: SET_TASK, payload: task });
 }
 
 export const unsetTask = () => dispatch => {

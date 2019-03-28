@@ -1,28 +1,25 @@
 import React, {Component} from 'react';
-import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
+import axios from "axios";
 
 class StocksList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            stocks: [],
-            selectedStock: null,
-        }
-    }
 
-    componentDidMount() {
-        axios.get('/api/stocks').then(response => {
-            this.setState({
-                stocks: response.data.data
+    state = {
+        stocks: [],
+        selectedStock: null,
+    }
+        componentDidMount() {
+            axios.get('/api/stocks').then(response => {
+                this.setState({
+                    stocks: response.data.data
+                })
             })
-        })
-    }
+        }
 
-    isValueChanged = (stock) => {
-        return (stock.stock.location === this.state.selectedStock.stock.location);
-    };
+        isValueChanged = (stock) => {
+            return (stock.stock.location === this.state.selectedStock.stock.location);
+        };
 
     createNewStock = () => {
         const emptyStock = {
@@ -58,7 +55,7 @@ class StocksList extends Component {
             $('div#message').fadeOut(300);
         }).catch(response => {
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
-                let message = $('div#message').addClass('failure');
+                const message = $('div#message').addClass('failure');
                 message.fadeIn(300);
             })
             console.log('rejected', response);
@@ -105,7 +102,7 @@ class StocksList extends Component {
         selectedStock.stock.location = value;
         this.setState({
             selectedStock: selectedStock
-            })
+        })
     };
 
     editStock(stock) {
@@ -194,7 +191,9 @@ class StocksList extends Component {
                                 <tr
                                     key={stockInfo.stock.id}
                                     className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                                    onClick={() => {this.editStock(stockInfo)}}>
+                                    onClick={() => {
+                                        this.editStock(stockInfo)
+                                    }}>
                                     <td className='badge-pill col-2'>
                                         {stockInfo.stock.id}
                                     </td>
@@ -218,10 +217,4 @@ class StocksList extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return {
-        user: store.user
-    }
-}
-
-export default connect(mapStateToProps, null)(withRouter(StocksList))
+export default withRouter(StocksList)

@@ -1,17 +1,11 @@
 import React from 'react'
-import {Link, Route, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
-import {setUser, unsetUser} from "../actions/users";
-import axios from "axios";
-import {ROUTES} from "./routes";
 import {bindActionCreators} from "redux";
-import {loginWatcher, logoutWatcher} from "../actions/actionCreators";
+import {logoutWatcher} from "../actions/actionCreators";
+import {ROUTES} from "./routes";
 
 class Header extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     logout = (event) => {
         event.preventDefault();
@@ -25,26 +19,19 @@ class Header extends React.Component {
         }).catch(response => {
             console.log('rejected ', response)
         })
-        // localStorage.clear();
-        // const params = new URLSearchParams();
-        // params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        // axios.post('/logout', params).then(response => {
-        //     this.props.unsetUser().then(() => {
-        //     })
-        // })
     }
 
     Dropdown() {
         const {user} = this.props.user
         const {history} = this.props
-        if (user === null)
+        if (!user)
             return (
                 <li className="nav-item">
                     <a className="nav-link" href="/login">Login</a>
                     {/*<a className="nav-link" onClick={this.logout}>Logout</a>*/}
                 </li>
             );
-        let userRole = user ? user.role : 'unauthorized';
+        const userRole = user ? user.role : 'unauthorized';
         const routesData = ROUTES[userRole]
         return (
             <li className="nav-item dropdown">

@@ -2,13 +2,11 @@ import React, {Component} from 'react';
 import axios from "axios";
 
 class ReportsList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            reports: [],
-            currentPage: 1,
-            table: null,
-        }
+
+    state = {
+        reports: [],
+        currentPage: 1,
+        table: null,
     }
 
     componentDidMount() {
@@ -24,7 +22,7 @@ class ReportsList extends Component {
                 currentPage: page,
                 lastPage: response.data.data.last_page,
             }, () => {
-                let table = $('#reports').DataTable({
+                const table = $('#reports').DataTable({
                     "paging": false,
                     "searching": true,
                     "dom": "t",

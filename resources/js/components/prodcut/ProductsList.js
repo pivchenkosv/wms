@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
+import axios from "axios";
 
 class ProductsList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            products: [],
-            product: null,
-        }
+
+    state = {
+        products: [],
+        product: null,
     }
 
     componentDidMount() {
@@ -40,7 +38,7 @@ class ProductsList extends Component {
             console.log('rejected', response);
             console.log(response.data);
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
-                let message = $('div#message').addClass('failure');
+                const message = $('div#message').addClass('failure');
                 message.fadeIn(300);
             })
         })
@@ -129,7 +127,7 @@ class ProductsList extends Component {
     selected = (product) => {
         const {user} = this.props.user
 
-        if (user.role !=='ROLE_WORKER' && this.state.product && this.state.product.id === product.id) {
+        if (user.role !== 'ROLE_WORKER' && this.state.product && this.state.product.id === product.id) {
 
             return (
                 <tr
@@ -233,10 +231,4 @@ class ProductsList extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return {
-        user: store.user
-    }
-}
-
-export default connect(mapStateToProps, null)(withRouter(ProductsList))
+export default withRouter(ProductsList)

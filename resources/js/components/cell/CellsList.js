@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
-import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
-import Cell from "./Cell";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
+import axios from "axios";
+import Cell from "./Cell";
 
 class CellsList extends Component {
-    constructor() {
-        super();
-        this.state = {
+
+    state = {
             cells: [],
             cell: null,
             showStocks: false,
             stocks: []
         }
-    }
 
     componentDidMount() {
         axios.get('/api/cells').then(response => {
@@ -52,7 +50,7 @@ class CellsList extends Component {
             console.log('rejected', response);
             console.log(response.data);
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
-                let message = $('div#message').addClass('failure');
+                const message = $('div#message').addClass('failure');
                 message.fadeIn(300);
             })
         })
@@ -319,10 +317,4 @@ class CellsList extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return {
-        user: store.user
-    }
-}
-
-export default connect(mapStateToProps, null)(withRouter(CellsList))
+export default withRouter(CellsList)

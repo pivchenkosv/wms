@@ -1,15 +1,13 @@
 import React, {Component} from 'react'
 import axios from "axios";
+
 import '../Style.css';
 
 class CellSelector extends Component {
-    constructor(props) {
-        super(props);
-        console.log(props);
-        this.state = {
+
+    state = {
             cells: [],
         }
-    }
 
     componentDidMount() {
         axios.get("/api/fromCell").then(response => {

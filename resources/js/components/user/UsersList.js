@@ -1,23 +1,14 @@
-import axios from 'axios'
 import React, {Component} from 'react'
 import User from "./User";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {loadUsersWatcher, loginWatcher} from "../../actions/actionCreators";
 
 class UsersList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            users: [],
-            user: null,
-        }
-        this.showUserInfo = this.showUserInfo.bind(this);
-        this.handleFormUnmount = this.handleFormUnmount.bind(this);
-        this.createNewUser = this.createNewUser.bind(this);
+
+    state = {
+        users: [],
+        user: null,
     }
 
-    handleFormUnmount() {
+    handleFormUnmount = () => {
         this.setState({user: null});
     }
 
@@ -25,13 +16,13 @@ class UsersList extends Component {
         this.setState({users: users.data});
     }
 
-    showUserInfo(user) {
+    showUserInfo = (user) => {
         this.setState({user: null}, function () {
             this.setState({user: user});
         });
     };
 
-    createNewUser() {
+    createNewUser = () => {
         this.setState({user: null}, function () {
             this.setState({
                 user: {
@@ -126,22 +117,5 @@ class UsersList extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return {
-        user: store.user,
-        users: store.users,
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    console.log('mapDispatchToProps when add');
-    // return {
-    //     setUser: (user) => setUser(user)(dispatch),
-    // }
-    return bindActionCreators({
-        loadUsersWatcher
-        // add other watcher sagas to this object to map them to props
-    }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList)
+export default UsersList
 

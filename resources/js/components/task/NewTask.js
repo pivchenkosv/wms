@@ -1,37 +1,33 @@
 import React, {Component} from 'react'
 import DatePicker from "react-datepicker/es";
-import 'react-datepicker/dist/react-datepicker.css';
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import {connect} from "react-redux";
-import {setTask, unsetTask} from "../../actions/task";
-import axios from "axios";
 import {withRouter} from "react-router-dom";
+import axios from "axios";
+
 import CellSelector from "../cell/CellSelector";
 import ProductSelector from "../prodcut/ProductSelector";
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 class NewTask extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            startDate: new Date(),
-            task: {
-                id: null,
-                assigned_user: 0,
-                description: '',
-                at: new Date(),
-                status: null,
-                created_by: null,
-            },
-            subtasks: [],
-            newSubtaskId: -1,
-            selected: {
-                subtask: null,
-                column: null
-            },
-            message: null,
-            errors: null,
-        }
+    state = {
+        startDate: new Date(),
+        task: {
+            id: null,
+            assigned_user: 0,
+            description: '',
+            at: new Date(),
+            status: null,
+            created_by: null,
+        },
+        subtasks: [],
+        newSubtaskId: -1,
+        selected: {
+            subtask: null,
+            column: null
+        },
+        message: null,
+        errors: null,
     }
 
     handleChange = (event) => {
@@ -139,7 +135,7 @@ class NewTask extends Component {
         }).catch(response => {
             console.log('rejected', response.response);
             this.setState({message: response.response.data.errors.assigned_user[0]}, function () {
-                let message = $('div#message').addClass('failure');
+                const message = $('div#message').addClass('failure');
                 message.fadeIn(300).delay(1500).fadeOut(400);
             })
             const button = document.getElementById('createButton');
@@ -192,7 +188,7 @@ class NewTask extends Component {
     }
 
     renderInfoTable = () => {
-        const { selected } = this.state;
+        const {selected} = this.state;
         if (!selected) {
             return null;
         }
@@ -208,7 +204,7 @@ class NewTask extends Component {
     inputChange = (event) => {
         const {value} = event.target
         const selectedId = this.state.selected.subtask.id;
-        let newSubtasks = this.state.subtasks.map(el => (
+        const newSubtasks = this.state.subtasks.map(el => (
             el.id === selectedId ? {...el, quantity: value} : el
         ))
         this.setState({
@@ -238,7 +234,8 @@ class NewTask extends Component {
                     {subtask.product_id}
                 </td>
                 {(this.state.selected && this.state.selected.column === "quantity" && this.state.selected.subtask.id === subtask.id) ?
-                    <input id={subtask.id} className="col-3 text-size" name="quantity" type="number" value={subtask.quantity}
+                    <input id={subtask.id} className="col-3 text-size" name="quantity" type="number"
+                           value={subtask.quantity}
                            min="1" max="20"
                            onChange={this.inputChange}/> :
                     <td onClick={() => this.selectCell(subtask, "quantity")}
@@ -247,7 +244,7 @@ class NewTask extends Component {
                     </td>
                 }
                 <button type='button' id={'delete' + subtask.id} className='btn badge badge-pill col-2 hidden'
-                    onClick={() => this.deleteSubtask(subtask)}>
+                        onClick={() => this.deleteSubtask(subtask)}>
                     {'\u2718'}
                 </button>
 
@@ -278,7 +275,8 @@ class NewTask extends Component {
                         <div className="card-body">
                             <form id="newTask" onSubmit={this.handleSubmit}>
                                 <div className="row">
-                                    <label htmlFor="user" className="col-form-label text-md-left mx-3">For user: </label>
+                                    <label htmlFor="user" className="col-form-label text-md-left mx-3">For
+                                        user: </label>
                                     <input id="user" type="text" className="col-md-2 left"
                                            name="assigned_user" value={this.state.task.assigned_user}
                                            onChange={this.handleChange}/>
@@ -334,7 +332,7 @@ class NewTask extends Component {
                                 </div>
                                 <div className="container flex-md-row mt-2">
                                     <button id="createButton" className="btn btn-primary mr-1">
-                                    Create Task
+                                        Create Task
                                     </button>
                                     <button type="button" className="btn btn-danger" onClick={this.cancel}>Cancel
                                     </button>
@@ -351,35 +349,22 @@ class NewTask extends Component {
     }
 
     showDeleteButton = (id) => {
-        let elementId = 'delete' + id;
-        let cross = document.getElementById(elementId);
+        const elementId = 'delete' + id;
+        const cross = document.getElementById(elementId);
         cross.style.visibility = 'visible'
     }
 
     hideDeleteButton = (id) => {
-        let elementId = 'delete' + id;
-        let cross = document.getElementById(elementId);
+        const elementId = 'delete' + id;
+        const cross = document.getElementById(elementId);
         cross.style.visibility = 'hidden'
     }
 
     deleteSubtask = (subtask) => {
-        let id = subtask.id
-        let subtasks = this.state.subtasks.filter(subtask => subtask.id !== id);
+        const id = subtask.id
+        const subtasks = this.state.subtasks.filter(subtask => subtask.id !== id);
         this.setState({subtasks: subtasks})
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
-    return {
-        task: store.task.task
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setTask: (task) => setTask(task)(dispatch),
-        unsetTask: () => unsetTask()(dispatch),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewTask))
+export default withRouter(NewTask)
