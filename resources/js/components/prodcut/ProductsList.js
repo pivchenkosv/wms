@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
-import axios from "axios";
+import {handleDeleteProduct, handleEditProduct, loadProducts} from "../api";
 
 class ProductsList extends Component {
 
@@ -11,7 +10,7 @@ class ProductsList extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/products').then(response => {
+        loadProducts().then(response => {
             this.setState({
                 products: response.data.data
             })
@@ -20,23 +19,13 @@ class ProductsList extends Component {
 
     handleSubmit = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        if (this.state.product.id !== 0)
-            params.append('id', this.state.product.id);
-        params.append('name', this.state.product.name);
-        params.append('description', this.state.product.description);
-        params.append('volume', this.state.product.volume)
-        axios.put('/api/editProduct', params).then(response => {
-            console.log('fulfilled', response);
-            console.log(response.data);
+        handleEditProduct(this.state.product).then(response => {
             this.setState({
                 products: response.data.data,
                 product: null
             })
             $('div#message').fadeOut(300);
         }).catch(response => {
-            console.log('rejected', response);
-            console.log(response.data);
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
                 const message = $('div#message').addClass('failure');
                 message.fadeIn(300);
@@ -53,10 +42,8 @@ class ProductsList extends Component {
 
     handleDelete = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
         if (this.state.product.id !== 0) {
-            params.append('id', this.state.product.id);
-            axios.delete(`/api/delProduct/${this.state.product.id}`).then(response => {
+            handleDeleteProduct(this.state.product).then(response => {
                 this.setState({
                     products: response.data.data,
                     product: null

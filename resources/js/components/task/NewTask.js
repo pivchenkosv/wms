@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import DatePicker from "react-datepicker/es";
 import {withRouter} from "react-router-dom";
-import axios from "axios";
 
 import CellSelector from "../cell/CellSelector";
 import ProductSelector from "../prodcut/ProductSelector";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import {getSubtasks, handleCreateTask} from "../api";
 
 class NewTask extends Component {
 
@@ -52,11 +52,7 @@ class NewTask extends Component {
     componentDidMount() {
         if (this.props.task && this.props.task.id !== 0) {
             this.setState({task: this.props.task})
-            axios.get("/api/taskInfo", {
-                params: {
-                    taskId: this.props.task.id,
-                }
-            }).then(response => {
+            getSubtasks(this.props.task.id).then(response => {
                 this.setState({
                     subtasks: response.data
                 })
@@ -110,22 +106,8 @@ class NewTask extends Component {
         button.disabled = true;
         button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp Loading...'
 
-        const params = new URLSearchParams();
-        if (this.state.task.id !== 0) {
-            params.append('id', this.state.task.id);
-        }
-        params.append('assigned_user', this.state.task.assigned_user);
-        params.append('description', this.state.task.description);
+        handleCreateTask(this.state.task, this.state.subtasks).then(() => {
 
-        let d = new Date(this.state.task.at);
-        d.setHours(d.getHours() + 3);
-
-        params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
-        params.append('subtasks', JSON.stringify(this.state.subtasks))
-
-        axios.put('api/editTask', params).then(response => {
-
-            // console.log(response)
             this.setState({message: 'Success!'}, function () {
                 $("div.success").fadeIn(300).delay(1500).fadeOut(400);
             })
@@ -134,7 +116,7 @@ class NewTask extends Component {
 
         }).catch(response => {
             console.log('rejected', response.response);
-            this.setState({message: response.response.data.errors.assigned_user[0]}, function () {
+            this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]]}, function () {
                 const message = $('div#message').addClass('failure');
                 message.fadeIn(300).delay(1500).fadeOut(400);
             })

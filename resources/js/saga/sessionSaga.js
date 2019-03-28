@@ -24,19 +24,14 @@ function logoutApi(token) {
 function* loginEffectSaga(action) {
     console.log('loginEffectSaga')
     try {
-        // data is obtained after axios call is resolved
         let { data } = yield call(loginApi, action.payload);
         console.log('data ', data)
         localStorage.setItem('user', JSON.stringify(data.user));
 
         yield put(updateProfile(data.user));
-        //
-        // // redirect to home route after successful login
-        // browserHistory.push('/home');
-        console.log('effect saga resolved')
+
         action.resolve(data)
     } catch (e) {
-        console.log('effect saga rejected login')
         action.reject(e)
     }
 }
@@ -44,12 +39,10 @@ function* loginEffectSaga(action) {
 function* logoutEffectSaga(action) {
     try {
         let { data } = yield call(logoutApi, action.token);
-        console.log('data logout ', data)
         localStorage.clear();
         window.location.reload()
         yield put(updateProfile(null))
     } catch (e) {
-        console.log('logoutEffect saga rejected logout')
         action.reject(e)
     }
 }

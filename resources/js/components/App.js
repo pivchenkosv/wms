@@ -7,12 +7,12 @@ import {connect, Provider} from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import createSagaMiddleware from 'redux-saga';
 
-import Header from './Header'
 import reducers from '../reducers';
 import {ROUTES} from "./routes";
 import {SET_USER} from "../types/users";
 import {setUser, unsetUser} from "../actions/users";
 import rootSaga from "../saga/rootSaga";
+import HeaderContainer from "../containers/HeaderContainer";
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = applyMiddleware(sagaMiddleware);
@@ -48,7 +48,7 @@ class App extends Component {
             <Provider store={store}>
                 <Router history={history}>
                     <div>
-                        <Header history={history}/>
+                        <HeaderContainer history={history}/>
                         {this.router()}
                     </div>
                 </Router>

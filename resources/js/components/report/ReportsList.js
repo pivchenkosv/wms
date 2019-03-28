@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from "axios";
+import {loadReports} from "../api";
 
 class ReportsList extends Component {
 
@@ -16,7 +16,7 @@ class ReportsList extends Component {
     loadReports = (page) => {
         if (this.state.table)
             this.state.table.destroy()
-        axios.get(`/api/reports?page=${page}`).then(response => {
+        loadReports(page).then(response => {
             this.setState({
                 reports: response.data.data.data,
                 currentPage: page,

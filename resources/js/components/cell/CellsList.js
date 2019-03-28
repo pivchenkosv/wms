@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
-import axios from "axios";
 import Cell from "./Cell";
+import {handleDeleteCell, handleEditCell, loadCells, loadStocks} from "../api";
 
 class CellsList extends Component {
 
@@ -14,12 +13,12 @@ class CellsList extends Component {
         }
 
     componentDidMount() {
-        axios.get('/api/cells').then(response => {
+        loadCells().then(response => {
             this.setState({
                 cells: response.data.data
             })
         })
-        axios.get('/api/stocks').then(response => {
+        loadStocks().then(response => {
             this.setState({
                 stocks: response.data.data
             })
@@ -32,13 +31,7 @@ class CellsList extends Component {
 
     handleSubmit = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        if (this.state.cell.id !== 0)
-            params.append('id', this.state.cell.id);
-        params.append('volume', this.state.cell.volume);
-        params.append('status', this.state.cell.status);
-        params.append('stock_id', this.state.cell.stock_id)
-        axios.put('/api/editCell', params).then(response => {
+        handleEditCell(this.state.cell).then(response => {
             this.setState({
                 cells: response.data.data,
                 cell: null,
@@ -112,16 +105,14 @@ class CellsList extends Component {
 
     handleDelete = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
         if (this.state.cell.id !== 0) {
-            axios.delete(`/api/delCell/${this.state.cell.id}`).then(response => {
+            handleDeleteCell(this.state.cell.id).then(response => {
                 this.setState({
                     cells: response.data.data,
                     cell: null
                 })
             }).catch(response => {
                 console.log('rejected', response);
-                console.log(response.data);
             })
 
         } else {

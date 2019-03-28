@@ -29,7 +29,6 @@ class User extends Component {
 
     inputChange = (event) => {
         const {name, value} = event.target;
-        console.log(this.props);
         this.setState({
             userInfo: {
                 ...this.state.userInfo,

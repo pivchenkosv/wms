@@ -32,28 +32,11 @@ class Register extends Component {
 
     }
 
-    handleUserChange = (evt) => {
+    handleInputChange = (evt) => {
+        const {name, value} = evt.target
         this.setState({
-            name: evt.target.value,
-        });
-    };
-
-    handleEmailChange = (evt) => {
-        this.setState({
-            email: evt.target.value,
-        });
-    };
-
-    handlePassChange = (evt) => {
-        this.setState({
-            password: evt.target.value,
-        });
-    }
-
-    handleConfirmPassChange = (evt) => {
-        this.setState({
-            confirmPassword: evt.target.value,
-        });
+            [name]: value
+        })
     }
 
     render() {
@@ -78,7 +61,7 @@ class Register extends Component {
                                                 <input id="name" type="text"
                                                        className="form-control"
                                                        name="name" value={this.state.name}
-                                                       onChange={this.handleUserChange} required autoFocus/>
+                                                       onChange={this.handleInputChange} required autoFocus/>
                                             </div>
                                         </div>
 
@@ -90,7 +73,7 @@ class Register extends Component {
                                                 <input id="email" type="email"
                                                        className="form-control"
                                                        name="email" value={this.state.email}
-                                                       onChange={this.handleEmailChange} required/>
+                                                       onChange={this.handleInputChange} required/>
                                             </div>
                                         </div>
 
@@ -102,7 +85,7 @@ class Register extends Component {
                                                 <input id="password" type="password"
                                                        className="form-control"
                                                        name="password" value={this.state.password}
-                                                       onChange={this.handlePassChange} required/>
+                                                       onChange={this.handleInputChange} required/>
                                             </div>
                                         </div>
 
@@ -113,8 +96,8 @@ class Register extends Component {
 
                                             <div className="col-md-6">
                                                 <input id="password-confirm" type="password" className="form-control"
-                                                       name="password_confirmation" value={this.state.confirmPassword}
-                                                       onChange={this.handleConfirmPassChange} required/>
+                                                       name="confirmPassword" value={this.state.confirmPassword}
+                                                       onChange={this.handleInputChange} required/>
                                             </div>
                                         </div>
 

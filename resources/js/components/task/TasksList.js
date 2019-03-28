@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
 
 import Task from "./Task";
-import {setTask, unsetTask} from "../../actions/task";
+import {handleCompleteTask, handleDeleteTask, loadTasks} from "../api";
 
 class TasksList extends Component {
 
@@ -17,7 +15,7 @@ class TasksList extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/tasks').then(response => {
+        loadTasks().then(response => {
             this.setState({
                 tasks: response.data
             }, () => {
@@ -48,9 +46,8 @@ class TasksList extends Component {
 
     handleDelete = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        params.append('id', this.state.task.id)
-        axios.delete(`/api/delTask/${this.state.task.id}`).then(response => {
+
+        handleDeleteTask(this.state.task.id).then(response => {
             this.setState({
                 tasks: response.data
             })
@@ -60,9 +57,7 @@ class TasksList extends Component {
 
     handleComplete = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        params.append('id', this.state.task.id)
-        axios.post('/api/completeTask', params).then(response => {
+        handleCompleteTask(this.state.task.id).then(response => {
             this.setState({
                 tasks: response.data
             })

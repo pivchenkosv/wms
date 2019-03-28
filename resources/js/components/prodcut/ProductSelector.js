@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import axios from "axios";
 
 import '../Style.css';
+import {loadProducts} from "../api";
 
 class ProductSelector extends Component {
 
@@ -10,7 +10,7 @@ class ProductSelector extends Component {
     }
 
     componentDidMount() {
-        axios.get("/api/products").then(response => {
+        loadProducts().then(response => {
             this.setState({
                 products: response.data.data
             })

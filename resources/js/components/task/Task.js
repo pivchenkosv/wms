@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import axios from "axios";
 
 import '../Style.css';
+import {getSubtasks} from "../api";
 
 class Task extends Component {
 
@@ -11,11 +11,7 @@ class Task extends Component {
     }
 
     componentDidMount() {
-        axios.get("/api/taskInfo", {
-            params: {
-                taskId: this.state.taskId,
-            }
-        }).then(response => {
+        getSubtasks(this.state.taskId).then(response => {
             this.setState({
                 subtasks: response.data
             })

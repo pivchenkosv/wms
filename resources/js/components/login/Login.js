@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
-import {bindActionCreators} from "redux";
-import {loginWatcher} from "../../actions/actionCreators";
 
 class Login extends Component {
 

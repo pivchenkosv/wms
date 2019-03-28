@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import axios from "axios";
 
 import '../Style.css';
+import {loadAvailableCells} from "../api";
 
 class CellSelector extends Component {
 
@@ -10,7 +10,7 @@ class CellSelector extends Component {
         }
 
     componentDidMount() {
-        axios.get("/api/fromCell").then(response => {
+        loadAvailableCells().then(response => {
             this.setState({
                 cells: response.data.data
             })

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from "axios";
 
 import '../Style.css';
+import {loadCellInfo} from "../api";
 
 class Cell extends Component {
 
@@ -11,11 +12,7 @@ class Cell extends Component {
     }
 
     componentDidMount() {
-        axios.get("/api/cellInfo", {
-            params: {
-                cellId: this.state.cellId,
-            }
-        }).then(response => {
+        loadCellInfo(this.state.cellId).then(response => {
             this.setState({
                 cellProducts: response.data.data
             })
