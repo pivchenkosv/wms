@@ -15,11 +15,13 @@ class TasksList extends Component {
     }
 
     componentDidMount() {
-        loadTasks().then(response => {
+        new Promise((resolve, reject) => {
+            this.props.loadTasksWatcher(resolve, reject)
+        }).then(response => {
             this.setState({
-                tasks: response.data
+                tasks: response
             }, () => {
-                let table = $('#tasks').DataTable({
+                const table = $('#tasks').DataTable({
                     "paging": false,
                     "searching": true,
                     "dom": "t"

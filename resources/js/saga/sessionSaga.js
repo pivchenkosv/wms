@@ -1,38 +1,25 @@
-import axios from 'axios';
-import { updateProfile } from '../actions/actionCreators';
+import {setErrorMessage, updateProfile} from '../actions/actionCreators';
 import { browserHistory } from 'react-router';
 import { takeLatest, call, put } from 'redux-saga/effects';
-
-/** function that returns an axios call */
-function loginApi(authParams) {
-    const params = new URLSearchParams();
-    params.append('email', authParams.email);
-    params.append('password', authParams.password);
-    params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-    return axios.post('api/login', params, {
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-    });
-}
-
-function logoutApi(token) {
-    const params = new URLSearchParams();
-    params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-    return axios.post('/api/logout', params)
-}
+import {loginApi, logoutApi} from "../components/api";
 
 /** saga worker that is responsible for the side effects */
 function* loginEffectSaga(action) {
-    console.log('loginEffectSaga')
     try {
         let { data } = yield call(loginApi, action.payload);
         console.log('data ', data)
         localStorage.setItem('user', JSON.stringify(data.user));
 
         yield put(updateProfile(data.user));
+        yield put(setErrorMessage(null))
+        window.location.reload()
 
-        action.resolve(data)
     } catch (e) {
-        action.reject(e)
+        yield put(setErrorMessage(e.response.data.message))
+
+        $( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+
+        console.log('rejected ', e)
     }
 }
 
@@ -43,7 +30,7 @@ function* logoutEffectSaga(action) {
         window.location.reload()
         yield put(updateProfile(null))
     } catch (e) {
-        action.reject(e)
+        console.log('rejected')
     }
 }
 

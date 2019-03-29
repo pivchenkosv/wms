@@ -6,7 +6,8 @@ import Login from "../components/login/Login";
 const mapStateToProps = (store) => {
     console.log(store)
     return {
-        user: store.user
+        user: store.user,
+        message: store.message,
     }
 }
 

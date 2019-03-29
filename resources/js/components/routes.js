@@ -8,6 +8,7 @@ import NewTaskContainer from "../containers/NewTaskContainer";
 import ReportsList from "./report/ReportsList";
 import Home from "./Home";
 import LoginContainer from "../containers/LoginContainer";
+import ResetPassword from "./password/ResetPassword";
 
 export const ROUTES = {
     ROLE_WORKER: {
@@ -24,7 +25,8 @@ export const ROUTES = {
         redirect: "/login",
         routes: [
             {path: '/', component: LoginContainer},
-            {path: '/login', component: LoginContainer}
+            {path: '/login', component: LoginContainer},
+            {path: '/password/reset', component: ResetPassword},
         ],
     },
     ROLE_ADMIN: {

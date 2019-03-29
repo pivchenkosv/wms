@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import Header from "../components/Header";
 
 const mapStateToProps = (store, ownProps) => {
-    console.log(store)
     return {
         user: store.user
     }

@@ -1,8 +1,5 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
-import {logoutWatcher} from "../actions/actionCreators";
 import {ROUTES} from "./routes";
 
 class Header extends React.Component {

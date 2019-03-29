@@ -12,22 +12,20 @@
 */
 
 // Password Reset Routes...
-Route::post('password/email', [
-    'as' => 'password.email',
-    'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'
-]);
-Route::get('password/reset', [
-    'as' => 'password.request',
-    'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
-]);
-Route::post('password/reset', [
-    'as' => 'password.update',
-    'uses' => 'Auth\ResetPasswordController@reset'
-]);
+
+//Route::get('password/reset', [
+//    'as' => 'password.request',
+//    'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
+//]);
+//Route::post('password/reset', [
+//    'as' => 'password.update',
+//    'uses' => 'Auth\ResetPasswordController@reset'
+//]);
 Route::get('password/reset/{token}', [
     'as' => 'password.reset',
     'uses' => 'Auth\ResetPasswordController@showResetForm'
 ]);
 
-Route::view('/{path?}', 'app');
+Route::view('/{any?}', 'app');
 Route::view('/admin/users', 'app');
+Route::view('/password/reset', 'app');

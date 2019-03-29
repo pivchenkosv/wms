@@ -8,7 +8,6 @@ class Login extends Component {
             email: '',
             password: '',
             error: '',
-            toDashboard: false,
     };
 
     handleSubmit = (evt) => {
@@ -20,22 +19,10 @@ class Login extends Component {
         if (!this.state.password) {
             return this.setState({error: 'Password is required'});
         }
-        new Promise((resolve, reject) => {
+        new Promise(() => {
             this.props.loginWatcher({
                 email: this.state.email,
                 password: this.state.password
-            }, resolve, reject);
-        }).then(response => {
-            console.log('resolved', response)
-            if (this.props.user) {
-                console.log('should be redirected');
-                window.location.reload()
-            }
-            this.setState({error: null})
-        }).catch(response => {
-            console.log('rejected: ', response);
-            this.setState({error: response.response.data.message}, function () {
-                $( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
             })
         })
     }
@@ -54,6 +41,7 @@ class Login extends Component {
 
     render() {
 
+        const {history} = this.props
         return (
             <div className="Login">
                 <div className="container py-4">
@@ -65,9 +53,9 @@ class Login extends Component {
                                         <div className="col-2">
                                             Login
                                         </div>
-                                        {this.state.error ?
+                                        {this.props.message.message ?
                                             <div className='col-8 alert-box failure'>
-                                                {this.state.error}
+                                                {this.props.message.message}
                                             </div> : ''}
                                     </div>
                                 </div>
@@ -109,7 +97,7 @@ class Login extends Component {
                                         <div className="form-group row mb-0">
                                             <div className="col-md-12 offset-md-2">
                                                 <button type="submit" className="btn btn-primary">Login</button>
-                                                <a className="btn btn-link" href="password/reset">
+                                                <a className="btn btn-link" onClick={() => {history.push('password/reset')}}>
                                                     Forgot Your Password?
                                                 </a>
                                             </div>

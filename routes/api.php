@@ -113,3 +113,7 @@ Route::get('reports', [
     'uses' => 'ReportController@indexPaginate'
 ])->middleware('auth');
 
+Route::post('password/email', [
+    'as' => 'password.email',
+    'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'
+]);

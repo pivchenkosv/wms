@@ -1,21 +1,22 @@
-export const loginWatcher = (authParams, resolve, reject) => {
+import {SET_TASK, UNSET_TASK} from "../types/task";
+
+export const loginWatcher = (authParams) => {
     return {
         type: 'LOGIN_WATCHER',
         payload: authParams,
-        resolve: resolve,
-        reject: reject,
     };
 }
-export const logoutWatcher = (token, resolve, reject) => {
+export const logoutWatcher = (token) => {
     return {
         type: 'LOGOUT_WATCHER',
         payload: token,
-        resolve: resolve,
-        reject: reject,
     };
 }
 export const updateProfile = (profile) => {
     return { type: 'UPDATE_PROFILE', payload: profile };
+}
+export const setErrorMessage = (message) => {
+    return { type: 'SET_MESSAGE', payload: message}
 }
 export const loadUsers = (users) => {
     return { type: 'LOAD_USERS', payload: users };
@@ -24,6 +25,24 @@ export const loadUsersWatcher = (resolve, reject) => {
     return {
         type: 'USERS_WATCHER',
         resolve: resolve,
-        reject: reject,
+        reject: reject
     }
+}
+export const loadTasksWatcher = (resolve, reject) => {
+    return {
+        type: 'TASKS_WATCHER',
+        resolve: resolve,
+        reject: reject
+    }
+}
+export const loadTasks = (tasks) => {
+    return { type: 'LOAD_TASKS', payload: tasks }
+}
+export const setTask = (task) => {
+    console.log('actions/task');
+    return { type: SET_TASK, payload: task };
+}
+
+export const unsetTask = () => {
+    return { type: UNSET_TASK };
 }

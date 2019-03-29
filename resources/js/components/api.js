@@ -113,3 +113,25 @@ export const handleCreateTask = (task, subtasks) => {
 
     return axios.put('api/editTask', params)
 }
+
+export const loginApi = (authParams) => {
+    const params = new URLSearchParams();
+    params.append('email', authParams.email);
+    params.append('password', authParams.password);
+    params.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    return axios.post('api/login', params, {
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+}
+
+export const logoutApi = (token) => {
+    const params = new URLSearchParams();
+    params.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    return axios.post('/api/logout', params)
+}
+
+export const resetPasswordApi = (email) => {
+    const params = new URLSearchParams();
+    params.append('email', email);
+    return axios.post('/api/password/email', params)
+}
