@@ -4,7 +4,7 @@ const UsersReducer = (state = {}, action ) => {
     switch (action.type) {
         case LOAD_USERS:
             return {
-                users: action.data
+                users: action.payload
             }
         default:
             return state;

@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import axios from "axios";
+import {loadReports} from "../api";
 
 class ReportsList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            reports: [],
-            currentPage: 1,
-            table: null,
-        }
+
+    state = {
+        reports: [],
+        currentPage: 1,
+        table: null,
     }
 
     componentDidMount() {
@@ -18,13 +16,13 @@ class ReportsList extends Component {
     loadReports = (page) => {
         if (this.state.table)
             this.state.table.destroy()
-        axios.get(`/api/reports?page=${page}`).then(response => {
+        loadReports(page).then(response => {
             this.setState({
                 reports: response.data.data.data,
                 currentPage: page,
                 lastPage: response.data.data.last_page,
             }, () => {
-                let table = $('#reports').DataTable({
+                const table = $('#reports').DataTable({
                     "paging": false,
                     "searching": true,
                     "dom": "t",

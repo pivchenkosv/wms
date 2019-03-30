@@ -1,31 +1,30 @@
 import React, {Component} from 'react';
-import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
+
 import Task from "./Task";
-import {connect} from "react-redux";
-import {setTask, unsetTask} from "../../actions/task";
+import {handleCompleteTask, handleDeleteTask, loadTasks} from "../api";
 
 class TasksList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tasks: [],
-            task: null,
-            store: null,
-            message: null,
-            table: null
-        }
+
+    state = {
+        tasks: [],
+        task: null,
+        store: null,
+        message: null,
+        table: null
     }
 
     componentDidMount() {
-        axios.get('/api/tasks').then(response => {
+        new Promise((resolve, reject) => {
+            this.props.loadTasksWatcher(resolve, reject)
+        }).then(response => {
             this.setState({
-                tasks: response.data
+                tasks: response
             }, () => {
-                let table = $('#tasks').DataTable({
+                const table = $('#tasks').DataTable({
                     "paging": false,
                     "searching": true,
-                    "dom" : "t"
+                    "dom": "t"
                 });
                 this.setState({table: table})
             })
@@ -49,9 +48,8 @@ class TasksList extends Component {
 
     handleDelete = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        params.append('id', this.state.task.id)
-        axios.delete(`/api/delTask/${this.state.task.id}`).then(response => {
+
+        handleDeleteTask(this.state.task.id).then(response => {
             this.setState({
                 tasks: response.data
             })
@@ -61,9 +59,7 @@ class TasksList extends Component {
 
     handleComplete = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        params.append('id', this.state.task.id)
-        axios.post('/api/completeTask', params).then(response => {
+        handleCompleteTask(this.state.task.id).then(response => {
             this.setState({
                 tasks: response.data
             })
@@ -110,7 +106,7 @@ class TasksList extends Component {
                                 Delete
                             </button>
                             <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-3'
-                               onClick={() => this.createNewTask(history)}>
+                                    onClick={() => this.createNewTask(history)}>
                                 Create/Update task
                             </button>
                         </div>
@@ -198,19 +194,4 @@ class TasksList extends Component {
     }
 }
 
-const mapStateToProps = (store, ownProps) => {
-    return {
-        task: store.task.task,
-        store: store,
-        user: store.user
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setTask: (task) => setTask(task)(dispatch),
-        unsetTask: () => unsetTask()(dispatch),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TasksList));
+export default withRouter(TasksList);

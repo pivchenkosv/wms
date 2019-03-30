@@ -1,23 +1,18 @@
 import React, {Component} from 'react'
 import axios from "axios";
+
 import '../Style.css';
+import {loadCellInfo} from "../api";
 
 class Cell extends Component {
-    constructor(props) {
-        super(props);
-        console.log(props);
-        this.state = {
-            cellId: this.props.cellId,
-            cellProducts: [],
-        }
+
+    state = {
+        cellId: this.props.cellId,
+        cellProducts: [],
     }
 
     componentDidMount() {
-        axios.get("/api/cellInfo", {
-            params: {
-                cellId: this.state.cellId,
-            }
-        }).then(response => {
+        loadCellInfo(this.state.cellId).then(response => {
             this.setState({
                 cellProducts: response.data.data
             })
@@ -49,23 +44,23 @@ class Cell extends Component {
 
 
                     <tbody>
-                        {cellProducts.map(product => (
-                            <tr
-                                key={product.name}
-                                className='list-group-item list-group-item-action justify-content-between align-items-left'
-                            >
-                                <td className='badge badge-pill col-4'>
-                                    {product.name}
-                                </td>
-                                <td className='badge badge-pill col-4'>
-                                    {product.quantity}
-                                </td>
+                    {cellProducts.map(product => (
+                        <tr
+                            key={product.name}
+                            className='list-group-item list-group-item-action justify-content-between align-items-left'
+                        >
+                            <td className='badge badge-pill col-4'>
+                                {product.name}
+                            </td>
+                            <td className='badge badge-pill col-4'>
+                                {product.quantity}
+                            </td>
 
-                                <td className='badge badge-pill col-4'>
-                                    {product.volume}
-                                </td>
-                            </tr>
-                        ))}
+                            <td className='badge badge-pill col-4'>
+                                {product.volume}
+                            </td>
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>

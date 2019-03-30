@@ -2,47 +2,26 @@ import React, {Component} from 'react';
 import axios from "axios";
 
 class Register extends Component {
-    constructor() {
-        super();
-        this.state = {
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            error: '',
-            toDashboard: false,
-        };
 
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleUserChange = this.handleUserChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handleConfirmPassChange = this.handleConfirmPassChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.dismissError = this.dismissError.bind(this);
-    }
+    state = {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    };
 
-    dismissError() {
-        this.setState({error: ''});
-    }
-
-    handleSubmit(evt) {
+    handleSubmit = (evt) => {
         evt.preventDefault();
-        if (!this.state.email) {
-            return this.setState({error: 'Username is required'});
-        }
 
-        if (!this.state.password) {
-            return this.setState({error: 'Password is required'});
-        }
         console.log(this.state);
         const params = new URLSearchParams();
         params.append('name', this.state.name);
         params.append('email', this.state.email);
         params.append('password', this.state.password);
         params.append('password_confirmation', this.state.confirmPassword);
-        params.append('_token',$('meta[name="csrf-token"]').attr('content'));
+        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
         axios.post('api/register', params, {
-            headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         }).then(response => {
             console.log(response);
             console.log(response.data);
@@ -50,31 +29,14 @@ class Register extends Component {
             console.log(response);
             console.log(response.data);
         })
-        return this.setState({error: ''});
+
     }
 
-    handleUserChange(evt) {
+    handleInputChange = (evt) => {
+        const {name, value} = evt.target
         this.setState({
-            name: evt.target.value,
-        });
-    };
-
-    handleEmailChange(evt) {
-        this.setState({
-            email: evt.target.value,
-        });
-    };
-
-    handlePassChange(evt) {
-        this.setState({
-            password: evt.target.value,
-        });
-    }
-
-    handleConfirmPassChange(evt) {
-        this.setState({
-            confirmPassword: evt.target.value,
-        });
+            [name]: value
+        })
     }
 
     render() {
@@ -89,24 +51,29 @@ class Register extends Component {
 
                                 <div className="card-body">
                                     <form onSubmit={this.handleSubmit}>
-                                        <input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')} />
+                                        <input type="hidden" name="_token"
+                                               value={$('meta[name="csrf-token"]').attr('content')}/>
                                         <div className="form-group row">
-                                            <label htmlFor="name" className="col-md-4 col-form-label text-md-right">Name</label>
+                                            <label htmlFor="name"
+                                                   className="col-md-4 col-form-label text-md-right">Name</label>
 
                                             <div className="col-md-6">
                                                 <input id="name" type="text"
                                                        className="form-control"
-                                                       name="name" value={this.state.name} onChange={this.handleUserChange} required autoFocus/>
+                                                       name="name" value={this.state.name}
+                                                       onChange={this.handleInputChange} required autoFocus/>
                                             </div>
                                         </div>
 
                                         <div className="form-group row">
-                                            <label htmlFor="email" className="col-md-4 col-form-label text-md-right">E-mail Address</label>
+                                            <label htmlFor="email" className="col-md-4 col-form-label text-md-right">E-mail
+                                                Address</label>
 
                                             <div className="col-md-6">
                                                 <input id="email" type="email"
                                                        className="form-control"
-                                                       name="email" value={this.state.email} onChange={this.handleEmailChange} required/>
+                                                       name="email" value={this.state.email}
+                                                       onChange={this.handleInputChange} required/>
                                             </div>
                                         </div>
 
@@ -117,17 +84,20 @@ class Register extends Component {
                                             <div className="col-md-6">
                                                 <input id="password" type="password"
                                                        className="form-control"
-                                                       name="password" value={this.state.password} onChange={this.handlePassChange} required/>
+                                                       name="password" value={this.state.password}
+                                                       onChange={this.handleInputChange} required/>
                                             </div>
                                         </div>
 
                                         <div className="form-group row">
                                             <label htmlFor="password-confirm"
-                                                   className="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                                                   className="col-md-4 col-form-label text-md-right">Confirm
+                                                Password</label>
 
                                             <div className="col-md-6">
                                                 <input id="password-confirm" type="password" className="form-control"
-                                                       name="password_confirmation" value={this.state.confirmPassword} onChange={this.handleConfirmPassChange} required/>
+                                                       name="confirmPassword" value={this.state.confirmPassword}
+                                                       onChange={this.handleInputChange} required/>
                                             </div>
                                         </div>
 
@@ -148,5 +118,6 @@ class Register extends Component {
         );
     }
 }
+
 export default Register
 

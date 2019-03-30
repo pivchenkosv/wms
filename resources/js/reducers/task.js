@@ -8,7 +8,7 @@ const TaskReducer =  (state = {}, action) => {
     switch (action.type) {
         case SET_TASK: {
             return {
-                task: action.data,
+                task: action.payload,
             };
         }
         case UNSET_TASK: {

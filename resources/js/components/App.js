@@ -2,23 +2,20 @@ import React, {Component} from 'react'
 
 import ReactDOM from 'react-dom'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
-import Header from './Header'
 import {applyMiddleware, compose, createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
-import reducers from '../reducers';
 import createHistory from 'history/createBrowserHistory';
 import createSagaMiddleware from 'redux-saga';
 
+import reducers from '../reducers';
 import {ROUTES} from "./routes";
-
-
-import {setUser, unsetUser} from "../actions/users";
 import {SET_USER} from "../types/users";
+import {setUser, unsetUser} from "../actions/users";
 import rootSaga from "../saga/rootSaga";
+import HeaderContainer from "../containers/HeaderContainer";
 
-const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : f => f;
 const sagaMiddleware = createSagaMiddleware();
-let middlewares = applyMiddleware(sagaMiddleware);
+const middlewares = applyMiddleware(sagaMiddleware);
 const store = createStore(reducers, compose(middlewares));
 sagaMiddleware.run(rootSaga);
 const history = createHistory();
@@ -27,14 +24,14 @@ class App extends Component {
 
     constructor(props) {
         super(props)
-        let user = JSON.parse(localStorage.getItem('user'));
-        store.dispatch({type: SET_USER, data: user})
+        const user = JSON.parse(localStorage.getItem('user'));
+        store.dispatch({type: SET_USER, payload: user})
     }
 
     router() {
 
-        let {user} = store.getState();
-        let userRole = user.user ? user.user.role : 'unauthorized';
+        const {user} = store.getState();
+        const userRole = user.user ? user.user.role : 'unauthorized';
         const routesData = ROUTES[userRole]
 
         return (
@@ -51,7 +48,7 @@ class App extends Component {
             <Provider store={store}>
                 <Router history={history}>
                     <div>
-                        <Header history={history}/>
+                        <HeaderContainer history={history}/>
                         {this.router()}
                     </div>
                 </Router>

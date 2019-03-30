@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
-import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
-import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
+import {handleDeleteStock, handleEditStock, loadStocks} from "../api";
 
 class StocksList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            stocks: [],
-            selectedStock: null,
-        }
+
+    state = {
+        stocks: [],
+        selectedStock: null,
     }
 
     componentDidMount() {
-        axios.get('/api/stocks').then(response => {
+        loadStocks().then(response => {
             this.setState({
                 stocks: response.data.data
             })
@@ -44,11 +41,7 @@ class StocksList extends Component {
 
     handleSubmit = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        if (this.state.selectedStock.stock.id !== 0)
-            params.append('id', this.state.selectedStock.stock.id);
-        params.append('location', this.state.selectedStock.stock.location);
-        axios.put('/api/editStock', params).then(response => {
+        handleEditStock(this.state.selectedStock.stock).then(response => {
             console.log('fulfilled', response);
             console.log(response.data);
             this.setState({
@@ -58,7 +51,7 @@ class StocksList extends Component {
             $('div#message').fadeOut(300);
         }).catch(response => {
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
-                let message = $('div#message').addClass('failure');
+                const message = $('div#message').addClass('failure');
                 message.fadeIn(300);
             })
             console.log('rejected', response);
@@ -68,13 +61,11 @@ class StocksList extends Component {
 
     deleteStock = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
         if (this.state.selectedStock.stock.id !== 0) {
             if (this.state.selectedStock.cells.quantity > 0) {
                 alert('First delete all cells related to this stock');
             } else {
-                params.append('id', this.state.selectedStock.stock.id);
-                axios.delete(`/api/delStock/${this.state.selectedStock.stock.id}`).then(response => {
+                handleDeleteStock(this.state.selectedStock.stock.id).then(response => {
                     console.log('fulfilled', response);
                     console.log(response.data);
                     this.setState({
@@ -89,7 +80,6 @@ class StocksList extends Component {
         } else {
             this.setState(state => {
                 const stocks = state.stocks.filter((stock) => 0 !== stock.stock.id);
-
                 return {
                     stocks,
                 };
@@ -105,7 +95,7 @@ class StocksList extends Component {
         selectedStock.stock.location = value;
         this.setState({
             selectedStock: selectedStock
-            })
+        })
     };
 
     editStock(stock) {
@@ -194,7 +184,9 @@ class StocksList extends Component {
                                 <tr
                                     key={stockInfo.stock.id}
                                     className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                                    onClick={() => {this.editStock(stockInfo)}}>
+                                    onClick={() => {
+                                        this.editStock(stockInfo)
+                                    }}>
                                     <td className='badge-pill col-2'>
                                         {stockInfo.stock.id}
                                     </td>
@@ -218,10 +210,4 @@ class StocksList extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return {
-        user: store.user
-    }
-}
-
-export default connect(mapStateToProps, null)(withRouter(StocksList))
+export default withRouter(StocksList)

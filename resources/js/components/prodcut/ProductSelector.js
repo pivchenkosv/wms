@@ -1,18 +1,16 @@
 import React, {Component} from 'react'
-import axios from "axios";
+
 import '../Style.css';
+import {loadProducts} from "../api";
 
 class ProductSelector extends Component {
-    constructor(props) {
-        super(props);
-        console.log(props);
-        this.state = {
-            products: [],
-        }
+
+    state = {
+        products: [],
     }
 
     componentDidMount() {
-        axios.get("/api/products").then(response => {
+        loadProducts().then(response => {
             this.setState({
                 products: response.data.data
             })
