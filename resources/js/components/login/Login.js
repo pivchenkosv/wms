@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import {hashHistory} from 'react-router';
 
 class Login extends Component {
 

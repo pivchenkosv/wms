@@ -9,6 +9,7 @@ import ReportsList from "./report/ReportsList";
 import Home from "./Home";
 import LoginContainer from "../containers/LoginContainer";
 import ResetPassword from "./password/ResetPassword";
+import ResetPasswordForm from "./password/ResetPasswordForm";
 
 export const ROUTES = {
     ROLE_WORKER: {
@@ -27,6 +28,7 @@ export const ROUTES = {
             {path: '/', component: LoginContainer},
             {path: '/login', component: LoginContainer},
             {path: '/password/reset', component: ResetPassword},
+            {path: '/password/reset/:token', component: ResetPasswordForm}
         ],
     },
     ROLE_ADMIN: {

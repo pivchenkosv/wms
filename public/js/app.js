@@ -79995,7 +79995,7 @@ if (false) {} else {
 /*!***********************************************************************!*\
   !*** ./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js ***!
   \***********************************************************************/
-/*! exports provided: default, CANCEL, SAGA_LOCATION, buffers, detach, runSaga, END, isEnd, eventChannel, channel, multicastChannel, stdChannel */
+/*! exports provided: CANCEL, SAGA_LOCATION, buffers, detach, runSaga, END, isEnd, eventChannel, channel, multicastChannel, stdChannel, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84068,7 +84068,10 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "nav-link",
         href: "/login"
-      }, "Login"));
+      }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "nav-link",
+        onClick: this.logout
+      }, "Logout"));
       var userRole = user ? user.role : 'unauthorized';
       var routesData = _routes__WEBPACK_IMPORTED_MODULE_2__["ROUTES"][userRole];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -84246,7 +84249,7 @@ if(false) {}
 /*!****************************************!*\
   !*** ./resources/js/components/api.js ***!
   \****************************************/
-/*! exports provided: loadCellInfo, loadAvailableCells, loadCells, handleEditCell, handleDeleteCell, loadStocks, handleEditStock, handleDeleteStock, loadProducts, handleEditProduct, handleDeleteProduct, loadReports, loadTasks, getSubtasks, handleDeleteTask, handleCompleteTask, handleCreateTask, loginApi, logoutApi, resetPasswordApi */
+/*! exports provided: loadCellInfo, loadAvailableCells, loadCells, handleEditCell, handleDeleteCell, loadStocks, handleEditStock, handleDeleteStock, loadProducts, handleEditProduct, handleDeleteProduct, loadReports, loadTasks, getSubtasks, handleDeleteTask, handleCompleteTask, handleCreateTask, loginApi, logoutApi, resetPasswordApi, submitPasswordReset */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84271,6 +84274,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginApi", function() { return loginApi; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutApi", function() { return logoutApi; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetPasswordApi", function() { return resetPasswordApi; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "submitPasswordReset", function() { return submitPasswordReset; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
  //Cells
@@ -84387,6 +84391,14 @@ var resetPasswordApi = function resetPasswordApi(email) {
   var params = new URLSearchParams();
   params.append('email', email);
   return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/password/email', params);
+};
+var submitPasswordReset = function submitPasswordReset(data) {
+  var params = new URLSearchParams();
+  params.append('token', data.token);
+  params.append('email', data.email);
+  params.append('password', data.password);
+  params.append('password_confirmation', data.passwordConfirmation);
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/password/reset', params);
 };
 
 /***/ }),
@@ -85062,7 +85074,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85082,7 +85093,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -85371,6 +85381,172 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ResetPassword));
+
+/***/ }),
+
+/***/ "./resources/js/components/password/ResetPasswordForm.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/password/ResetPasswordForm.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api */ "./resources/js/components/api.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var ResetPasswordForm =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ResetPasswordForm, _Component);
+
+  function ResetPasswordForm() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ResetPasswordForm);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ResetPasswordForm)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      token: _this.props.match.params.token,
+      email: null,
+      password: null,
+      passwordConfirmation: null
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleInputChange", function (evt) {
+      var _evt$target = evt.target,
+          name = _evt$target.name,
+          value = _evt$target.value;
+
+      _this.setState(_defineProperty({}, name, value));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (evt) {
+      evt.preventDefault();
+      Object(_api__WEBPACK_IMPORTED_MODULE_2__["submitPasswordReset"])(_this.state).then(function (response) {
+        console.log(response);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        window.location.reload();
+      }).catch(function (reason) {
+        console.log(reason);
+        console.log(reason.data);
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(ResetPasswordForm, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container py-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row justify-content-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-8"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, "Reset Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "email",
+        className: "col-md-4 col-form-label text-md-right"
+      }, "E-Mail Address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "email",
+        type: "email",
+        className: "form-control",
+        name: "email",
+        value: this.state.email,
+        onChange: this.handleInputChange,
+        required: true,
+        autoFocus: true
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "password",
+        className: "col-md-4 col-form-label text-md-right"
+      }, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "password",
+        type: "password",
+        className: "form-control",
+        value: this.state.password,
+        onChange: this.handleInputChange,
+        name: "password",
+        required: true
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "password-confirm",
+        className: "col-md-4 col-form-label text-md-right"
+      }, "Confirm Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "password-confirm",
+        type: "password",
+        className: "form-control",
+        name: "passwordConfirmation",
+        value: this.state.passwordConfirmation,
+        onChange: this.handleInputChange,
+        required: true
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group row mb-0"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-6 offset-md-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary"
+      }, "Reset Password")))))))));
+    }
+  }]);
+
+  return ResetPasswordForm;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ResetPasswordForm));
 
 /***/ }),
 
@@ -86014,6 +86190,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Home */ "./resources/js/components/Home.js");
 /* harmony import */ var _containers_LoginContainer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../containers/LoginContainer */ "./resources/js/containers/LoginContainer.js");
 /* harmony import */ var _password_ResetPassword__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./password/ResetPassword */ "./resources/js/components/password/ResetPassword.js");
+/* harmony import */ var _password_ResetPasswordForm__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./password/ResetPasswordForm */ "./resources/js/components/password/ResetPasswordForm.js");
+
 
 
 
@@ -86060,6 +86238,9 @@ var ROUTES = {
     }, {
       path: '/password/reset',
       component: _password_ResetPassword__WEBPACK_IMPORTED_MODULE_10__["default"]
+    }, {
+      path: '/password/reset/:token',
+      component: _password_ResetPasswordForm__WEBPACK_IMPORTED_MODULE_11__["default"]
     }]
   },
   ROLE_ADMIN: {

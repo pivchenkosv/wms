@@ -135,3 +135,12 @@ export const resetPasswordApi = (email) => {
     params.append('email', email);
     return axios.post('/api/password/email', params)
 }
+
+export const submitPasswordReset = (data) => {
+    const params = new URLSearchParams();
+    params.append('token', data.token);
+    params.append('email', data.email);
+    params.append('password', data.password);
+    params.append('password_confirmation', data.passwordConfirmation);
+    return axios.post('/api/password/reset', params)
+}

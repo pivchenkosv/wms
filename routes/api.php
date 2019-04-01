@@ -117,3 +117,7 @@ Route::post('password/email', [
     'as' => 'password.email',
     'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail'
 ]);
+Route::post('password/reset', [
+    'as' => 'password.update',
+    'uses' => 'Auth\ResetPasswordController@reset'
+]);

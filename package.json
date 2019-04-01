@@ -44,6 +44,7 @@
     "react-router-dom": "^4.3.1",
     "react-use-localstorage": "latest",
     "redux": "^4.0.1",
-    "react-addons-update": "latest"
+    "react-addons-update": "latest",
+    "react-router": "latest"
   }
 }

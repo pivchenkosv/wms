@@ -25,7 +25,7 @@ class Header extends React.Component {
             return (
                 <li className="nav-item">
                     <a className="nav-link" href="/login">Login</a>
-                    {/*<a className="nav-link" onClick={this.logout}>Logout</a>*/}
+                    <a className="nav-link" onClick={this.logout}>Logout</a>
                 </li>
             );
         const userRole = user ? user.role : 'unauthorized';
