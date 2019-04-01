@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import axios from "axios";
 
 import '../Style.css';
 import {loadCellInfo} from "../api";
@@ -23,7 +22,7 @@ class Cell extends Component {
         const {cellProducts} = this.state;
         const {unmountForm} = this.props;
         return (
-            <div>
+            <div className='sticky-1'>
                 <div className="card card-header">
                     <div className="row">
                         <div className='col-sm-10'>{`Cell id: ` + this.state.cellId}</div>

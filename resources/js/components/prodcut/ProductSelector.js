@@ -35,7 +35,7 @@ class ProductSelector extends Component {
                 </div>
                 <table className='card'>
                     <thead>
-                    <tr className='card-header list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
+                    <tr className='card-header d-flex justify-content-between align-items-left'>
                         <th className='badge-pill col-3'>id</th>
                         <th className='badge-pill col-3'>name</th>
                         <th className='badge-pill col-3'>description</th>

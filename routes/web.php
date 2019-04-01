@@ -17,6 +17,6 @@ Route::get('password/reset/{token}', [
     'uses' => 'Auth\ResetPasswordController@showResetForm'
 ]);
 
-Route::view('/{any?}', 'app');
+Route::view('/{any?}', 'app')->where('any', '.*');
 Route::view('/admin/users', 'app');
 Route::view('/password/reset', 'app');

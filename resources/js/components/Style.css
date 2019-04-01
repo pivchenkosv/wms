@@ -98,4 +98,9 @@
         transition: top 0.3s; /* Transition effect when sliding down (and up) */
         z-index: 5;
     }
+
+    .sticky-1 {
+        position: sticky;
+        top: 15%;
+    }
 }

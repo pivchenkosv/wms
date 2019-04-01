@@ -41,10 +41,11 @@ class CellSelector extends Component {
                         <th className='badge badge-pill col-3'>total volume</th>
                         <th className='badge badge-pill col-4'>status</th>
                     </tr>
-
+                    <tbody className='overflow-auto' style={{height: '200px'}}>
                     {cells.map(cell => (
                         <tr className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                            onClick={() => this.returnSelected(cell)}>
+                            onClick={() => this.returnSelected(cell)}
+                            key={cell.id}>
                                     <th className='badge col-1 text-size'>
                                         {cell.id}
                                     </th>
@@ -62,7 +63,7 @@ class CellSelector extends Component {
                                     </th>
                         </tr>
                     ))}
-
+                    </tbody>
                 </table>
             </div>
         )

@@ -144,3 +144,7 @@ export const submitPasswordReset = (data) => {
     params.append('password_confirmation', data.passwordConfirmation);
     return axios.post('/api/password/reset', params)
 }
+
+export const usersApi = () => {
+    return axios.get('/api/admin/users')
+}

@@ -22,7 +22,7 @@ class Task extends Component {
         const {subtasks} = this.state;
         const {unmountForm} = this.props;
         return (
-            <div>
+            <div className='sticky-1 card'>
                 <div className="card-header">
                     <div className="row">
                         <div className='col-sm-10'>{`Task id: ` + this.state.taskId}</div>

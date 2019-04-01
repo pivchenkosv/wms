@@ -131,7 +131,7 @@ class CellsList extends Component {
     stocksList = () => {
 
         return (
-            <div>
+            <div className='sticky-1'>
                 <div className='card card-header'>
                     <div className='row'>
                         <span className='col-sm-6'>Select Stock</span>

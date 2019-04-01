@@ -1,16 +1,19 @@
 import React, {Component} from 'react'
 import DatePicker from "react-datepicker/es";
 import {withRouter} from "react-router-dom";
+import {Dropdown} from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
 import CellSelector from "../cell/CellSelector";
 import ProductSelector from "../prodcut/ProductSelector";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import {getSubtasks, handleCreateTask} from "../api";
+import {getSubtasks, handleCreateTask, usersApi} from "../api";
 
 class NewTask extends Component {
 
     state = {
+        users: null,
         startDate: new Date(),
         task: {
             id: null,
@@ -40,6 +43,15 @@ class NewTask extends Component {
         });
     }
 
+    handleUserChange = (event, {value}) => {
+        this.setState({
+            task: {
+                ...this.state.task,
+                assigned_user: value,
+            }
+        });
+    }
+
     handleDateChange = (date) => {
         this.setState({
             task: {
@@ -50,6 +62,12 @@ class NewTask extends Component {
     }
 
     componentDidMount() {
+        usersApi().then(response => {
+            const users = response.data.data.map((user) => {
+                return {key: user.id, value: user.id, text: user.name, role: user.role}
+            })
+            this.setState({users: users})
+        })
         if (this.props.task && this.props.task.id !== 0) {
             this.setState({task: this.props.task})
             getSubtasks(this.props.task.id).then(response => {
@@ -235,8 +253,12 @@ class NewTask extends Component {
     }
 
     render() {
-        const {subtasks} = this.state;
+        const {subtasks, users} = this.state;
+        const {assigned_user} = this.state.task
+        const usersOpts = users ? users.filter(user => user.role === 'ROLE_WORKER') : null;
+
         return (
+
             <div className='container py-4'>
                 <div className='row justify-content-left'>
                     <div className="card">
@@ -256,12 +278,17 @@ class NewTask extends Component {
                         </div>
                         <div className="card-body">
                             <form id="newTask" onSubmit={this.handleSubmit}>
-                                <div className="row">
-                                    <label htmlFor="user" className="col-form-label text-md-left mx-3">For
-                                        user: </label>
-                                    <input id="user" type="text" className="col-md-2 left"
-                                           name="assigned_user" value={this.state.task.assigned_user}
-                                           onChange={this.handleChange}/>
+                                <div className="mx-1 mb-2">
+                                    <Dropdown
+                                        placeholder='For user'
+                                        name='assigned_user'
+                                        fluid
+                                        search
+                                        selection
+                                        options={usersOpts}
+                                        onChange={this.handleUserChange}
+                                        value={assigned_user}
+                                    />
                                 </div>
                                 <div className="row">
                                     <label htmlFor="description" className="col-12 text-md-left">Description: </label>
