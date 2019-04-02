@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import {handleDeleteProduct, handleEditProduct, loadProducts} from "../api";
+import Product from "./Product";
 
 class ProductsList extends Component {
 
@@ -163,11 +164,11 @@ class ProductsList extends Component {
     }
 
     render() {
-        const {products} = this.state
+        const {products, product} = this.state
         const {user} = this.props.user
         return (
             <div className='container py-4'>
-                <div className='row justify-content-center'>
+                <div className='row justify-content-left'>
                     <div className='col-md-8'>
                         <div className='card'>
                             <div className='card-header'>
@@ -211,6 +212,9 @@ class ProductsList extends Component {
                             ))}
                             </tbody>
                         </table>
+                    </div>
+                    <div id="product" className="col-md-4">
+                        {product ? <Product productId={product.id}/> : null}
                     </div>
                 </div>
             </div>

@@ -53,6 +53,10 @@ export const loadProducts = () => {
     return axios.get("/api/products")
 }
 
+export const loadProductInfo = (productId) => {
+    return axios.get(`/api/products/${productId}`)
+}
+
 export const handleEditProduct = (product) => {
     const params = new URLSearchParams();
     if (product.id !== 0)

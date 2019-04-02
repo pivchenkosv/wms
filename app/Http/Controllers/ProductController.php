@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -51,6 +52,20 @@ class ProductController extends Controller
         if (Product::destroy($id))
         {
             $products = Product::all();
+            return response()->json(['success' => true, 'data' => $products]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+
+    public function showInfo(Request $request, $id)
+    {
+        if ($id) {
+            $products = DB::table('cell_product')
+                ->join('products', 'cell_product.product_id', '=', 'products.id')
+                ->where('cell_product.product_id', '=', $id)
+                ->select('cell_id', 'volume', 'quantity')
+                ->get();
             return response()->json(['success' => true, 'data' => $products]);
         }
 

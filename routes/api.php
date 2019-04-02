@@ -53,6 +53,10 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => '',
         'uses' => 'ProductController@delete'
     ])->middleware(['manager']);
+    Route::get('products/{id}', [
+        'as' => 'productInfo',
+        'uses' => 'ProductController@showInfo'
+    ]);
 
     //Stocks
     Route::get('stocks', [

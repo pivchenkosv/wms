@@ -82,6 +82,7 @@ class TasksList extends Component {
     tableHeader = (history) => {
 
         const {user} = this.props.user
+        const {task} = this.state
 
         switch (user.role) {
             case "ROLE_ADMIN":
@@ -101,12 +102,13 @@ class TasksList extends Component {
                                 />
                             </div>
                             <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2 mr-1'
-                                    disabled={!this.state.task}
+                                    disabled={!task}
                                     onClick={this.handleDelete}>
                                 Delete
                             </button>
                             <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                    onClick={() => this.createNewTask(history)}>
+                                    onClick={() => this.createNewTask(history)}
+                                    disabled={task && task.status === 'COMPLETED'}>
                                 Create/Update task
                             </button>
                         </div>

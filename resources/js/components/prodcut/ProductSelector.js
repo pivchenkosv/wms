@@ -42,7 +42,7 @@ class ProductSelector extends Component {
                         <th className='badge-pill col-3'>volume</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='overflow-auto' style={{height: '200px'}}>
                     {products.map(product => (
                         <tr key={product.id}
                             className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'

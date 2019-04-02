@@ -9,12 +9,12 @@ import ProductSelector from "../prodcut/ProductSelector";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import {getSubtasks, handleCreateTask, usersApi} from "../api";
+import {ACTIONS} from "./taskActions";
 
 class NewTask extends Component {
 
     state = {
         users: null,
-        startDate: new Date(),
         task: {
             id: null,
             assigned_user: 0,
@@ -22,6 +22,7 @@ class NewTask extends Component {
             at: new Date(),
             status: null,
             created_by: null,
+            action: 'custom',
         },
         subtasks: [],
         newSubtaskId: -1,
@@ -30,11 +31,43 @@ class NewTask extends Component {
             column: null
         },
         message: null,
-        errors: null,
+    }
+
+    handleActionChange = (e, {name, value}) => {
+        this.setState({
+            task: {
+                ...this.state.task,
+                [name]: value,
+            }
+        }, () => {
+            switch (this.state.task.action) {
+                case 'shipment': {
+                    const newSubtasks = this.state.subtasks.map(el => (
+                        {...el, ['to_cell']: 1, ['from_cell']: 0, ['product_id']: 0}
+                    ))
+
+                    this.setState({
+                        subtasks: newSubtasks,
+                    })
+                    break
+                }
+                case 'acceptance': {
+                    const newSubtasks = this.state.subtasks.map(el => (
+                        {...el, ['from_cell']: 1, ['to_cell']: 0, ['product_id']: 0}
+                    ))
+
+                    this.setState({
+                        subtasks: newSubtasks,
+                    })
+                    break
+                }
+            }
+        })
     }
 
     handleChange = (event) => {
         const {name, value} = event.target;
+
         this.setState({
             task: {
                 ...this.state.task,
@@ -98,13 +131,30 @@ class NewTask extends Component {
     }
 
     createNewSubtask = () => {
+        let from_cell = 0, to_cell = 0;
+        switch (this.state.task.action) {
+            case 'acceptance':{
+                from_cell = 1;
+                break;
+            }
+            case 'shipment':{
+                to_cell = 1;
+                break;
+            }
+            default: {
+                from_cell = 0;
+                to_cell = 0;
+                break;
+            }
+        }
         const newSubtask = {
             id: this.state.newSubtaskId,
-            from_cell: 0,
-            to_cell: 0,
+            from_cell: from_cell,
+            to_cell: to_cell,
             product_id: 0,
             quantity: 0,
         }
+
         this.setState({
             subtasks: [...this.state.subtasks, newSubtask],
             newSubtaskId: this.state.newSubtaskId - 1,
@@ -158,29 +208,13 @@ class NewTask extends Component {
 
     setSubtaskState = (id) => {
         const selectedId = this.state.selected.subtask.id;
-        let newSubtasks = null
-        switch (this.state.selected.column) {
-            case "from_cell":
-                newSubtasks = this.state.subtasks.map(el => (
-                    el.id === selectedId ? {...el, from_cell: id} : el
-                ))
-                break;
-            case "to_cell":
-                newSubtasks = this.state.subtasks.map(el => (
-                    el.id === selectedId ? {...el, to_cell: id} : el
-                ))
-                break;
-            case "product_id":
-                newSubtasks = this.state.subtasks.map(el => (
-                    el.id === selectedId ? {...el, product_id: id} : el
-                ))
-                break;
-            case "quantity":
-                newSubtasks = this.state.subtasks.map(el => (
-                    el.id === selectedId ? {...el, quantity: id} : el
-                ))
-                break;
-        }
+        let newSubtasks
+        const {column} = this.state.selected
+
+        newSubtasks = this.state.subtasks.map(el => (
+            el.id === selectedId ? {...el, [column]: id} : el
+        ))
+
         this.setState({
             subtasks: newSubtasks,
             selected: null
@@ -194,9 +228,14 @@ class NewTask extends Component {
         }
         switch (this.state.selected.column) {
             case "from_cell":
-            case  "to_cell":
-                return <CellSelector returnSelected={this.setSubtaskState}/>
-            case  "product_id":
+                if (this.state.task.action === 'acceptance')
+                    return null
+                return <CellSelector returnSelected={this.setSubtaskState} action={this.state.task.action}/>
+            case "to_cell":
+                if (this.state.task.action === 'shipment')
+                    return null
+                return <CellSelector returnSelected={this.setSubtaskState} action={this.state.task.action}/>
+            case "product_id":
                 return <ProductSelector returnSelected={this.setSubtaskState}/>
         }
     }
@@ -211,6 +250,10 @@ class NewTask extends Component {
             subtasks: newSubtasks,
         })
     };
+
+    countMaxQuantity = (subtask) => {
+        return null;
+    }
 
     selected = (subtask) => {
 
@@ -236,7 +279,7 @@ class NewTask extends Component {
                 {(this.state.selected && this.state.selected.column === "quantity" && this.state.selected.subtask.id === subtask.id) ?
                     <input id={subtask.id} className="col-3 text-size" name="quantity" type="number"
                            value={subtask.quantity}
-                           min="1" max="20"
+                           min="1" max={this.countMaxQuantity(subtask)}
                            onChange={this.inputChange}/> :
                     <td onClick={() => this.selectCell(subtask, "quantity")}
                         className='badge badge-pill col-3'>
@@ -253,7 +296,7 @@ class NewTask extends Component {
     }
 
     render() {
-        const {subtasks, users} = this.state;
+        const {subtasks, users, actions} = this.state;
         const {assigned_user} = this.state.task
         const usersOpts = users ? users.filter(user => user.role === 'ROLE_WORKER') : null;
 
@@ -264,15 +307,26 @@ class NewTask extends Component {
                     <div className="card">
                         <div className="card-header">
                             <div className='row'>
-                                <div className='col-3'>
+                                <div className='col-2 pl-1 pr-0 pt-2 text-center'>
                                     New Task
                                 </div>
-                                <div className='col-8'>
+                                <div className='col-6 px-1 pt-2'>
                                     {
                                         <div id='message' className='alert-box success'>
                                             {this.state.message}
                                         </div>
                                     }
+                                </div>
+                                <div className='col-4 py-0'>
+                                    <Dropdown
+                                        placeholder='Action'
+                                        name='action'
+                                        fluid
+                                        selection
+                                        options={ACTIONS}
+                                        onChange={this.handleActionChange}
+                                        value={this.state.task.action}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -298,7 +352,7 @@ class NewTask extends Component {
                                 </div>
                                 <div className="row">
                                     <label htmlFor="description"
-                                           className="col-2 col-form-label text-md-left">At: </label>
+                                           className="col-2 col-form-label text-md-left pt-0">At: </label>
                                     <DatePicker
                                         minDate={new Date()}
                                         selected={new Date(this.state.task.at)}
