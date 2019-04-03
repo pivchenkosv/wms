@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     //Reports
     Route::get('reports', [
@@ -29,10 +29,10 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => '',
         'uses' => 'AdminController@delete'
     ])->middleware(['admin']);
-    Route::post('register', [
+    Route::middleware(['admin'])->post('register', [
         'as' => '',
         'uses' => 'Auth\RegisterController@register'
-    ])->middleware(['admin']);
+    ]);
 
     //Logout
     Route::post('logout', [
@@ -117,7 +117,7 @@ Route::group(['middleware' => ['auth']], function () {
     ])->middleware(['manager']);
 
 });
-Route::group(['middleware' => ['guest']], function () {
+Route::group(['middleware' => ['api-header']], function () {
 
     Route::post('login', [
         'as' => '',

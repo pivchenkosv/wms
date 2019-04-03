@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 
 import Task from "./Task";
-import {handleCompleteTask, handleDeleteTask, loadTasks} from "../api";
+import {handleCompleteTask, handleDeleteTask} from "../api";
 
 class TasksList extends Component {
 
@@ -29,8 +29,7 @@ class TasksList extends Component {
                 this.setState({table: table})
             })
         }).catch(reason => {
-            localStorage.clear();
-            window.location.reload()
+            // window.location.reload()
         })
     }
 

@@ -1,11 +1,7 @@
-import axios from 'axios';
-import {loadUsers, updateProfile} from '../actions/actionCreators';
-import { browserHistory } from 'react-router';
+import {loadUsers} from '../actions/actionCreators';
 import { takeLatest, call, put } from 'redux-saga/effects';
+import {usersApi} from "../components/api";
 
-function usersApi(action) {
-    return axios.get('/api/admin/users')
-}
 
 function* usersEffectSaga(action) {
     console.log('usersEffectSaga')

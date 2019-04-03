@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import '../Style.css';
+import {handleCreateUser} from "../api";
 
 class User extends Component {
 
@@ -52,18 +53,7 @@ class User extends Component {
 
     handleSubmit = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        if (this.state.userInfo.id !== null)
-            params.append('id', this.state.userInfo.id);
-        params.append('name', this.state.userInfo.name);
-        params.append('email', this.state.userInfo.email);
-        params.append('role', this.state.userInfo.role);
-        params.append('password', '12345678');
-        params.append('password_confirmation', '12345678');
-        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        axios.post('/api/register', params, {
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        }).then(response => {
+        handleCreateUser(this.state.userInfo).then(response => {
             console.log('fulfilled', response);
             console.log(response.data);
             this.props.rerenderUsersList(response.data);

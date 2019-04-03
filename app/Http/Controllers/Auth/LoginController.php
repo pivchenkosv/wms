@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -34,4 +35,40 @@ class LoginController extends Controller
      * @return void
      */
     public function __construct() {}
+
+    private function getToken($email, $password)
+    {
+        $token = null;
+        //$credentials = $request->only('email', 'password');
+        try {
+            if (!$token = JWTAuth::attempt( ['email'=>$email, 'password'=>$password])) {
+                return response()->json([
+                    'response' => 'error',
+                    'message' => 'Password or email is invalid',
+                    'token'=>$token
+                ]);
+            }
+        } catch (JWTAuthException $e) {
+            return response()->json([
+                'response' => 'error',
+                'message' => 'Token creation failed',
+            ]);
+        }
+        return $token;
+    }
+    public function login(Request $request)
+    {
+        $user = \App\User::where('email', $request->email)->get()->first();
+        if ($user && \Hash::check($request->password, $user->password)) // The passwords match...
+        {
+            $token = self::getToken($request->email, $request->password);
+            $user->auth_token = $token;
+            $user->save();
+            $response = ['success'=>true, 'user'=>$user];
+        }
+        else
+            $response = ['success'=>false, 'data'=>'Record doesnt exists'];
+
+        return response()->json($response, 201);
+    }
 }
