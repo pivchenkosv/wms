@@ -8,12 +8,15 @@ function* loginEffectSaga(action) {
     try {
         let { data } = yield call(loginApi, action.payload);
         console.log('data ', data)
-        localStorage.setItem('user', JSON.stringify(data.user));
+        if (data.success) {
+            localStorage.setItem('user', JSON.stringify(data.user));
+            yield put(updateProfile(data.user));
+            yield put(setErrorMessage(null))
+            window.location.reload()
+        }
 
-        yield put(updateProfile(data.user));
-        yield put(setErrorMessage(null))
-        window.location.reload()
-
+        yield put(setErrorMessage(data.data))
+        $( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
     } catch (e) {
         yield put(setErrorMessage(e.response.data.message))
 

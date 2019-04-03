@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 trait ResetsPasswords
 {
@@ -44,16 +45,16 @@ trait ResetsPasswords
         // database. Otherwise we will parse the error and return the response.
         $response = $this->broker()->reset(
             $this->credentials($request), function ($user, $password) {
-                $this->resetPassword($user, $password);
-            }
+            $this->resetPassword($user, $password);
+        }
         );
 
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         return $response == Password::PASSWORD_RESET
-                    ? $this->sendResetResponse($request, $response)
-                    : $this->sendResetFailedResponse($request, $response);
+            ? $this->sendResetResponse($request, $response)
+            : $this->sendResetFailedResponse($request, $response);
     }
 
     /**
@@ -110,7 +111,8 @@ trait ResetsPasswords
 
         event(new PasswordReset($user));
 
-        $this->guard()->login($user);
+//        $this->guard('api')->login($user);
+
     }
 
     /**
@@ -124,7 +126,7 @@ trait ResetsPasswords
     {
 //        return redirect($this->redirectPath())
 //                            ->with('status', trans($response));
-        return response()->json(['success' => true, 'user' => $this->guard()->user()]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -137,8 +139,8 @@ trait ResetsPasswords
     protected function sendResetFailedResponse(Request $request, $response)
     {
         return redirect()->back()
-                    ->withInput($request->only('email'))
-                    ->withErrors(['email' => trans($response)]);
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => trans($response)]);
     }
 
     /**

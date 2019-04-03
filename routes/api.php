@@ -122,7 +122,7 @@ Route::group(['middleware' => ['api-header']], function () {
     Route::post('login', [
         'as' => '',
         'uses' => 'Auth\LoginController@login'
-    ])->middleware('guest');
+    ]);
 
     Route::post('password/email', [
         'as' => 'password.email',

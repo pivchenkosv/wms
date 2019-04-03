@@ -12,6 +12,7 @@ class User extends Component {
             userInfo: this.props.user,
             errors: null,
         }
+        console.log('props.user ', this.props.user)
         this.handleRoleChange = this.handleRoleChange.bind(this);
     }
 

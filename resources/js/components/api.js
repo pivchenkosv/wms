@@ -161,13 +161,13 @@ export const loginApi = (authParams) => {
     const params = new URLSearchParams();
     params.append('email', authParams.email);
     params.append('password', authParams.password);
-    params.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    // params.append('_token', $('meta[name="csrf-token"]').attr('content'));
     return axios.post('api/login', params);
 }
 
 export const logoutApi = (token) => {
     const params = new URLSearchParams();
-    params.append('token', $('meta[name="csrf-token"]').attr('content'));
+    params.append('token', authToken);
     return axios.post('/api/logout', params)
 }
 
@@ -198,6 +198,7 @@ export const usersApi = () => {
 }
 
 export const handleCreateUser = (userInfo) => {
+    console.log('userInfo ', userInfo)
     const params = new URLSearchParams();
     if (userInfo.id !== null)
         params.append('id', userInfo.id);

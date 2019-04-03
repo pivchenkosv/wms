@@ -21,9 +21,7 @@ class ResetPasswordForm extends Component {
     handleSubmit = (evt) => {
         evt.preventDefault()
         submitPasswordReset(this.state).then(response => {
-            console.log(response)
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            window.location.reload()
+            this.props.history.push('/login')
         }).catch(reason => {
             console.log(reason);
             console.log(reason.data);

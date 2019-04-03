@@ -29,7 +29,7 @@ class UsersList extends Component {
                     id: null,
                     name: '',
                     email: '',
-                    role: '',
+                    role: 'ROLE_WORKER',
                 }
             });
         });

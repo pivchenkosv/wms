@@ -85,14 +85,15 @@ class RegisterController extends Controller
 
         if ($request->has('id')) {
             $user = User::find($request->id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->auth_token = $token;
+
 
         } else {
-            $user = new User;
+            $user = new \App\User($payload);
         }
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role = $request->role;
-        $user->auth_token = $token;
 
 //        $user = User::updateOrCreate(
 //            ['email' => $request->email],
