@@ -212,3 +212,11 @@ export const handleCreateUser = (userInfo) => {
         headers: headers
     })
 }
+
+export const handleDeleteUser = (id) => {
+
+    return axios.delete(`/api/deleteUser/${id}`, {
+        headers: headers
+    })
+
+}

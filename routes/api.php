@@ -111,6 +111,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => '',
         'uses' => 'TaskController@save'
     ])->middleware(['manager']);
+
     Route::delete('delTask/{id}', [
         'as' => '',
         'uses' => 'TaskController@delete'
@@ -138,3 +139,7 @@ Route::group(['middleware' => ['api-header']], function () {
 Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('createTask', [
+    'as' => '',
+    'uses' => 'TaskController@createTask'
+]);

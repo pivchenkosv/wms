@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cell;
 use App\Mail\TaskCreated;
 use App\Mail\TaskUpdated;
+use App\Product;
 use App\Report;
 use App\Subtask;
 use App\Task;
@@ -30,7 +31,11 @@ class TaskController extends Controller
     public function showTaskInfo(Request $request)
     {
         $taskId = $request->input('taskId');
-        $subtasks = DB::table('subtasks')->join('tasks', 'subtasks.task_id', '=', 'tasks.id')->where('subtasks.task_id', '=', $taskId)->select('subtasks.id', 'from_cell', 'to_cell', 'product_id', 'quantity')->get();
+        $subtasks = DB::table('subtasks')
+            ->join('tasks', 'subtasks.task_id', '=', 'tasks.id')
+            ->where('subtasks.task_id', '=', $taskId)
+            ->select('subtasks.id', 'from_cell', 'to_cell', 'product_id', 'quantity')
+            ->get();
         return json_encode($subtasks);
     }
 
@@ -42,7 +47,7 @@ class TaskController extends Controller
         ]);
         $validator->validate();
         $subtasks = json_decode($request->input('subtasks'));
-//        die(var_dump($subtasks));
+
         foreach ($subtasks as $subtask) {
             $subtasksValidator = Validator::make((array)$subtask, [
                 'from_cell' => ['exists:cells,id'],
@@ -217,5 +222,88 @@ class TaskController extends Controller
                     return $query->insert(['product_id' => $subtask->product_id, 'cell_id' => $subtask->to_cell, 'quantity' => $subtask->quantity]);
                 });
         }
+    }
+
+    public function createTask(Request $request)
+    {
+        $userIds = json_decode($request->input('userIds'));
+        $taskType = $request->input('taskType');
+        $products = json_decode($request->input('products'));
+        $subtasks = [];
+
+
+        foreach ($products as $product) {
+            $productDB = Product::find($product->id);
+            $cells = $this->getCells($taskType, $product->id);
+            $productQuantityRemaining = $product->quantity;
+
+            foreach ($cells as $cell) {
+                if ($productQuantityRemaining <= 0)
+                    break;
+                if ($cell->available_volume < $productDB->volume)
+                    continue;
+
+                $quantity = intdiv($cell->available_volume, $productDB->volume);
+                $subtask = [
+                    'from_cell' => $taskType === 'acceptance' ? 1 : $cell->id,
+                    'to_cell' => $taskType === 'shipment' ? 1 : $cell->id,
+                    'product_id' => $product->id,
+                    'quantity' => $productQuantityRemaining < $quantity ?
+                        $productQuantityRemaining :
+                        $quantity,
+                ];
+                $productQuantityRemaining -= $quantity;
+                $subtasks[] = $subtask;
+            }
+        }
+
+        return ['subtasks' => $subtasks, 'cells' => $this->getCells($taskType, $products[0]->id)];
+
+    }
+
+    public function getCells($taskType, $productId)
+    {
+//        $taskType = $request->input('taskType');
+//        $productId = json_decode($request->input('product'));
+        switch ($taskType) {
+            case 'acceptance':
+                {
+
+                    $cells = DB::table('cells')
+                        ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
+                        ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
+                        ->select('cells.*',
+                            DB::raw('ifnull(cells.volume - SUM(cell_product.quantity * products.volume), cells.volume) as available_volume')
+                        )
+                        ->where('cells.status', '!=', 'RESERVED')
+                        ->orderBy('available_volume', 'asc')
+                        ->groupBy('cells.id');
+
+
+                    $cells = $cells
+                        ->orWhereRaw('cells.id not in(select distinct(cell_product.cell_id) as ids from cell_product)')
+                        ->get();
+
+                    return $cells;
+                }
+            case 'shipment':
+                {
+                    $cells = DB::table('cells')
+                        ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
+                        ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
+                        ->select('cells.*', DB::raw('ifnull(cells.volume - SUM(cell_product.quantity * products.volume), cells.volume) as available_volume'))
+                        ->where('cells.status', '!=', 'RESERVED')
+                        ->where('cell_product.product_id', $productId)
+                        ->WhereRaw('cells.id in(select distinct(cell_product.cell_id) as ids from cell_product)')
+                        ->orderBy('available_volume', 'desc')
+                        ->groupBy('cells.id')
+                        ->get();
+
+                    return $cells;
+                }
+        }
+
+
+//        return response()->json(['data' => $cells]);
     }
 }

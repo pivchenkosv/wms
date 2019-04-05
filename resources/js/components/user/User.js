@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import '../Style.css';
-import {handleCreateUser} from "../api";
+import {handleCreateUser, handleDeleteUser} from "../api";
 
 class User extends Component {
 
@@ -66,13 +66,13 @@ class User extends Component {
                 $("div.failure").fadeIn(300).delay(1500).fadeOut(400);
             })
         })
+        this.props.unmountForm()
     };
 
     deleteUser = (event) => {
         event.preventDefault();
-        const id = new URLSearchParams();
-        id.append('id', this.state.userInfo.id);
-        axios.delete(`/api/deleteUser/${this.state.userInfo.id}`).then(response => {
+
+        handleDeleteUser(this.state.userInfo.id).then(response => {
             this.props.rerenderUsersList(response.data);
         })
         this.props.unmountForm()

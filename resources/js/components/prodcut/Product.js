@@ -12,9 +12,11 @@ class Product extends Component {
 
     componentDidMount() {
         loadProductInfo(this.state.productId).then(response => {
-            this.setState({
-                productCells: response.data.data
-            })
+            if (response.data.success) {
+                this.setState({
+                    productCells: response.data.data
+                })
+            }
         })
     }
 
@@ -25,7 +27,7 @@ class Product extends Component {
             <div className='sticky-1'>
                 <div className="card card-header">
                     <div className="row">
-                        <div className='col-sm-10'>{`Cells having product: ` + productId}</div>
+                        <div className='col-sm-10'>{`Cells containing product ` + productId}</div>
                         {/*<div className='col-sm-2'>*/}
                         {/*    <button className='btn btn-danger py-0 px-1 float-right text-size'*/}
                         {/*            onClick={unmountForm}>{'\u2718'}</button>*/}

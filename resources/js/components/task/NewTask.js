@@ -177,7 +177,8 @@ class NewTask extends Component {
         handleCreateTask(this.state.task, this.state.subtasks).then(() => {
 
             this.setState({message: 'Success!'}, function () {
-                $("div.success").fadeIn(300).delay(1500).fadeOut(400);
+                const message = $('div#message').addClass('success');
+                message.fadeIn(300).delay(1500).fadeOut(400);
             })
 
             setTimeout(() => this.cancel(), 2500);
