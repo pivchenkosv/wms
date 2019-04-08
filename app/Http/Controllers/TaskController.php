@@ -10,6 +10,7 @@ use App\Report;
 use App\Subtask;
 use App\Task;
 use App\User;
+use ArrayIterator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -224,30 +225,54 @@ class TaskController extends Controller
         }
     }
 
-    public function createTask(Request $request)
+    public function createTasks(Request $request)
     {
+//        return $request;
         $userIds = json_decode($request->input('userIds'));
         $taskType = $request->input('taskType');
         $products = json_decode($request->input('products'));
-        $subtasks = [];
+        $opts = ['description' => $request->input('description'), 'at' => $request->input('at')];
 
+        $subtasks = $this->makeSubtasks($taskType, $products);
 
+        $id = new ArrayIterator($userIds);
+        $subtasksForUsers = [];
+        foreach ($subtasks as $subtask) {
+            $subtasksForUsers[$id->current()][] = $subtask;
+            $id->next();
+            if (!$id->valid())
+                $id->rewind();
+        }
+
+        $tasks = [];
+        foreach ($subtasksForUsers as $id => $subtasksForUser) {
+//            return $subtasksForUser;
+            $tasks[] = $this->makeTask($id, $subtasksForUser, $opts);
+        }
+
+        return $tasks;
+//        return ['subtasks' => $subtasks, 'cells' => $this->getCells($taskType, $products[0]->id)];
+
+    }
+
+    private function makeSubtasks($taskType, $products)
+    {
         foreach ($products as $product) {
-            $productDB = Product::find($product->id);
-            $cells = $this->getCells($taskType, $product->id);
+            $productDB = Product::find($product->product_id);
+            $cells = $this->getCells($taskType, $product->product_id);
             $productQuantityRemaining = $product->quantity;
 
             foreach ($cells as $cell) {
+                $quantity = $taskType === 'acceptance' ? intdiv($cell->available_volume, $productDB->volume) : $cell->available_quantity;
                 if ($productQuantityRemaining <= 0)
                     break;
-                if ($cell->available_volume < $productDB->volume)
+                if ($quantity <= 0)
                     continue;
 
-                $quantity = intdiv($cell->available_volume, $productDB->volume);
                 $subtask = [
                     'from_cell' => $taskType === 'acceptance' ? 1 : $cell->id,
                     'to_cell' => $taskType === 'shipment' ? 1 : $cell->id,
-                    'product_id' => $product->id,
+                    'product_id' => $product->product_id,
                     'quantity' => $productQuantityRemaining < $quantity ?
                         $productQuantityRemaining :
                         $quantity,
@@ -257,14 +282,34 @@ class TaskController extends Controller
             }
         }
 
-        return ['subtasks' => $subtasks, 'cells' => $this->getCells($taskType, $products[0]->id)];
+        return $subtasks;
+    }
 
+    private function makeTask($userId, $subtasksForUser, $opts = [])
+    {
+        $task = new Task;
+        $task->assigned_user = $userId;
+        $task->description = $opts['description'];
+        $task->at = $opts['at'];
+        $task->created_by = Auth::user()->id;
+        $task->save();
+
+        foreach ($subtasksForUser as $subtaskForUser) {
+            $subtask = new Subtask;
+//            $subtask->id = 'id';
+            $subtask->task_id = $task->id;
+            $subtask->from_cell = $subtaskForUser['from_cell'];
+            $subtask->to_cell = $subtaskForUser['to_cell'];
+            $subtask->product_id = $subtaskForUser['product_id'];
+            $subtask->quantity = $subtaskForUser['quantity'];
+            $subtask->save();
+        }
+
+        return [$task, Subtask::where('task_id', '=', $task->id)];
     }
 
     public function getCells($taskType, $productId)
     {
-//        $taskType = $request->input('taskType');
-//        $productId = json_decode($request->input('product'));
         switch ($taskType) {
             case 'acceptance':
                 {
@@ -276,12 +321,9 @@ class TaskController extends Controller
                             DB::raw('ifnull(cells.volume - SUM(cell_product.quantity * products.volume), cells.volume) as available_volume')
                         )
                         ->where('cells.status', '!=', 'RESERVED')
-                        ->orderBy('available_volume', 'asc')
-                        ->groupBy('cells.id');
-
-
-                    $cells = $cells
                         ->orWhereRaw('cells.id not in(select distinct(cell_product.cell_id) as ids from cell_product)')
+                        ->orderBy('available_volume', 'asc')
+                        ->groupBy('cells.id')
                         ->get();
 
                     return $cells;
@@ -291,12 +333,10 @@ class TaskController extends Controller
                     $cells = DB::table('cells')
                         ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
                         ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
-                        ->select('cells.*', DB::raw('ifnull(cells.volume - SUM(cell_product.quantity * products.volume), cells.volume) as available_volume'))
+                        ->select('cells.*', DB::raw('cell_product.quantity as available_quantity'))
                         ->where('cells.status', '!=', 'RESERVED')
                         ->where('cell_product.product_id', $productId)
-                        ->WhereRaw('cells.id in(select distinct(cell_product.cell_id) as ids from cell_product)')
-                        ->orderBy('available_volume', 'desc')
-                        ->groupBy('cells.id')
+                        ->orderBy('available_quantity', 'asc')
                         ->get();
 
                     return $cells;

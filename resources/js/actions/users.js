@@ -3,10 +3,10 @@ import {
     UNSET_USER
 } from './../types/users';
 
-export const setUser = (user) => dispatch => {
-    dispatch({ type: SET_USER, payload: user });
+export const setUser = (user) => {
+    return { type: SET_USER, payload: user };
 }
 
-export const unsetUser = () => dispatch => {
-    dispatch({ type: UNSET_USER });
+export const unsetUser = () => {
+    return { type: UNSET_USER };
 }

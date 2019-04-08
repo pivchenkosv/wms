@@ -157,6 +157,24 @@ export const handleCreateTask = (task, subtasks) => {
     })
 }
 
+export const handleCreateTasks = (task, products) => {
+    const params = new URLSearchParams();
+
+    params.append('userIds', JSON.stringify(task.assigned_user));
+    params.append('description', task.description);
+    params.append('taskType', task.action)
+;
+    let d = new Date(task.at);
+    d.setHours(d.getHours() + 3);
+
+    params.append('at', d.toISOString().slice(0, 19).replace('T', ' '));
+    params.append('products', JSON.stringify(products))
+
+    return axios.post('api/createTasks', params, {
+        headers: headers
+    })
+}
+
 export const loginApi = (authParams) => {
     const params = new URLSearchParams();
     params.append('email', authParams.email);

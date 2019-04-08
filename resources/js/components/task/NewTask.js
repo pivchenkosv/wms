@@ -8,7 +8,7 @@ import CellSelector from "../cell/CellSelector";
 import ProductSelector from "../prodcut/ProductSelector";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import {getSubtasks, handleCreateTask, usersApi} from "../api";
+import {getSubtasks, handleCreateTask, handleCreateTasks, loadProducts, usersApi} from "../api";
 import {ACTIONS} from "./taskActions";
 
 class NewTask extends Component {
@@ -22,7 +22,8 @@ class NewTask extends Component {
             at: new Date(),
             status: null,
             created_by: null,
-            action: 'custom',
+            action: "custom",
+            products: [],
         },
         subtasks: [],
         newSubtaskId: -1,
@@ -76,11 +77,11 @@ class NewTask extends Component {
         });
     }
 
-    handleUserChange = (event, {value}) => {
+    handleUserChange = (event, {name, value}) => {
         this.setState({
             task: {
                 ...this.state.task,
-                assigned_user: value,
+                [name]: value,
             }
         });
     }
@@ -100,6 +101,17 @@ class NewTask extends Component {
                 return {key: user.id, value: user.id, text: user.name, role: user.role}
             })
             this.setState({users: users})
+        })
+        loadProducts().then(response => {
+            const products = response.data.data.map((product) => {
+                return {key: product.id, value: product.id, text: product.name}
+            })
+            this.setState({
+                task: {
+                    ...this.state.task,
+                    products: products
+                }
+            })
         })
         if (this.props.task && this.props.task.id !== 0) {
             this.setState({task: this.props.task})
@@ -124,6 +136,7 @@ class NewTask extends Component {
                     at: new Date(),
                     status: null,
                     created_by: null,
+                    action: 'custom',
                 },
                 subtasks: [...this.state.subtasks, newSubtask],
             })
@@ -133,11 +146,11 @@ class NewTask extends Component {
     createNewSubtask = () => {
         let from_cell = 0, to_cell = 0;
         switch (this.state.task.action) {
-            case 'acceptance':{
+            case 'acceptance': {
                 from_cell = 1;
                 break;
             }
-            case 'shipment':{
+            case 'shipment': {
                 to_cell = 1;
                 break;
             }
@@ -163,8 +176,12 @@ class NewTask extends Component {
     }
 
     cancel = (message) => {
-        this.props.unsetTask();
+        this.props.unsetTask;
         this.props.history.push('/tasks');
+    }
+
+    handleRequest = (task, subtasks) => {
+        return this.state.task.action === 'custom' ? handleCreateTask(task, subtasks) : handleCreateTasks(task, subtasks)
     }
 
     handleSubmit = (evt) => {
@@ -174,7 +191,7 @@ class NewTask extends Component {
         button.disabled = true;
         button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp Loading...'
 
-        handleCreateTask(this.state.task, this.state.subtasks).then(() => {
+        this.handleRequest(this.state.task, this.state.subtasks).then(() => {
 
             this.setState({message: 'Success!'}, function () {
                 const message = $('div#message').addClass('success');
@@ -261,18 +278,23 @@ class NewTask extends Component {
         return (
             <tr
                 key={subtask.id}
-                className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
+                className='list-group-item d-flex list-group-item-action align-items-left'
                 onMouseEnter={() => this.showDeleteButton(subtask.id)}
                 onMouseLeave={() => this.hideDeleteButton(subtask.id)}
             >
-                <td className='badge badge-pill col-3'
-                    onClick={() => this.selectCell(subtask, "from_cell")}>
-                    {subtask.from_cell}
-                </td>
-                <td onClick={() => this.selectCell(subtask, "to_cell")}
-                    className='badge badge-pill col-3'>
-                    {subtask.to_cell}
-                </td>
+                {this.state.task.action === 'custom' ?
+                    <td className='badge badge-pill col-3'
+                        onClick={() => this.selectCell(subtask, "from_cell")}>
+                        {subtask.from_cell}
+                    </td> : null
+                }
+                {this.state.task.action === 'custom' ?
+                    <td onClick={() => this.selectCell(subtask, "to_cell")}
+                        className='badge badge-pill col-3'>
+                        {subtask.to_cell}
+                    </td> : null
+                }
+
                 <td onClick={() => this.selectCell(subtask, "product_id")}
                     className='badge badge-pill col-3'>
                     {subtask.product_id}
@@ -297,7 +319,7 @@ class NewTask extends Component {
     }
 
     render() {
-        const {subtasks, users, actions} = this.state;
+        const {subtasks, users} = this.state;
         const {assigned_user} = this.state.task
         const usersOpts = users ? users.filter(user => user.role === 'ROLE_WORKER') : null;
 
@@ -334,16 +356,30 @@ class NewTask extends Component {
                         <div className="card-body">
                             <form id="newTask" onSubmit={this.handleSubmit}>
                                 <div className="mx-1 mb-2">
-                                    <Dropdown
-                                        placeholder='For user'
-                                        name='assigned_user'
-                                        fluid
-                                        search
-                                        selection
-                                        options={usersOpts}
-                                        onChange={this.handleUserChange}
-                                        value={assigned_user}
-                                    />
+                                    {this.state.task.action == 'custom' ?
+                                        <Dropdown
+                                            placeholder='For user'
+                                            name='assigned_user'
+                                            fluid
+                                            search
+                                            selection
+                                            options={usersOpts}
+                                            onChange={this.handleUserChange}
+                                            value={assigned_user}
+                                        /> :
+                                        <Dropdown
+                                            placeholder='For user'
+                                            name='assigned_user'
+                                            fluid
+                                            search
+                                            selection
+                                            multiple
+                                            options={usersOpts}
+                                            onChange={this.handleUserChange}
+                                            value={assigned_user}
+                                        />
+                                    }
+
                                 </div>
                                 <div className="row">
                                     <label htmlFor="description" className="col-12 text-md-left">Description: </label>
@@ -380,9 +416,13 @@ class NewTask extends Component {
                                     </div>
                                     <table className="card">
                                         <thead>
-                                        <tr className="list-group-item list-group-item-action d-flex justify-content-between align-items-left">
-                                            <td className='badge badge-pill col-3'>from cell</td>
-                                            <td className='badge badge-pill col-3'>to cell</td>
+                                        <tr className="list-group-item align-items-left">
+                                            {this.state.task.action === 'custom' ?
+                                                <td className='badge badge-pill col-3'>from cell</td> : null
+                                            }
+                                            {this.state.task.action === 'custom' ?
+                                                <td className='badge badge-pill col-3'>to cell</td> : null
+                                            }
                                             <td className='badge badge-pill col-3'>product id</td>
                                             <td className='badge badge-pill col-3'>quantity</td>
                                         </tr>
