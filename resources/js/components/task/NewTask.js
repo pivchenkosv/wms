@@ -102,22 +102,16 @@ class NewTask extends Component {
             })
             this.setState({users: users})
         })
-        loadProducts().then(response => {
-            const products = response.data.data.map((product) => {
-                return {key: product.id, value: product.id, text: product.name}
-            })
-            this.setState({
-                task: {
-                    ...this.state.task,
-                    products: products
-                }
-            })
-        })
+
         if (this.props.task && this.props.task.id !== 0) {
             this.setState({task: this.props.task})
             getSubtasks(this.props.task.id).then(response => {
                 this.setState({
-                    subtasks: response.data
+                    subtasks: response.data,
+                    task: {
+                        ...this.props.task,
+                        action: 'custom'
+                    }
                 })
             })
         } else {

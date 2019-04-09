@@ -227,13 +227,26 @@ class TaskController extends Controller
 
     public function createTasks(Request $request)
     {
-//        return $request;
         $userIds = json_decode($request->input('userIds'));
+        $validator = Validator::make([
+            'at' => $request->input('at'),
+            'userIds' => $userIds
+        ], [
+            'userIds' => ['required', 'array'],
+            'userIds.*' => ['exists:users,id'],
+            'at' => ['required', 'date', 'after:now'],
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
         $taskType = $request->input('taskType');
         $products = json_decode($request->input('products'));
         $opts = ['description' => $request->input('description'), 'at' => $request->input('at')];
 
-        $subtasks = $this->makeSubtasks($taskType, $products);
+        $returnedArray = $this->makeSubtasks($taskType, $products);
+        $subtasks = $returnedArray['subtasks'];
+        $message = $returnedArray['message'];
 
         $id = new ArrayIterator($userIds);
         $subtasksForUsers = [];
@@ -246,28 +259,48 @@ class TaskController extends Controller
 
         $tasks = [];
         foreach ($subtasksForUsers as $id => $subtasksForUser) {
-//            return $subtasksForUser;
             $tasks[] = $this->makeTask($id, $subtasksForUser, $opts);
         }
 
-        return $tasks;
-//        return ['subtasks' => $subtasks, 'cells' => $this->getCells($taskType, $products[0]->id)];
+        return response()->json(['success' => true, 'message' => $message]);
 
     }
 
-    private function makeSubtasks($taskType, $products)
+    public function makeSubtasks($taskType, $products)
     {
+        $subtasks = [];
+//        $taskType = $request->input('taskType');
+//        $products = json_decode($request->input('products'));
+        $message = 'Success!';
+
+        $tracker = [];
+
         foreach ($products as $product) {
             $productDB = Product::find($product->product_id);
             $cells = $this->getCells($taskType, $product->product_id);
             $productQuantityRemaining = $product->quantity;
 
             foreach ($cells as $cell) {
-                $quantity = $taskType === 'acceptance' ? intdiv($cell->available_volume, $productDB->volume) : $cell->available_quantity;
-                if ($productQuantityRemaining <= 0)
-                    break;
-                if ($quantity <= 0)
+                $tracker['order'][] = $cell->id;
+                if ($taskType === 'acceptance') {
+                    $cellVolume = $this->countAvailableVolumeRemaining($cell, $subtasks);
+
+                    if ($cellVolume <= 0) {
+                        $tracker['skippedCV'][] = $cell->id;
+                        continue;
+                    }
+                }
+
+
+                $quantity = $taskType === 'acceptance' ? intdiv($cellVolume, $productDB->volume) : $cell->available_quantity;
+                if ($productQuantityRemaining <= 0) {
+                    $tracker['skippedPQR'][] = $cell->id;
+                    break 1;
+                }
+                if ($quantity <= 0) {
+                    $tracker['skippedQt'][] = $cell->id;
                     continue;
+                }
 
                 $subtask = [
                     'from_cell' => $taskType === 'acceptance' ? 1 : $cell->id,
@@ -279,10 +312,45 @@ class TaskController extends Controller
                 ];
                 $productQuantityRemaining -= $quantity;
                 $subtasks[] = $subtask;
+
+            }
+
+            if ($productQuantityRemaining > 0)
+                switch ($taskType) {
+                    case 'acceptance':
+                        $message = 'Out of storage!';
+                        break;
+                    case 'shipment':
+                        $message = 'Out of products!';
+                        break;
+                }
+
+        }
+
+        return ['subtasks' => $subtasks, 'message' => $message];
+    }
+
+    private function countAvailableVolumeRemaining($cell, $subtasks)
+    {
+        $openedSubtasksVolume = DB::table('subtasks')
+            ->where('tasks.status', '=', 'OPENED')
+            ->where('subtasks.to_cell', $cell->id)
+            ->leftJoin('products', 'products.id', '=', 'subtasks.product_id')
+            ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
+            ->select('subtasks.to_cell',
+                DB::raw('sum(subtasks.quantity * products.volume) as volume')
+            )
+            ->groupBy('subtasks.to_cell')
+            ->value('volume');
+        $availableVolume = $cell->available_volume - $openedSubtasksVolume;
+        foreach ($subtasks as $subtask) {
+            if ($cell->id == $subtask['to_cell']) {
+                $product = Product::find($subtask['product_id']);
+                $availableVolume -= $subtask['quantity'] * $product->volume;
             }
         }
 
-        return $subtasks;
+        return $availableVolume;
     }
 
     private function makeTask($userId, $subtasksForUser, $opts = [])
@@ -310,6 +378,8 @@ class TaskController extends Controller
 
     public function getCells($taskType, $productId)
     {
+//        $taskType = $request->input('taskType');
+//        $productId = $request->input('product');
         switch ($taskType) {
             case 'acceptance':
                 {
