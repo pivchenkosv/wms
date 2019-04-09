@@ -19,29 +19,52 @@ use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
     }
 
+    /**
+     * List with not REMOVED tasks
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         $tasks = Task::where('status', '!=', 'REMOVED')->get();
-        return $tasks->toJson();
+
+        return response()->json($tasks);
     }
 
+    /**
+     * List with subtasks for selected task
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showTaskInfo(Request $request)
     {
         $taskId = $request->input('taskId');
+
         $subtasks = DB::table('subtasks')
             ->join('tasks', 'subtasks.task_id', '=', 'tasks.id')
             ->where('subtasks.task_id', '=', $taskId)
             ->select('subtasks.id', 'from_cell', 'to_cell', 'product_id', 'quantity')
             ->get();
-        return json_encode($subtasks);
+
+        return response()->json($subtasks);
     }
 
+    /**
+     * Create or update task
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function save(Request $request)
     {
+        //Validate input values
         $validator = Validator::make($request->all(), [
             'assigned_user' => ['required', 'numeric', 'exists:users,id'],
             'at' => ['required', 'date', 'after:now'],
@@ -66,6 +89,7 @@ class TaskController extends Controller
             $subtasksValidator->validate();
         }
 
+        //Determine to create new or update existing task. Set appropriate action
         if (!$request->has('id')) {
             $task = new Task;
             $action = 'TASK_CREATED';
@@ -74,13 +98,15 @@ class TaskController extends Controller
             $task = Task::find($id);
             $action = 'TASK_UPDATED';
         }
+
+        //Initialize or rewrite task fields and persist to database
         $task->assigned_user = $request->input('assigned_user');
         $task->description = $request->input('description');
         $task->at = $request->input('at');
         $task->created_by = Auth::user()->id;
         $task->save();
 
-//        Subtask::where('task_id', $task->id)->delete();
+        //handle subtasks
         $subtasks = json_decode($request->input('subtasks'));
 
         $this->deleteSubtasks($subtasks, $task->id);
@@ -100,13 +126,20 @@ class TaskController extends Controller
             $subtask->save();
         }
 
+        //Notify worker about task changes and make report
         $this->notifyWorker($task, $action);
         $this->makeReport($task, $action);
 
         return response()->json(['success' => true, 'data' => $subtasks]);
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * Change task status to REMOVED
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
     {
         $task = Task::find($id);
         $task->status = 'REMOVED';
@@ -115,9 +148,15 @@ class TaskController extends Controller
         $this->makeReport($task, 'TASK_REMOVED');
 
         $tasks = Task::where('status', '!=', 'REMOVED')->get();
+
         return response()->json($tasks);
     }
 
+    /**
+     * Delete inappropriate subtasks
+     * @param $subtasks
+     * @param $id
+     */
     public function deleteSubtasks($subtasks, $id)
     {
         $subtasksDB = Subtask::where('task_id', $id)->get();
@@ -128,6 +167,12 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * Check whether second array parameter contains first or not
+     * @param $subtaskDB
+     * @param $subtasks
+     * @return bool
+     */
     private function isInArray($subtaskDB, $subtasks)
     {
         foreach ($subtasks as $subtask) {
@@ -138,6 +183,11 @@ class TaskController extends Controller
         return false;
     }
 
+    /**
+     * Send mail to worker about task changes
+     * @param $task
+     * @param $action
+     */
     public function notifyWorker($task, $action)
     {
         $user = User::find($task->assigned_user);
@@ -152,6 +202,11 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * Make report about task changes
+     * @param $task
+     * @param $action
+     */
     private function makeReport($task, $action)
     {
         $report = new Report;
@@ -161,6 +216,11 @@ class TaskController extends Controller
         $report->save();
     }
 
+    /**
+     * Handle task completion
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function completeTask(Request $request)
     {
         $id = $request->input('id');
@@ -182,6 +242,11 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
+    /**
+     * Increase and decrease quantity of product in cells with ids are equal to values in $subtask->to_cell and $subtask->from_cell fields accordingly
+     * @param $subtask
+     * @return void
+     */
     private function handleSubtask($subtask)
     {
         $cell = Cell::find($subtask->from_cell);
@@ -225,6 +290,11 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * Create tasks for multiple users
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
+     */
     public function createTasks(Request $request)
     {
         $userIds = json_decode($request->input('userIds'));
@@ -266,14 +336,17 @@ class TaskController extends Controller
 
     }
 
+    /**
+     * Create subtasks according to $taskType (acceptance or shipment)
+     * $products is an array of product_id and quantity
+     * @param $taskType
+     * @param array $products
+     * @return array
+     */
     public function makeSubtasks($taskType, $products)
     {
         $subtasks = [];
-//        $taskType = $request->input('taskType');
-//        $products = json_decode($request->input('products'));
         $message = 'Success!';
-
-        $tracker = [];
 
         foreach ($products as $product) {
             $productDB = Product::find($product->product_id);
@@ -330,6 +403,16 @@ class TaskController extends Controller
         return ['subtasks' => $subtasks, 'message' => $message];
     }
 
+    /**
+     * Count an available volume of cell.
+     * Cell volume -
+     * - volume of products located in cell -
+     * - volume of products that should be placed to this cell
+     * according to tasks with status OPENED and recently created subtasks
+     * @param $cell
+     * @param $subtasks
+     * @return float|int|mixed
+     */
     private function countAvailableVolumeRemaining($cell, $subtasks)
     {
         $openedSubtasksVolume = DB::table('subtasks')
@@ -353,6 +436,13 @@ class TaskController extends Controller
         return $availableVolume;
     }
 
+    /**
+     * Make task for user and init it with subtasks
+     * @param $userId
+     * @param $subtasksForUser
+     * @param array $opts
+     * @return array
+     */
     private function makeTask($userId, $subtasksForUser, $opts = [])
     {
         $task = new Task;
@@ -364,7 +454,6 @@ class TaskController extends Controller
 
         foreach ($subtasksForUser as $subtaskForUser) {
             $subtask = new Subtask;
-//            $subtask->id = 'id';
             $subtask->task_id = $task->id;
             $subtask->from_cell = $subtaskForUser['from_cell'];
             $subtask->to_cell = $subtaskForUser['to_cell'];
@@ -376,10 +465,14 @@ class TaskController extends Controller
         return [$task, Subtask::where('task_id', '=', $task->id)];
     }
 
+    /**
+     * Return cells in priority order according to task type
+     * @param $taskType
+     * @param $productId
+     * @return \Illuminate\Support\Collection
+     */
     public function getCells($taskType, $productId)
     {
-//        $taskType = $request->input('taskType');
-//        $productId = $request->input('product');
         switch ($taskType) {
             case 'acceptance':
                 {
@@ -411,9 +504,8 @@ class TaskController extends Controller
 
                     return $cells;
                 }
+            default: return Cell::all();
         }
 
-
-//        return response()->json(['data' => $cells]);
     }
 }

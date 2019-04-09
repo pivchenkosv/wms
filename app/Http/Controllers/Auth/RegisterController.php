@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -71,6 +72,13 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * Register user
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function register(Request $request)
     {
         $token = self::getToken($request->email, $request->password);
@@ -95,36 +103,24 @@ class RegisterController extends Controller
             $user = new \App\User($payload);
         }
 
-//        $user = User::updateOrCreate(
-//            ['email' => $request->email],
-//            $payload
-//        );
+        if ($user->save()) {
+            $users = User::all();
+            $response = ['success' => true, 'data' => $users];
 
-        $user->save();
-//        if ($user->save()) {
-//
-//            $token = self::getToken($request->email, $request->password); // generate user token
-//
-//            if (!is_string($token)) return response()->json(['success' => false, 'data' => 'Token generation failed'], 201);
-//
-//            $user = \App\User::where('email', $request->email)->get()->first();
-//
-//            $user->auth_token = $token; // update user token
-//
-//            $user->save();
-//
-//            $users = User::all();
-//
-//            $response = ['success' => true, 'data' => $users];
-//        } else
-//            $response = ['success' => false, 'data' => 'Couldnt register user'];
+            return response()->json($response, 201);
+        }
 
-        $users = User::all();
-
-        $response = ['success' => true, 'data' => $users];
-        return response()->json($response, 201);
+        return response()->json(['success' => false, 'data' => 'Couldn\'t register user'], 201);
     }
 
+    /**
+     * Return token
+     *
+     * @param $email
+     * @param $password
+     *
+     * @return JsonResponse|null
+     */
     private function getToken($email, $password)
     {
         $token = null;

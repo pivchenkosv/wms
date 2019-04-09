@@ -37,10 +37,18 @@ class LoginController extends Controller
      */
     public function __construct() {}
 
+    /**
+     * Return token
+     *
+     * @param $email
+     * @param $password
+     *
+     * @return JsonResponse|null
+     */
     private function getToken($email, $password)
     {
         $token = null;
-        //$credentials = $request->only('email', 'password');
+
         try {
             if (!$token = JWTAuth::attempt( ['email'=>$email, 'password'=>$password])) {
                 return response()->json([
@@ -57,6 +65,12 @@ class LoginController extends Controller
         }
         return $token;
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function login(Request $request)
     {
         $user = \App\User::where('email', $request->email)->get()->first();

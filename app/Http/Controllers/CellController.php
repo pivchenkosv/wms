@@ -3,19 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Cell;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CellController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct() {}
 
+    /**
+     * Cells list
+     *
+     * @return JsonResponse
+     */
     public function showCells()
     {
         $cells = Cell::all();
         return response()->json(['success' => true, 'data' => $cells]);
     }
 
+    /**
+     * Show information about products in cell
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function showInfo(Request $request)
     {
         if ($request->has('cellId')) {
@@ -27,6 +44,13 @@ class CellController extends Controller
         return response()->json(['success' => false]);
     }
 
+    /**
+     * Create or update cell
+     *
+     * @param Request $request
+     * @param Cell $cell
+     * @return JsonResponse
+     */
     public function save(Request $request, Cell $cell)
     {
         if ($request->has('id')){
@@ -57,7 +81,13 @@ class CellController extends Controller
         return response()->json(['success' => false]);
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * Delete cell by id
+     *
+     * @param $id
+     * @return JsonResponse
+     */
+    public function delete($id)
     {
         if ($id) {
             Cell::destroy($id);
@@ -68,7 +98,12 @@ class CellController extends Controller
         return response(['success' => false]);
     }
 
-    public function fromCell(Request $request)
+    /**
+     * Cells list with available volume
+     *
+     * @return JsonResponse
+     */
+    public function fromCell()
     {
         $cells = DB::table('cells')
             ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
