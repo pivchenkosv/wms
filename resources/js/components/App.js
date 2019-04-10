@@ -13,10 +13,11 @@ import {SET_USER} from "../types/users";
 import {setUser, unsetUser} from "../actions/users";
 import rootSaga from "../saga/rootSaga";
 import HeaderContainer from "../containers/HeaderContainer";
+import {getUser} from "./api";
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = applyMiddleware(sagaMiddleware);
-const store = createStore(reducers, compose(middlewares));
+const store = createStore(reducers,{tasks: {tasks: []}}, compose(middlewares));
 sagaMiddleware.run(rootSaga);
 const history = createHistory();
 
@@ -25,6 +26,15 @@ class App extends Component {
     constructor(props) {
         super(props)
         const user = JSON.parse(localStorage.getItem('user'));
+        getUser().then(response => {
+            store.dispatch({type: SET_USER, payload: response.data})
+        }).catch(rejected => {
+            console.log('getUser rejected ', rejected.response)
+            if (rejected.response.status === 401 && localStorage.user) {
+                localStorage.removeItem('user');
+                window.location.reload();
+            }
+        })
         store.dispatch({type: SET_USER, payload: user})
     }
 

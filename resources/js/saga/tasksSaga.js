@@ -1,12 +1,11 @@
 import {loadTasks} from '../actions/actionCreators';
-import { browserHistory } from 'react-router';
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { loadTasks as loadTasksApi} from "../components/api";
 
 function* tasksEffectSaga(action) {
     try {
         let { data } = yield call(loadTasksApi, action);
-        yield put(loadTasks(data));
+        yield put(loadTasks(data.data));
         action.resolve(data)
     } catch (e) {
         action.reject(e)

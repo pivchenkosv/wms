@@ -40,6 +40,17 @@ class TaskController extends Controller
     }
 
     /**
+     * Paginated list with not REMOVED tasks
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function indexPaginate()
+    {
+        $tasks = Task::where('status', '!=', 'REMOVED')->orderBy('at', 'desc')->paginate(15);
+
+        return response()->json($tasks);
+    }
+
+    /**
      * List with subtasks for selected task
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

@@ -12,13 +12,6 @@ const mapStateToProps = (store, ownProps) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         setTask: (task) => setTask(task)(dispatch),
-//         unsetTask: () => unsetTask()(dispatch),
-//     }
-// }
-
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         loadTasksWatcher,

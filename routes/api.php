@@ -97,7 +97,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //Tasks
     Route::get('tasks', [
         'as' => 'tasks',
-        'uses' => 'TaskController@index',
+        'uses' => 'TaskController@indexPaginate',
     ]);
     Route::get('taskInfo', [
         'as' => 'taskInfo',
@@ -140,6 +140,10 @@ Route::group(['middleware' => ['api-header']], function () {
     ]);
 
 });
-Route::middleware('auth')->get('/user', function (Request $request) {
+Route::middleware('jwt.auth', 'api-header')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('tasksPaginated', [
+    'as' => 'tasksPaginated',
+    'uses' => 'TaskController@indexPaginate',
+]);

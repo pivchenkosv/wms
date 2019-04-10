@@ -11,26 +11,36 @@ class TasksList extends Component {
         task: null,
         store: null,
         message: null,
-        table: null
+        table: null,
+        currentPage: 1
     }
 
-    componentDidMount() {
+    loadTasks = (page) => {
+        if (this.state.table)
+            this.state.table.destroy()
         new Promise((resolve, reject) => {
-            this.props.loadTasksWatcher(resolve, reject)
+            this.props.loadTasksWatcher(resolve, reject, page)
         }).then(response => {
             this.setState({
-                tasks: response
+                tasks: response,
+                currentPage: page,
+                lastPage: response.data.last_page,
             }, () => {
                 const table = $('#tasks').DataTable({
                     "paging": false,
                     "searching": true,
-                    "dom": "t"
+                    "dom": "t",
+                    "destroy": true
                 });
                 this.setState({table: table})
             })
         }).catch(reason => {
-            // window.location.reload()
+            console.log(reason)
         })
+    }
+
+    componentDidMount() {
+        this.loadTasks(1)
     }
 
     search = () => {
@@ -159,7 +169,7 @@ class TasksList extends Component {
     }
 
     render() {
-        let {tasks} = this.state
+        let {tasks} = this.props
         const {history, user} = this.props;
         tasks = user.user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.user.id) : tasks
         return (
@@ -184,6 +194,22 @@ class TasksList extends Component {
                             ))}
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                                <li className="page-item">
+                                    <button className="page-link"
+                                            disabled={this.state.currentPage === 1}
+                                            onClick={() => this.loadTasks(this.state.currentPage - 1)}>Previous
+                                    </button>
+                                </li>
+                                <li className="page-item">
+                                    <button className="page-link"
+                                            disabled={this.state.currentPage === this.state.lastPage}
+                                            onClick={() => this.loadTasks(this.state.currentPage + 1)}>Next
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div className="col-md-4">
                         {(this.state.task) ?

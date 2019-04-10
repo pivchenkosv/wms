@@ -109,8 +109,8 @@ export const loadReports = (page) => {
 }
 
 //Tasks
-export const loadTasks = () => {
-    return axios.get('/api/tasks', {
+export const loadTasks = (action) => {
+    return axios.get(`/api/tasks?page=${action.page}`, {
         headers: headers
     })
 }
@@ -211,6 +211,12 @@ export const submitPasswordReset = (data) => {
 //Users
 export const usersApi = () => {
     return axios.get('/api/admin/users', {
+        headers: headers
+    })
+}
+
+export const getUser = () => {
+    return axios.get('/api/user', {
         headers: headers
     })
 }
