@@ -147,3 +147,7 @@ Route::get('tasksPaginated', [
     'as' => 'tasksPaginated',
     'uses' => 'TaskController@indexPaginate',
 ]);
+Route::post('makeSubtasks', [
+    'as' => '',
+    'uses' => 'TaskController@makeSubtasks'
+]);

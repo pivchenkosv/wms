@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use function PHPSTORM_META\elementType;
 
 class TaskController extends Controller
 {
@@ -359,30 +360,32 @@ class TaskController extends Controller
         $subtasks = [];
         $message = 'Success!';
 
+        $tracker = [];
+
         foreach ($products as $product) {
             $productDB = Product::find($product->product_id);
             $cells = $this->getCells($taskType, $product->product_id);
             $productQuantityRemaining = $product->quantity;
 
             foreach ($cells as $cell) {
-                $tracker['order'][] = $cell->id;
+                $tracker['order'][] = $cell;
                 if ($taskType === 'acceptance') {
                     $cellVolume = $this->countAvailableVolumeRemaining($cell, $subtasks);
+                    $quantity = intdiv($cellVolume, $productDB->volume);
 
                     if ($cellVolume <= 0) {
                         $tracker['skippedCV'][] = $cell->id;
                         continue;
                     }
+                } else {
+                    $quantity = $this->countAvailableProductQuantity($cell, $product);
+                    $tracker['apq'][] = $quantity;
                 }
 
-
-                $quantity = $taskType === 'acceptance' ? intdiv($cellVolume, $productDB->volume) : $cell->available_quantity;
                 if ($productQuantityRemaining <= 0) {
-                    $tracker['skippedPQR'][] = $cell->id;
                     break 1;
                 }
                 if ($quantity <= 0) {
-                    $tracker['skippedQt'][] = $cell->id;
                     continue;
                 }
 
@@ -411,7 +414,7 @@ class TaskController extends Controller
 
         }
 
-        return ['subtasks' => $subtasks, 'message' => $message];
+        return ['subtasks' => $subtasks, 'message' => $message, 'tracker' => $tracker];
     }
 
     /**
@@ -445,6 +448,20 @@ class TaskController extends Controller
         }
 
         return $availableVolume;
+    }
+
+    private function countAvailableProductQuantity($cell, $product)
+    {
+        $quantity = DB::table('subtasks')
+            ->where('tasks.status', '=', 'OPENED')
+            ->where('subtasks.from_cell', $cell->id)
+            ->where('subtasks.product_id', $product->product_id)
+            ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
+            ->selectRaw('subtasks.id, sum(subtasks.quantity) as qt')
+            ->groupBy('subtasks.id')
+            ->value('qt');
+
+        return $cell->available_quantity - $quantity;
     }
 
     /**
@@ -515,7 +532,8 @@ class TaskController extends Controller
 
                     return $cells;
                 }
-            default: return Cell::all();
+            default:
+                return Cell::all();
         }
 
     }
