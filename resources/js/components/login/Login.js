@@ -4,25 +4,30 @@ import {withRouter} from 'react-router-dom';
 class Login extends Component {
 
     state = {
-            email: '',
-            password: '',
-            error: '',
+        email: '',
+        password: '',
+        error: '',
     };
 
     handleSubmit = (evt) => {
+        // this.props.history.push('/tasks')
         evt.preventDefault();
         if (!this.state.email) {
             return this.setState({error: 'Username is required'});
-        }
 
+        }
         if (!this.state.password) {
             return this.setState({error: 'Password is required'});
         }
-        new Promise(() => {
+        new Promise((resolve) => {
             this.props.loginWatcher({
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                history: this.props.history,
+                resolve: resolve
             })
+        }).then(() => {
+            this.props.history.push('/tasks')
         })
     }
 
@@ -41,6 +46,7 @@ class Login extends Component {
     render() {
 
         const {history} = this.props
+
         return (
             <div className="Login">
                 <div className="container py-4">
@@ -96,7 +102,9 @@ class Login extends Component {
                                         <div className="form-group row mb-0">
                                             <div className="col-md-12 offset-md-2">
                                                 <button type="submit" className="btn btn-primary">Login</button>
-                                                <a className="btn btn-link" onClick={() => {history.push('password/reset')}}>
+                                                <a className="btn btn-link" onClick={() => {
+                                                    history.push('password/reset')
+                                                }}>
                                                     Forgot Your Password?
                                                 </a>
                                             </div>

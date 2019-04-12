@@ -13,13 +13,13 @@ export const logoutWatcher = (token) => {
     };
 }
 export const updateProfile = (profile) => {
-    return { type: 'UPDATE_PROFILE', payload: profile };
+    return {type: 'UPDATE_PROFILE', payload: profile};
 }
 export const setErrorMessage = (message) => {
-    return { type: 'SET_MESSAGE', payload: message}
+    return {type: 'SET_MESSAGE', payload: message}
 }
 export const loadUsers = (users) => {
-    return { type: 'LOAD_USERS', payload: users };
+    return {type: 'LOAD_USERS', payload: users};
 }
 export const loadUsersWatcher = (resolve, reject) => {
     return {
@@ -37,13 +37,13 @@ export const loadTasksWatcher = (resolve, reject, page) => {
     }
 }
 export const loadTasks = (tasks, page) => {
-    return { type: 'LOAD_TASKS', payload: tasks, page: page }
+    return {type: 'LOAD_TASKS', payload: tasks, page: page}
 }
 export const setTask = (task) => {
     console.log('actions/task');
-    return { type: SET_TASK, payload: task };
+    return {type: SET_TASK, payload: task};
 }
 
 export const unsetTask = () => {
-    return { type: UNSET_TASK };
+    return {type: UNSET_TASK};
 }

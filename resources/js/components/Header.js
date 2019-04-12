@@ -1,5 +1,7 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
+
+import LoadingBar from 'react-redux-loading-bar'
 import {ROUTES} from "./routes";
 
 class Header extends React.Component {
@@ -69,6 +71,7 @@ class Header extends React.Component {
                         </ul>
                     </div>
                 </div>
+
             </nav>
         )
 

@@ -6,6 +6,7 @@ import {applyMiddleware, compose, createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import createSagaMiddleware from 'redux-saga';
+import LoadingBar, {loadingBarMiddleware} from 'react-redux-loading-bar'
 
 import reducers from '../reducers';
 import {ROUTES} from "./routes";
@@ -16,8 +17,8 @@ import HeaderContainer from "../containers/HeaderContainer";
 import {getUser} from "./api";
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = applyMiddleware(sagaMiddleware);
-const store = createStore(reducers,{tasks: {tasks: []}}, compose(middlewares));
+const middlewares = applyMiddleware(sagaMiddleware, loadingBarMiddleware());
+const store = createStore(reducers,{tasks: {tasks: []}, reports: {reports: []}}, compose(middlewares));
 sagaMiddleware.run(rootSaga);
 const history = createHistory();
 
@@ -25,28 +26,35 @@ class App extends Component {
 
     constructor(props) {
         super(props)
-        const user = JSON.parse(localStorage.getItem('user'));
+        let user = JSON.parse(localStorage.getItem('user'));
+        // let user = null;
         getUser().then(response => {
             store.dispatch({type: SET_USER, payload: response.data})
+            user = response.data
         }).catch(rejected => {
-            console.log('getUser rejected ', rejected.response)
             if (rejected.response.status === 401 && localStorage.user) {
                 localStorage.removeItem('user');
-                window.location.reload();
             }
         })
         store.dispatch({type: SET_USER, payload: user})
     }
 
-    router() {
+    update = () => {
+        this.setState({somethingToUpdate: "newValue"});
+        console.log("updated!");
+    }
 
-        const {user} = store.getState();
+    router = () => {
+
+        const {user} = store.getState()
+        console.log('user', user)
         const userRole = user.user ? user.user.role : 'unauthorized';
         const routesData = ROUTES[userRole]
 
         return (
             <Switch>
                 {routesData.routes.map((item, index) => (<Route exact key={index} {...item} />))}
+                {console.log('switch')}
                 <Redirect to={routesData.redirect}/>
             </Switch>
         );
@@ -59,6 +67,7 @@ class App extends Component {
                 <Router history={history}>
                     <div>
                         <HeaderContainer history={history}/>
+                        <LoadingBar/>
                         {this.router()}
                     </div>
                 </Router>

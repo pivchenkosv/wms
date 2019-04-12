@@ -7,22 +7,29 @@ import {loginApi, logoutApi} from "../components/api";
 function* loginEffectSaga(action) {
     try {
         let { data } = yield call(loginApi, action.payload);
-        console.log('data ', data)
+        const { history } = action.payload
+
         if (data.success) {
             localStorage.setItem('user', JSON.stringify(data.user));
             yield put(updateProfile(data.user));
             yield put(setErrorMessage(null))
-            window.location.reload()
+            // window.location.reload()
         }
 
         yield put(setErrorMessage(data.data))
         $( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+
+        action.payload.resolve(data);
+
+        // history.push('/tasks')
     } catch (e) {
         yield put(setErrorMessage(e.response.data.message))
 
         $( "div.failure" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
         console.log('rejected ', e)
+
+        history.push('/tasks')
     }
 }
 
@@ -31,7 +38,8 @@ function* logoutEffectSaga(action) {
         let { data } = yield call(logoutApi, action.token);
         localStorage.clear();
         window.location.reload()
-        yield put(updateProfile(null))
+        yield put(updateProfile({user: null}))
+
     } catch (e) {
         console.log('rejected')
     }

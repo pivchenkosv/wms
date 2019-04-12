@@ -1,0 +1,2 @@
+export const LOAD_REPORTS = 'LOAD_REPORTS';
+export const REPORTS_WATCHER = 'REPORTS_WATCHER';

@@ -1,19 +1,22 @@
 import {loadTasks} from '../actions/actionCreators';
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { loadTasks as loadTasksApi} from "../components/api";
+import {hideLoading, showLoading} from "react-redux-loading-bar";
 
 function* tasksEffectSaga(action) {
     try {
+        yield put(showLoading())
         let { data } = yield call(loadTasksApi, action);
         yield put(loadTasks(data.data));
         action.resolve(data)
     } catch (e) {
         action.reject(e)
         console.log('rejected 2 ', e)
+    } finally {
+        yield put(hideLoading())
     }
 }
 
 export function* tasksWatcherSaga() {
-    console.log('tasksSagaWatcher')
     yield takeLatest('TASKS_WATCHER', tasksEffectSaga);
 }

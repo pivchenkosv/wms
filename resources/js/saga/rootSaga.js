@@ -5,6 +5,7 @@ import {
 } from './sessionSaga';
 import {usersWatcherSaga} from "./usersSaga";
 import {tasksWatcherSaga} from "./tasksSaga";
+import {reportsWatcherSaga} from "./reportsSaga";
 // import watchers from other files
 
 export default function* rootSaga() {
@@ -13,6 +14,7 @@ export default function* rootSaga() {
         logoutWatcherSaga(),
         usersWatcherSaga(),
         tasksWatcherSaga(),
+        reportsWatcherSaga(),
         // add other watchers to the array
     ]);
 }
