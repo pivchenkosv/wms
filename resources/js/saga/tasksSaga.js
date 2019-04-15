@@ -11,7 +11,6 @@ function* tasksEffectSaga(action) {
         action.resolve(data)
     } catch (e) {
         action.reject(e)
-        console.log('rejected 2 ', e)
     } finally {
         yield put(hideLoading())
     }

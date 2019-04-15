@@ -42,8 +42,6 @@ class StocksList extends Component {
     handleSubmit = (evt) => {
         evt.preventDefault();
         handleEditStock(this.state.selectedStock.stock).then(response => {
-            console.log('fulfilled', response);
-            console.log(response.data);
             this.setState({
                 stocks: response.data.data,
                 selectedStock: null
@@ -54,8 +52,6 @@ class StocksList extends Component {
                 const message = $('div#message').addClass('failure');
                 message.fadeIn(300);
             })
-            console.log('rejected', response);
-            console.log(response.data);
         })
     };
 
@@ -66,15 +62,10 @@ class StocksList extends Component {
                 alert('First delete all cells related to this stock');
             } else {
                 handleDeleteStock(this.state.selectedStock.stock.id).then(response => {
-                    console.log('fulfilled', response);
-                    console.log(response.data);
                     this.setState({
                         stocks: response.data.data,
                         selectedStock: null
                     })
-                }).catch(response => {
-                    console.log('rejected', response);
-                    console.log(response.data);
                 })
             }
         } else {
@@ -83,8 +74,6 @@ class StocksList extends Component {
                 return {
                     stocks,
                 };
-            }, function () {
-                console.log(this.state);
             });
         }
     }
@@ -101,17 +90,12 @@ class StocksList extends Component {
     editStock(stock) {
         if (!this.state.selectedStock || (stock.stock.id !== this.state.selectedStock.stock.id))
             this.setState({selectedStock: null}, function () {
-                this.setState({selectedStock: stock}, function () {
-                    console.log('state.stock ', this.state.selectedStock)
-                    console.log('stock ', stock);
-                });
-
+                this.setState({selectedStock: stock});
             });
     };
 
     selected = (stock) => {
         const {user} = this.props.user
-        console.log(stock)
 
         if (user.role !== 'ROLE_WORKER' && this.state.selectedStock && this.state.selectedStock.stock.id === stock.stock.id) {
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {handleDeleteProduct, handleEditProduct, loadProducts} from "../api";
+import {handleDeleteProduct, handleEditProduct} from "../api";
 import Product from "./Product";
 
 class ProductsList extends Component {
@@ -11,10 +11,10 @@ class ProductsList extends Component {
     }
 
     componentDidMount() {
-        loadProducts().then(response => {
-            this.setState({
-                products: response.data.data
-            })
+        new Promise(resolve => {
+            this.props.loadProductsWatcher(resolve)
+        }).then(data => {
+            this.setState({products: data})
         })
     }
 
@@ -49,8 +49,6 @@ class ProductsList extends Component {
                     products: response.data.data,
                     product: null
                 })
-            }).catch(response => {
-                console.log('rejected', response);
             })
 
         } else {
@@ -173,7 +171,7 @@ class ProductsList extends Component {
                         <div className='card'>
                             <div className='card-header'>
                                 <div className='row'>
-                                    <div className='col-sm-7'>
+                                    <div className='col-sm-7 row'>
                                         <span className='col-sm-4'>Products Table</span>
                                         <div id='message' className='alert-box success col-sm-7 mb-3 ml-3'>
                                             {this.state.message}

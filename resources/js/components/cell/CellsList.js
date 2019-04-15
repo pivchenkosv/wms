@@ -13,11 +13,12 @@ class CellsList extends Component {
         }
 
     componentDidMount() {
-        loadCells().then(response => {
-            this.setState({
-                cells: response.data.data
-            })
+        new Promise((resolve) => {
+            this.props.loadCellsWatcher(resolve)
+        }).then(data => {
+            this.setState({cells: data})
         })
+
         loadStocks().then(response => {
             this.setState({
                 stocks: response.data.data
@@ -40,8 +41,6 @@ class CellsList extends Component {
             $('div#message').fadeOut(300);
 
         }).catch(response => {
-            console.log('rejected', response);
-            console.log(response.data);
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]][0]}, function () {
                 const message = $('div#message').addClass('failure');
                 message.fadeIn(300);
@@ -97,6 +96,7 @@ class CellsList extends Component {
             volume: 5,
             status: 'FREE'
         }
+
         this.setState({
             cells: [...this.state.cells, newCell],
             cell: newCell,
@@ -111,8 +111,6 @@ class CellsList extends Component {
                     cells: response.data.data,
                     cell: null
                 })
-            }).catch(response => {
-                console.log('rejected', response);
             })
 
         } else {
@@ -122,8 +120,6 @@ class CellsList extends Component {
                 return {
                     cells,
                 };
-            }, function () {
-                console.log(this.state);
             });
         }
     }

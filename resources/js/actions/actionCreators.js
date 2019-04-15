@@ -28,6 +28,21 @@ export const loadUsersWatcher = (resolve, reject) => {
         reject: reject
     }
 }
+export const createUserWatcher = (resolve, reject, userInfo) => {
+    return {
+        type: 'CREATE_USER_WATCHER',
+        payload: userInfo,
+        resolve: resolve,
+        reject: reject
+    }
+}
+export const deleteUserWatcher = (userId) => {
+    return {
+        type: 'DELETE_USER_WATCHER',
+        payload: userId,
+    }
+}
+
 export const loadTasksWatcher = (resolve, reject, page) => {
     return {
         type: 'TASKS_WATCHER',
@@ -40,7 +55,6 @@ export const loadTasks = (tasks, page) => {
     return {type: 'LOAD_TASKS', payload: tasks, page: page}
 }
 export const setTask = (task) => {
-    console.log('actions/task');
     return {type: SET_TASK, payload: task};
 }
 

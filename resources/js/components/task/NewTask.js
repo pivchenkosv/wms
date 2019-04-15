@@ -195,7 +195,6 @@ class NewTask extends Component {
             setTimeout(() => this.cancel(), 2500);
 
         }).catch(response => {
-            console.log('rejected', response.response);
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]]}, function () {
                 const message = $('div#message').addClass('failure');
                 message.fadeIn(300).delay(1500).fadeOut(400);

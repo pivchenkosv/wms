@@ -14,12 +14,10 @@ class ProductSelector extends Component {
             this.setState({
                 products: response.data.data
             })
-            console.log(response);
         })
     }
 
     returnSelected = (product) => {
-        console.log('productId', product.id)
         this.props.returnSelected(product.id);
     }
 

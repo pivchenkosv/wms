@@ -11,7 +11,6 @@ class CellSelector extends Component {
 
     componentDidMount() {
         const {action} = this.props
-        console.log('action', action)
         let cells
         loadAvailableCells().then(response => {
             cells = response.data.data.map(cell => {
@@ -40,12 +39,10 @@ class CellSelector extends Component {
             this.setState({
                 cells: cells
             })
-            console.log(response);
         })
     }
 
     returnSelected = (cell) => {
-        console.log('cellId', cell.id)
         this.props.returnSelected(cell.id);
     }
 

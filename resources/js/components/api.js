@@ -162,8 +162,8 @@ export const handleCreateTasks = (task, products) => {
 
     params.append('userIds', JSON.stringify(task.assigned_user));
     params.append('description', task.description);
-    params.append('taskType', task.action)
-;
+    params.append('taskType', task.action);
+
     let d = new Date(task.at);
     d.setHours(d.getHours() + 3);
 
@@ -222,7 +222,6 @@ export const getUser = () => {
 }
 
 export const handleCreateUser = (userInfo) => {
-    console.log('userInfo ', userInfo)
     const params = new URLSearchParams();
     if (userInfo.id !== null)
         params.append('id', userInfo.id);
@@ -231,7 +230,6 @@ export const handleCreateUser = (userInfo) => {
     params.append('role', userInfo.role);
     params.append('password', '12345678');
     params.append('password_confirmation', '12345678');
-    // params.append('_token', $('meta[name="csrf-token"]').attr('content'));
     return axios.post('/api/register', params, {
         headers: headers
     })

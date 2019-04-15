@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import axios from "axios";
 import '../Style.css';
-import {handleCreateUser, handleDeleteUser} from "../api";
 
 class User extends Component {
 
@@ -12,7 +10,6 @@ class User extends Component {
             userInfo: this.props.user,
             errors: null,
         }
-        console.log('props.user ', this.props.user)
         this.handleRoleChange = this.handleRoleChange.bind(this);
     }
 
@@ -41,40 +38,35 @@ class User extends Component {
 
     handleRoleChange(evt) {
         const value = evt.target.options[evt.target.selectedIndex].value;
-        console.log(value);
         this.setState({
             userInfo: {
                 ...this.state.userInfo,
                 role: value,
             }
-        }, function () {
-            console.log(this.state.userInfo.role);
         });
     };
 
     handleSubmit = (evt) => {
         evt.preventDefault();
-        handleCreateUser(this.state.userInfo).then(response => {
-            console.log('fulfilled', response);
-            console.log(response.data);
-            this.props.rerenderUsersList(response.data);
+
+        new Promise((resolve, reject) => {
+            this.props.createUser(resolve, reject, this.state.userInfo)
+        }).then(() => {
+            this.props.unmountForm()
         }).catch(response => {
-            console.log('rejected', response);
-            // this.setState({errors: response.response.data.errors})
-            this.setState({errors: response.response.data}, function () {
-                console.log('state ', this.state)
+            this.setState({errors: response.response.data.errors[Object.keys(response.response.data.errors)[0]]}, function () {
                 $("div.failure").fadeIn(300).delay(1500).fadeOut(400);
             })
         })
-        this.props.unmountForm()
     };
 
     deleteUser = (event) => {
         event.preventDefault();
 
-        handleDeleteUser(this.state.userInfo.id).then(response => {
-            this.props.rerenderUsersList(response.data);
+        new Promise(() => {
+            this.props.deleteUser(this.state.userInfo.id)
         })
+
         this.props.unmountForm()
     }
 
@@ -97,7 +89,6 @@ class User extends Component {
 
                 <div className="card-body">
                     <form onSubmit={this.handleSubmit}>
-                        {/*<input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')}/>*/}
                         <div className="form-group">
                             <label htmlFor="name" className="col-form-label text-md-left">Name</label>
 
@@ -119,7 +110,7 @@ class User extends Component {
                                    required/>
 
                             <div className='col-sm-12 center alert-box failure mt-2'>
-                                {this.state.errors ? this.state.errors.errors.email[0] : ''}
+                                {this.state.errors ? this.state.errors : ''}
                             </div>
                         </div>
                         <div className="form-group">

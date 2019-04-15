@@ -28,10 +28,6 @@ class Product extends Component {
                 <div className="card card-header">
                     <div className="row">
                         <div className='col-sm-10'>{`Cells containing product ` + productId}</div>
-                        {/*<div className='col-sm-2'>*/}
-                        {/*    <button className='btn btn-danger py-0 px-1 float-right text-size'*/}
-                        {/*            onClick={unmountForm}>{'\u2718'}</button>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
                 <table className='card'>

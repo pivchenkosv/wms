@@ -13,10 +13,7 @@ class Header extends React.Component {
                 token: $('meta[name="csrf-token"]').attr('content'),
             }, resolve, reject);
         }).then(response => {
-            console.log('fulfilled ', response)
             window.location.reload()
-        }).catch(response => {
-            console.log('rejected ', response)
         })
     }
 

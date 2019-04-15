@@ -19,15 +19,11 @@ class Login extends Component {
         if (!this.state.password) {
             return this.setState({error: 'Password is required'});
         }
-        new Promise((resolve) => {
+        new Promise(() => {
             this.props.loginWatcher({
                 email: this.state.email,
                 password: this.state.password,
-                history: this.props.history,
-                resolve: resolve
             })
-        }).then(() => {
-            this.props.history.push('/tasks')
         })
     }
 

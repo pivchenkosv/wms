@@ -1,5 +1,5 @@
 import {bindActionCreators} from "redux";
-import {loadUsersWatcher} from "../actions/actionCreators";
+import {createUserWatcher, deleteUserWatcher, loadUsersWatcher} from "../actions/actionCreators";
 import {connect} from "react-redux";
 import UsersList from "../components/user/UsersList";
 
@@ -11,7 +11,9 @@ const mapStateToProps = (store) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        loadUsersWatcher
+        loadUsersWatcher,
+        createUserWatcher,
+        deleteUserWatcher,
         // add other watcher sagas to this object to map them to props
     }, dispatch);
 }

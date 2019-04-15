@@ -97,9 +97,8 @@ class RegisterController extends Controller
             $user->email = $request->email;
             $user->role = $request->role;
             $user->auth_token = $token;
-
-
         } else {
+            $this->validator($request->all())->validate();
             $user = new \App\User($payload);
         }
 

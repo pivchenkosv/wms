@@ -8,6 +8,9 @@ export const loadReportsWatcher = (resolve, reject, page) => {
         reject: reject
     }
 }
-export const loadReports= (data) => {
-    return {type: LOAD_REPORTS, payload: data}
+export const loadReports = (data) => {
+    return {
+        type: LOAD_REPORTS,
+        payload: data
+    }
 }

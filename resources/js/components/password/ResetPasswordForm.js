@@ -22,9 +22,6 @@ class ResetPasswordForm extends Component {
         evt.preventDefault()
         submitPasswordReset(this.state).then(response => {
             this.props.history.push('/login')
-        }).catch(reason => {
-            console.log(reason);
-            console.log(reason.data);
         });
     }
 

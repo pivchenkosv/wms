@@ -34,8 +34,6 @@ class TasksList extends Component {
                 });
                 this.setState({table: table})
             })
-        }).catch(reason => {
-            console.log(reason)
         })
     }
 
