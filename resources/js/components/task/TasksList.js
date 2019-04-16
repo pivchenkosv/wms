@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 
 import Task from "./Task";
-import {handleCompleteTask, handleDeleteTask} from "../api";
+import {handleCompleteTask, handleDeleteTask} from "../../api/tasks";
 
 class TasksList extends Component {
 
@@ -12,7 +12,7 @@ class TasksList extends Component {
         store: null,
         message: null,
         table: null,
-        currentPage: 1
+        currentPage: 1,
     }
 
     loadTasks = (page) => {
@@ -169,6 +169,7 @@ class TasksList extends Component {
     render() {
         let {tasks} = this.props
         const {history, user} = this.props;
+
         tasks = user.user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.user.id) : tasks
         return (
             <div className='container py-4'>
@@ -202,7 +203,7 @@ class TasksList extends Component {
                                 </li>
                                 <li className="page-item">
                                     <button className="page-link"
-                                            disabled={this.state.currentPage === this.state.lastPage}
+                                            disabled={this.state.currentPage === this.state.tasks.last_page}
                                             onClick={() => this.loadTasks(this.state.currentPage + 1)}>Next
                                     </button>
                                 </li>

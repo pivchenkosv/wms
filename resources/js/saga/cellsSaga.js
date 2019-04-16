@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import {loadCells as loadCellsApi} from "../components/api";
+import {loadCells as loadCellsApi} from "../api/cells";
 import {hideLoading, showLoading} from "react-redux-loading-bar";
 import {loadCellsAction} from "../actions/cells";
 import {CELLS_WATCHER} from "../types/cells";

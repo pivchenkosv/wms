@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {handleDeleteProduct, handleEditProduct} from "../api";
+import {handleDeleteProduct, handleEditProduct} from "../../api/products";
 import Product from "./Product";
 
 class ProductsList extends Component {

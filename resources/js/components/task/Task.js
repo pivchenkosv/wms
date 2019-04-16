@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import '../Style.css';
-import {getSubtasks} from "../api";
+import {getSubtasks} from "../../api/tasks";
 
 class Task extends Component {
 

@@ -1,6 +1,6 @@
 import {loadTasks} from '../actions/actionCreators';
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { loadTasks as loadTasksApi} from "../components/api";
+import { loadTasks as loadTasksApi} from "../api/tasks";
 import {hideLoading, showLoading} from "react-redux-loading-bar";
 
 function* tasksEffectSaga(action) {

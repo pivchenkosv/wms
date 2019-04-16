@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {submitPasswordReset} from "../api";
+import {submitPasswordReset} from "../../api/api";
 
 class ResetPasswordForm extends Component {
 

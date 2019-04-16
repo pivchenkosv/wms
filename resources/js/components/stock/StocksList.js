@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {handleDeleteStock, handleEditStock, loadStocks} from "../api";
+import {handleDeleteStock, handleEditStock, loadStocks} from "../../api/stocks";
 
 class StocksList extends Component {
 

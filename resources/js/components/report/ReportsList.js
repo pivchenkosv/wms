@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {loadReports} from "../api";
+import {loadReports} from "../../api/api";
 
 class ReportsList extends Component {
 

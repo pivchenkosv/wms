@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import '../Style.css';
-import {loadProductInfo} from "../api";
+import {loadProductInfo} from "../../api/products";
 
 class Product extends Component {
 

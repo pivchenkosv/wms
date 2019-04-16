@@ -15,7 +15,7 @@ import {SET_USER} from "../types/users";
 import {setUser, unsetUser} from "../actions/users";
 import rootSaga from "../saga/rootSaga";
 import HeaderContainer from "../containers/HeaderContainer";
-import {getUser} from "./api";
+import {getUser} from "../api/users";
 import {PRELOADED_STATE} from "./preloadedState";
 
 const sagaMiddleware = createSagaMiddleware();

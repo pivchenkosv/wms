@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {resetPasswordApi} from "../api";
+import {resetPasswordApi} from "../../api/api";
 
 class ResetPassword extends Component {
 

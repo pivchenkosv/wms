@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import '../Style.css';
-import {loadCellInfo} from "../api";
+import {loadCellInfo} from "../../api/cells";
 
 class Cell extends Component {
 

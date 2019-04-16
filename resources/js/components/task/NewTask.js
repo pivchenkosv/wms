@@ -8,8 +8,9 @@ import CellSelector from "../cell/CellSelector";
 import ProductSelector from "../prodcut/ProductSelector";
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import {getSubtasks, handleCreateTask, handleCreateTasks, loadProducts, usersApi} from "../api";
+import {getSubtasks, handleCreateTask, handleCreateTasks} from "../../api/tasks";
 import {ACTIONS} from "./taskActions";
+import {usersApi} from "../../api/users";
 
 class NewTask extends Component {
 

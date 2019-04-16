@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import {loadReports as loadReportsApi} from "../components/api";
+import {loadReports as loadReportsApi} from "../api/reports";
 import {hideLoading, showLoading} from "react-redux-loading-bar";
 import {loadReports} from "../actions/reports";
 import {REPORTS_WATCHER} from "../types/reports";

@@ -1,7 +1,7 @@
 import {setErrorMessage, updateProfile} from '../actions/actionCreators';
 import {browserHistory} from 'react-router';
 import {takeLatest, call, put} from 'redux-saga/effects';
-import {loginApi, logoutApi} from "../components/api";
+import {loginApi, logoutApi} from "../api/api";
 
 /** saga worker that is responsible for the side effects */
 function* loginEffectSaga(action) {

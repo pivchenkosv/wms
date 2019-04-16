@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { loadProducts as loadProductsApi} from "../components/api";
+import { loadProducts as loadProductsApi} from "../api/products";
 import {hideLoading, showLoading} from "react-redux-loading-bar";
 import {PRODUCTS_WATCHER} from "../types/products";
 import {loadProductsAction} from "../actions/products";

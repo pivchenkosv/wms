@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import Cell from "./Cell";
-import {handleDeleteCell, handleEditCell, loadCells, loadStocks} from "../api";
+import {handleDeleteCell, handleEditCell} from "../../api/cells";
+import {loadStocks} from "../../api/stocks";
 
 class CellsList extends Component {
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import '../Style.css';
-import {loadAvailableCells} from "../api";
+import {loadAvailableCells} from "../../api/cells";
 
 class CellSelector extends Component {
 

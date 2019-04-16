@@ -1,6 +1,6 @@
 import {loadUsers} from '../actions/actionCreators';
 import { takeLatest, call, put } from 'redux-saga/effects';
-import {handleCreateUser, handleDeleteUser, usersApi} from "../components/api";
+import {handleCreateUser, handleDeleteUser, usersApi} from "../api/users";
 import {hideLoading, showLoading} from "react-redux-loading-bar";
 
 
