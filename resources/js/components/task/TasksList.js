@@ -57,6 +57,7 @@ class TasksList extends Component {
         evt.preventDefault();
 
         handleDeleteTask(this.state.task.id).then(response => {
+            this.props.loadTasks(response.data)
             this.setState({
                 tasks: response.data
             })
@@ -66,7 +67,9 @@ class TasksList extends Component {
 
     handleComplete = (evt) => {
         evt.preventDefault();
+
         handleCompleteTask(this.state.task.id).then(response => {
+            this.props.loadTasks(response.data)
             this.setState({
                 tasks: response.data
             })

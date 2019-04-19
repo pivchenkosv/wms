@@ -99,7 +99,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => 'tasks',
         'uses' => 'TaskController@indexPaginate',
     ]);
-    Route::get('taskInfo', [
+    Route::get('taskInfo/{task}', [
         'as' => 'taskInfo',
         'uses' => 'TaskController@showTaskInfo',
     ]);
@@ -112,7 +112,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'uses' => 'TaskController@save'
     ])->middleware(['manager']);
 
-    Route::delete('delTask/{id}', [
+    Route::delete('delTask/{task}', [
         'as' => '',
         'uses' => 'TaskController@delete'
     ])->middleware(['manager']);

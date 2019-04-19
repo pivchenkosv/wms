@@ -33,22 +33,29 @@ class TaskController extends Controller
      * List with not REMOVED tasks
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function getTasks()
     {
-        $tasks = Task::where('status', '!=', 'REMOVED')->get();
 
-        return response()->json($tasks);
+        if (Auth::user()->role === 'ROLE_ADMIN' || Auth::user()->role === 'ROLE_MANAGER') {
+
+            $tasks = Task::where('status', '!=', 'REMOVED')->orderBy('at', 'desc')->paginate(15);
+        } else {
+            $tasks = Task::where('status', '!=', 'REMOVED')
+                ->where('assigned_user', Auth::user()->id)
+                ->orderBy('at', 'desc')->paginate(15);
+        }
+
+        return $tasks;
     }
 
     /**
      * Paginated list with not REMOVED tasks
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function indexPaginate()
+    public function indexPaginate(Request $request)
     {
-        $tasks = Task::where('status', '!=', 'REMOVED')->orderBy('at', 'desc')->paginate(15);
-
-        return response()->json($tasks);
+        return response()->json($this->getTasks());
     }
 
     /**
@@ -56,17 +63,9 @@ class TaskController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showTaskInfo(Request $request)
+    public function showTaskInfo(Task $task)
     {
-        $taskId = $request->input('taskId');
-
-        $subtasks = DB::table('subtasks')
-            ->join('tasks', 'subtasks.task_id', '=', 'tasks.id')
-            ->where('subtasks.task_id', '=', $taskId)
-            ->select('subtasks.id', 'from_cell', 'to_cell', 'product_id', 'quantity')
-            ->get();
-
-        return response()->json($subtasks);
+        return response()->json($task->subtask);
     }
 
     /**
@@ -148,20 +147,17 @@ class TaskController extends Controller
     /**
      * Change task status to REMOVED
      *
-     * @param $id
+     * @param Task $task
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete($id)
+    public function delete(Task $task)
     {
-        $task = Task::find($id);
         $task->status = 'REMOVED';
         $task->save();
 
         $this->makeReport($task, 'TASK_REMOVED');
 
-        $tasks = Task::where('status', '!=', 'REMOVED')->get();
-
-        return response()->json($tasks);
+        return response()->json($this->getTasks());
     }
 
     /**
@@ -250,8 +246,7 @@ class TaskController extends Controller
             }
         }
 
-        $tasks = Task::where('status', '!=', 'REMOVED')->get();
-        return response()->json($tasks);
+        return response()->json($this->getTasks());
     }
 
     /**

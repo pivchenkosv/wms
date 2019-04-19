@@ -8,10 +8,7 @@ export const loadTasks = (action) => {
 }
 
 export const getSubtasks = (id) => {
-    return axios.get("/api/taskInfo", {
-        params: {
-            taskId: id,
-        },
+    return axios.get(`/api/taskInfo/${id}`, {
         headers: headers
     })
 }

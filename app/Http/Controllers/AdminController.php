@@ -16,7 +16,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::all()->map(function ($user) {
+            return collect($user)->except(['auth_token']);
+        });
 
         return response()->json(['success' => true, 'data' => $users]);
     }
@@ -24,12 +26,16 @@ class AdminController extends Controller
     /**
      * Delete user
      *
+     * @param Request $request
+     * @param $id
      * @return JsonResponse
      */
     public function delete(Request $request, $id){
 
         User::destroy($id);
-        $users = User::all();
+        $users = User::all()->map(function ($user) {
+            return collect($user)->except(['auth_token']);
+        });
 
         return response()->json(['success' => true, 'data' => $users]);
     }
