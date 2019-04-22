@@ -52,7 +52,7 @@ class Cell extends Component {
                                 {product.name}
                             </td>
                             <td className='badge badge-pill col-4'>
-                                {product.quantity}
+                                {product.pivot.quantity}
                             </td>
 
                             <td className='badge badge-pill col-4'>

@@ -35,7 +35,7 @@ class Product extends Component {
                     <tr className='card-header list-group-item d-flex justify-content-between align-items-left'>
                         <th className='badge badge-pill col-4'>Cell id</th>
                         <th className='badge badge-pill col-4'>Product quantity</th>
-                        <th className='badge badge-pill col-4'>Volume</th>
+                        <th className='badge badge-pill col-4'>Cell volume</th>
                     </tr>
                     </thead>
 
@@ -43,18 +43,18 @@ class Product extends Component {
                     <tbody>
                     {productCells.map(product => (
                         <tr
-                            key={product.cell_id}
+                            key={product.pivot.cell_id}
                             className='list-group-item list-group-item-action justify-content-between align-items-left'
                         >
                             <td className='badge badge-pill col-4'>
-                                {product.cell_id}
+                                {product.pivot.cell_id}
                             </td>
                             <td className='badge badge-pill col-4'>
-                                {product.quantity}
+                                {product.pivot.quantity}
                             </td>
 
                             <td className='badge badge-pill col-4'>
-                                {product.volume * product.quantity}
+                                {product.volume}
                             </td>
                         </tr>
                     ))}

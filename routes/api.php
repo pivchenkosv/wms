@@ -25,7 +25,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => 'users',
         'uses' => 'AdminController@index'
     ]);
-    Route::delete('deleteUser/{id}', [
+    Route::delete('deleteUser/{user}', [
         'as' => '',
         'uses' => 'AdminController@delete'
     ])->middleware(['admin']);
@@ -49,11 +49,11 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => '',
         'uses' => 'ProductController@save'
     ])->middleware(['manager']);
-    Route::delete('delProduct/{id}', [
+    Route::delete('delProduct/{product}', [
         'as' => '',
         'uses' => 'ProductController@delete'
     ])->middleware(['manager']);
-    Route::get('products/{id}', [
+    Route::get('products/{product}', [
         'as' => 'productInfo',
         'uses' => 'ProductController@showInfo'
     ]);
@@ -77,7 +77,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => 'cells',
         'uses' => 'CellController@showCells'
     ]);
-    Route::get('cellInfo', [
+    Route::get('cellInfo/{cell}', [
         'as' => 'cellInfo',
         'uses' => 'CellController@showInfo'
     ]);
@@ -89,7 +89,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => '',
         'uses' => 'CellController@save'
     ])->middleware(['manager']);
-    Route::delete('delCell/{id}', [
+    Route::delete('delCell/{cell}', [
         'as' => '',
         'uses' => 'CellController@delete'
     ])->middleware(['manager']);
@@ -150,4 +150,7 @@ Route::get('tasksPaginated', [
 Route::post('makeSubtasks', [
     'as' => '',
     'uses' => 'TaskController@makeSubtasks'
+]);
+Route::get('cellProducts', [
+    'uses' => 'TaskController@cellProducts'
 ]);

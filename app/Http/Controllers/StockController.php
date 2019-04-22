@@ -27,7 +27,13 @@ class StockController extends Controller
         $stocks = Stock::all();
 
         foreach ($stocks as $key => $stock) {
-            $stock = array('stock' => $stock, 'cells' => array( 'in_use' => Cell::where('status', 'BUSY')->where('stock_id', $stock->id)->count(), 'quantity' => Cell::all()->where('stock_id', $stock->id)->count()));
+            $stock = array('stock' => $stock, 'cells' => array(
+                'in_use' => Cell::where('status', 'BUSY')
+                    ->where('stock_id', $stock->id)
+                    ->count(),
+                'quantity' => Cell::all()
+                    ->where('stock_id', $stock->id)
+                    ->count()));
             $stocks[$key] = $stock;
         }
 

@@ -29,10 +29,11 @@ class AdminController extends Controller
      * @param Request $request
      * @param $id
      * @return JsonResponse
+     * @throws \Exception
      */
-    public function delete(Request $request, $id){
+    public function delete(User $user){
 
-        User::destroy($id);
+        $user->delete();
         $users = User::all()->map(function ($user) {
             return collect($user)->except(['auth_token']);
         });

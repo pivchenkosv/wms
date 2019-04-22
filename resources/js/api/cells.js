@@ -2,10 +2,7 @@ import axios from "axios";
 import {headers} from "./headers";
 
 export const loadCellInfo = (cellId) => {
-    return axios.get("/api/cellInfo", {
-        params: {
-            cellId: cellId,
-        },
+    return axios.get(`/api/cellInfo/${cellId}`, {
         headers: headers
     })
 }
