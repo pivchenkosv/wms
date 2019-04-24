@@ -11,21 +11,12 @@
 |
 */
 
-// Password Reset Routes...
-
-//Route::get('password/reset', [
-//    'as' => 'password.request',
-//    'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
-//]);
-//Route::post('password/reset', [
-//    'as' => 'password.update',
-//    'uses' => 'Auth\ResetPasswordController@reset'
-//]);
+// Password Reset Route
 Route::get('password/reset/{token}', [
     'as' => 'password.reset',
     'uses' => 'Auth\ResetPasswordController@showResetForm'
 ]);
 
-Route::view('/{any?}', 'app');
+Route::view('/{any?}', 'app')->where('any', '.*');
 Route::view('/admin/users', 'app');
 Route::view('/password/reset', 'app');

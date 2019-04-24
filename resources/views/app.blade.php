@@ -9,6 +9,10 @@
     <title>WMS</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+{{--    <link--}}
+{{--            rel="stylesheet"--}}
+{{--            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"--}}
+{{--    />--}}
     {{--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>--}}
     {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">--}}
     {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}

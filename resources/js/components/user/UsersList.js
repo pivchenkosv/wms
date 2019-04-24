@@ -12,9 +12,9 @@ class UsersList extends Component {
         this.setState({user: null});
     }
 
-    rerenderList = (users) => {
-        this.setState({users: users.data});
-    }
+    // rerenderList = (users) => {
+    //     this.setState({users: users.data});
+    // }
 
     showUserInfo = (user) => {
         this.setState({user: null}, function () {
@@ -29,7 +29,7 @@ class UsersList extends Component {
                     id: null,
                     name: '',
                     email: '',
-                    role: '',
+                    role: 'ROLE_WORKER',
                 }
             });
         });
@@ -38,21 +38,13 @@ class UsersList extends Component {
     componentDidMount() {
         new Promise((resolve, reject) => {
             this.props.loadUsersWatcher(resolve, reject);
-        }).then(response => {
+        }).then(() => {
             this.setState({users: this.props.users.users})
-            console.log('resolved ', response)
-        }).catch(response => {
-            console.log('rejected ', response)
         })
-        // axios.get('/api/admin/users').then(response => {
-        //     this.setState({
-        //         users: response.data.data
-        //     })
-        // })
     }
 
     render() {
-        const {users} = this.state
+        const {users} = this.props.users
         return (
             <div className='container py-4'>
                 <div className='row justify-content-left'>
@@ -109,7 +101,9 @@ class UsersList extends Component {
                     <div id="user" className="col-md-4">
                         {(this.state.user) ?
                             <User user={this.state.user} unmountForm={this.handleFormUnmount}
-                                  rerenderUsersList={this.rerenderList}/> : ''}
+                                  createUser={this.props.createUserWatcher}
+                                  deleteUser={this.props.deleteUserWatcher}
+                            /> : ''}
                     </div>
                 </div>
             </div>

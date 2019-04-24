@@ -41,7 +41,7 @@
         color: #a94442;
         background-color: #f2dede;
         border-color: #ebccd1;
-        display: inline-block;
+        display: none;
     }
 
     .warning {
@@ -97,5 +97,10 @@
         width: 100%; /* Full width */
         transition: top 0.3s; /* Transition effect when sliding down (and up) */
         z-index: 5;
+    }
+
+    .sticky-1 {
+        position: sticky;
+        top: 15%;
     }
 }

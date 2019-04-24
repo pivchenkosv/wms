@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 
 import Task from "./Task";
-import {handleCompleteTask, handleDeleteTask, loadTasks} from "../api";
+import {handleCompleteTask, handleDeleteTask} from "../../api/tasks";
 
 class TasksList extends Component {
 
@@ -11,27 +11,34 @@ class TasksList extends Component {
         task: null,
         store: null,
         message: null,
-        table: null
+        table: null,
+        currentPage: 1,
     }
 
-    componentDidMount() {
+    loadTasks = (page) => {
+        if (this.state.table)
+            this.state.table.destroy()
         new Promise((resolve, reject) => {
-            this.props.loadTasksWatcher(resolve, reject)
+            this.props.loadTasksWatcher(resolve, reject, page)
         }).then(response => {
             this.setState({
-                tasks: response
+                tasks: response,
+                currentPage: page,
+                lastPage: response.data.last_page,
             }, () => {
                 const table = $('#tasks').DataTable({
                     "paging": false,
                     "searching": true,
-                    "dom": "t"
+                    "dom": "t",
+                    "destroy": true
                 });
                 this.setState({table: table})
             })
-        }).catch(reason => {
-            localStorage.clear();
-            window.location.reload()
         })
+    }
+
+    componentDidMount() {
+        this.loadTasks(1)
     }
 
     search = () => {
@@ -50,6 +57,7 @@ class TasksList extends Component {
         evt.preventDefault();
 
         handleDeleteTask(this.state.task.id).then(response => {
+            this.props.loadTasks(response.data)
             this.setState({
                 tasks: response.data
             })
@@ -59,7 +67,9 @@ class TasksList extends Component {
 
     handleComplete = (evt) => {
         evt.preventDefault();
+
         handleCompleteTask(this.state.task.id).then(response => {
+            this.props.loadTasks(response.data)
             this.setState({
                 tasks: response.data
             })
@@ -82,6 +92,7 @@ class TasksList extends Component {
     tableHeader = (history) => {
 
         const {user} = this.props.user
+        const {task} = this.state
 
         switch (user.role) {
             case "ROLE_ADMIN":
@@ -101,12 +112,13 @@ class TasksList extends Component {
                                 />
                             </div>
                             <button type='button' className='btn btn-danger btn-sm mb-3 col-sm-2 mr-1'
-                                    disabled={!this.state.task}
+                                    disabled={!task}
                                     onClick={this.handleDelete}>
                                 Delete
                             </button>
                             <button type='button' className='btn btn-primary btn-sm mb-3 col-sm-3'
-                                    onClick={() => this.createNewTask(history)}>
+                                    onClick={() => this.createNewTask(history)}
+                                    disabled={task && task.status === 'COMPLETED'}>
                                 Create/Update task
                             </button>
                         </div>
@@ -158,8 +170,9 @@ class TasksList extends Component {
     }
 
     render() {
-        let {tasks} = this.state
+        let {tasks} = this.props
         const {history, user} = this.props;
+
         tasks = user.user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.user.id) : tasks
         return (
             <div className='container py-4'>
@@ -183,6 +196,22 @@ class TasksList extends Component {
                             ))}
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                                <li className="page-item">
+                                    <button className="page-link"
+                                            disabled={this.state.currentPage === 1}
+                                            onClick={() => this.loadTasks(this.state.currentPage - 1)}>Previous
+                                    </button>
+                                </li>
+                                <li className="page-item">
+                                    <button className="page-link"
+                                            disabled={this.state.currentPage === this.state.tasks.last_page}
+                                            onClick={() => this.loadTasks(this.state.currentPage + 1)}>Next
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div className="col-md-4">
                         {(this.state.task) ?

@@ -19,4 +19,9 @@ class Product extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function cells()
+    {
+        return $this->belongsToMany(Cell::class, 'cell_product')->withPivot('quantity');
+    }
 }

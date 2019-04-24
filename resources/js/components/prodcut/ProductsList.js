@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import {handleDeleteProduct, handleEditProduct, loadProducts} from "../api";
+import {handleDeleteProduct, handleEditProduct} from "../../api/products";
+import Product from "./Product";
 
 class ProductsList extends Component {
 
@@ -10,10 +11,10 @@ class ProductsList extends Component {
     }
 
     componentDidMount() {
-        loadProducts().then(response => {
-            this.setState({
-                products: response.data.data
-            })
+        new Promise(resolve => {
+            this.props.loadProductsWatcher(resolve)
+        }).then(data => {
+            this.setState({products: data})
         })
     }
 
@@ -48,8 +49,6 @@ class ProductsList extends Component {
                     products: response.data.data,
                     product: null
                 })
-            }).catch(response => {
-                console.log('rejected', response);
             })
 
         } else {
@@ -163,16 +162,16 @@ class ProductsList extends Component {
     }
 
     render() {
-        const {products} = this.state
+        const {products, product} = this.state
         const {user} = this.props.user
         return (
             <div className='container py-4'>
-                <div className='row justify-content-center'>
+                <div className='row justify-content-left'>
                     <div className='col-md-8'>
                         <div className='card'>
                             <div className='card-header'>
                                 <div className='row'>
-                                    <div className='col-sm-7'>
+                                    <div className='col-sm-7 row'>
                                         <span className='col-sm-4'>Products Table</span>
                                         <div id='message' className='alert-box success col-sm-7 mb-3 ml-3'>
                                             {this.state.message}
@@ -211,6 +210,9 @@ class ProductsList extends Component {
                             ))}
                             </tbody>
                         </table>
+                    </div>
+                    <div id="product" className="col-md-4">
+                        {product ? <Product productId={product.id}/> : null}
                     </div>
                 </div>
             </div>

@@ -3,33 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Cell;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CellController extends Controller
 {
-    public function __construct() {}
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
 
+    /**
+     * Cells list
+     *
+     * @return JsonResponse
+     */
     public function showCells()
     {
         $cells = Cell::all();
         return response()->json(['success' => true, 'data' => $cells]);
     }
 
-    public function showInfo(Request $request)
+    /**
+     * Show information about products in cell
+     *
+     * @param Cell $cell
+     * @return JsonResponse
+     */
+    public function showInfo(Cell $cell)
     {
-        if ($request->has('cellId')) {
-            $cellId = $request->input('cellId');
-            $products = DB::table('cell_product')->join('products', 'cell_product.product_id', '=', 'products.id')->where('cell_product.cell_id', '=', $cellId)->select('name', 'volume', 'quantity')->get();
-            return response()->json(['success' => true, 'data' => $products]);
-        }
-
-        return response()->json(['success' => false]);
+        return response()->json(['success' => true, 'data' => $cell->products]);
     }
 
+    /**
+     * Create or update cell
+     *
+     * @param Request $request
+     * @param Cell $cell
+     * @return JsonResponse
+     */
     public function save(Request $request, Cell $cell)
     {
-        if ($request->has('id')){
+        if ($request->has('id')) {
             $cell = Cell::find($request->input('id'));
         }
 
@@ -57,18 +77,27 @@ class CellController extends Controller
         return response()->json(['success' => false]);
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * Delete cell by id
+     *
+     * @param Cell $cell
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function delete(Cell $cell)
     {
-        if ($id) {
-            Cell::destroy($id);
-            $cells = Cell::all();
-            return response(['success' => true, 'data' => $cells]);
-        }
+        $cell->delete();
 
-        return response(['success' => false]);
+        $cells = Cell::all();
+        return response(['success' => true, 'data' => $cells]);
     }
 
-    public function fromCell(Request $request)
+    /**
+     * Cells list with available volume
+     *
+     * @return JsonResponse
+     */
+    public function fromCell()
     {
         $cells = DB::table('cells')
             ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')

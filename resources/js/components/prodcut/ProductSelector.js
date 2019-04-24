@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import '../Style.css';
-import {loadProducts} from "../api";
+import {loadProducts} from "../../api/products";
 
 class ProductSelector extends Component {
 
@@ -14,12 +14,10 @@ class ProductSelector extends Component {
             this.setState({
                 products: response.data.data
             })
-            console.log(response);
         })
     }
 
     returnSelected = (product) => {
-        console.log('productId', product.id)
         this.props.returnSelected(product.id);
     }
 
@@ -35,14 +33,14 @@ class ProductSelector extends Component {
                 </div>
                 <table className='card'>
                     <thead>
-                    <tr className='card-header list-group-item list-group-item-action d-flex justify-content-between align-items-left'>
+                    <tr className='card-header d-flex justify-content-between align-items-left'>
                         <th className='badge-pill col-3'>id</th>
                         <th className='badge-pill col-3'>name</th>
                         <th className='badge-pill col-3'>description</th>
                         <th className='badge-pill col-3'>volume</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='overflow-auto' style={{height: '200px'}}>
                     {products.map(product => (
                         <tr key={product.id}
                             className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'

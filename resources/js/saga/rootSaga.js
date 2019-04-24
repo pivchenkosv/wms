@@ -3,8 +3,11 @@ import {
     loginWatcherSaga, logoutWatcherSaga
     // import other watchers from this file
 } from './sessionSaga';
-import {usersWatcherSaga} from "./usersSaga";
+import {createUserWatcherSaga, deleteUserWatcherSaga, usersWatcherSaga} from "./usersSaga";
 import {tasksWatcherSaga} from "./tasksSaga";
+import {reportsWatcherSaga} from "./reportsSaga";
+import {cellsWatcherSaga} from "./cellsSaga";
+import {productsWatcherSaga} from "./productsSaga";
 // import watchers from other files
 
 export default function* rootSaga() {
@@ -13,6 +16,11 @@ export default function* rootSaga() {
         logoutWatcherSaga(),
         usersWatcherSaga(),
         tasksWatcherSaga(),
+        reportsWatcherSaga(),
+        cellsWatcherSaga(),
+        productsWatcherSaga(),
+        createUserWatcherSaga(),
+        deleteUserWatcherSaga(),
         // add other watchers to the array
     ]);
 }

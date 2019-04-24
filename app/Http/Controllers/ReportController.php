@@ -3,21 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Report;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function __construct() {}
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
 
+    /**
+     * Reports list
+     *
+     * @return JsonResponse
+     */
     public function index()
     {
         $reports = Report::all();
+
         return response()->json(['success' => true, 'data' => $reports]);
     }
 
-    public function indexPaginate() {
+    /**
+     * Paginated reports list
+     *
+     * @return JsonResponse
+     */
+    public function indexPaginate()
+    {
         $reports = Report::paginate(30);
+
         return response()->json(['success' => true, 'data' => $reports]);
-//        return view('report.index', ['reports' => $reports]);
     }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {loadReports} from "../api";
+import {loadReports} from "../../api/api";
 
 class ReportsList extends Component {
 
@@ -16,11 +16,14 @@ class ReportsList extends Component {
     loadReports = (page) => {
         if (this.state.table)
             this.state.table.destroy()
-        loadReports(page).then(response => {
+
+        new Promise((resolve, reject) => {
+            this.props.loadReportsWatcher(resolve, reject, page)
+        }).then(response => {
             this.setState({
-                reports: response.data.data.data,
-                currentPage: page,
-                lastPage: response.data.data.last_page,
+                reports: response.data.data,
+                currentPage: response.data.current_page,
+                lastPage: response.data.last_page,
             }, () => {
                 const table = $('#reports').DataTable({
                     "paging": false,
@@ -28,11 +31,9 @@ class ReportsList extends Component {
                     "dom": "t",
                     "destroy": true
                 });
-                console.log(this.state)
                 $("#reports").css("width", "100%")
                 this.setState({table: table})
             })
-            console.log(response);
         })
     }
 
@@ -45,7 +46,7 @@ class ReportsList extends Component {
     }
 
     render() {
-        const {reports} = this.state
+        const {reports} = this.props.reports
         return (
             <div className='container py-4'>
                 <div className='row justify-content-center'>

@@ -1,5 +1,7 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
+
+import LoadingBar from 'react-redux-loading-bar'
 import {ROUTES} from "./routes";
 
 class Header extends React.Component {
@@ -11,10 +13,7 @@ class Header extends React.Component {
                 token: $('meta[name="csrf-token"]').attr('content'),
             }, resolve, reject);
         }).then(response => {
-            console.log('fulfilled ', response)
             window.location.reload()
-        }).catch(response => {
-            console.log('rejected ', response)
         })
     }
 
@@ -69,6 +68,7 @@ class Header extends React.Component {
                         </ul>
                     </div>
                 </div>
+
             </nav>
         )
 

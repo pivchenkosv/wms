@@ -7,7 +7,7 @@ use Closure;
 class CheckRoleManager
 {
     /**
-     * Handle an incoming request.
+     * Check whether user has ROLE_ADMIN / ROLE_MANAGER or not
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

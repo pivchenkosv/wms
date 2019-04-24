@@ -1,31 +1,55 @@
 import React, {Component} from 'react'
 
 import '../Style.css';
-import {loadAvailableCells} from "../api";
+import {loadAvailableCells} from "../../api/cells";
 
 class CellSelector extends Component {
 
     state = {
-            cells: [],
-        }
+        cells: [],
+    }
 
     componentDidMount() {
+        const {action} = this.props
+        let cells
         loadAvailableCells().then(response => {
-            this.setState({
-                cells: response.data.data
+            cells = response.data.data.map(cell => {
+                return cell.available_volume ? cell : {...cell, available_volume: cell.volume}
             })
-            console.log(response);
+            switch (action) {
+                case 'shipment':
+                    cells = cells.sort(function (a, b) {
+                        if (a.available_volume < b.available_volume)
+                            return 1;
+                        if (a.available_volume > b.available_volume)
+                            return -1;
+                        return 0;
+                    })
+                    break;
+                case 'acceptance':
+                    cells = cells.sort(function (a, b) {
+                        if (a.available_volume > b.available_volume)
+                            return 1;
+                        if (a.available_volume < b.available_volume)
+                            return -1;
+                        return 0;
+                    })
+                    break;
+            }
+            this.setState({
+                cells: cells
+            })
         })
     }
 
     returnSelected = (cell) => {
-        console.log('cellId', cell.id)
         this.props.returnSelected(cell.id);
     }
 
     render() {
 
         const {cells} = this.state
+
         return (
             <div className="col-12">
                 <table className='card'>
@@ -41,28 +65,29 @@ class CellSelector extends Component {
                         <th className='badge badge-pill col-3'>total volume</th>
                         <th className='badge badge-pill col-4'>status</th>
                     </tr>
-
+                    <tbody className='overflow-auto' style={{height: '200px'}}>
                     {cells.map(cell => (
                         <tr className='list-group-item list-group-item-action d-flex justify-content-between align-items-left'
-                            onClick={() => this.returnSelected(cell)}>
-                                    <th className='badge col-1 text-size'>
-                                        {cell.id}
-                                    </th>
+                            onClick={() => this.returnSelected(cell)}
+                            key={cell.id}>
                             <th className='badge col-1 text-size'>
-                                        {cell.stock_id}
-                                    </th>
+                                {cell.id}
+                            </th>
+                            <th className='badge col-1 text-size'>
+                                {cell.stock_id}
+                            </th>
                             <th className='badge col-3 text-size'>
                                 {cell.available_volume ? cell.available_volume : cell.volume}
                             </th>
                             <th className='badge col-3 text-size'>
-                                        {cell.volume}
-                                    </th>
+                                {cell.volume}
+                            </th>
                             <th className='badge badge-primary col-4 text-size'>
-                                        {cell.status}
-                                    </th>
+                                {cell.status}
+                            </th>
                         </tr>
                     ))}
-
+                    </tbody>
                 </table>
             </div>
         )

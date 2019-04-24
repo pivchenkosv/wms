@@ -19,4 +19,9 @@ class Task extends Model
      * @var bool
      */
     public $timestamps = true;
+
+    public function subtask()
+    {
+        return $this->hasMany(Subtask::class);
+    }
 }

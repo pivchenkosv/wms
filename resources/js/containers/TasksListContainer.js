@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import TasksList from "../components/task/TasksList";
 import {bindActionCreators} from "redux";
-import {loadTasksWatcher, setTask, unsetTask} from "../actions/actionCreators";
+import {loadTasks, loadTasksWatcher, setTask, unsetTask} from "../actions/actionCreators";
 
 const mapStateToProps = (store, ownProps) => {
     return {
@@ -12,16 +12,10 @@ const mapStateToProps = (store, ownProps) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         setTask: (task) => setTask(task)(dispatch),
-//         unsetTask: () => unsetTask()(dispatch),
-//     }
-// }
-
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         loadTasksWatcher,
+        loadTasks,
         setTask,
         unsetTask
     }, dispatch);

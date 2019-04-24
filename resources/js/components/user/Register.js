@@ -13,7 +13,6 @@ class Register extends Component {
     handleSubmit = (evt) => {
         evt.preventDefault();
 
-        console.log(this.state);
         const params = new URLSearchParams();
         params.append('name', this.state.name);
         params.append('email', this.state.email);
@@ -22,12 +21,6 @@ class Register extends Component {
         params.append('_token', $('meta[name="csrf-token"]').attr('content'));
         axios.post('api/register', params, {
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        }).then(response => {
-            console.log(response);
-            console.log(response.data);
-        }).catch(response => {
-            console.log(response);
-            console.log(response.data);
         })
 
     }

@@ -2,19 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Cell;
 use App\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct() {}
 
+    /**
+     * Products list
+     *
+     * @return JsonResponse
+     */
     public function index()
     {
         $products = Product::all();
         return response()->json(['success' => true, 'data' => $products]);
     }
 
+    /**
+     * Create or update product
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function save(Request $request)
     {
         if (!$request->has('id')) {
@@ -46,14 +65,32 @@ class ProductController extends Controller
 
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * Delete product by id
+     *
+     * @param Product $product
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function delete(Product $product)
     {
-        if (Product::destroy($id))
+        if ($product->delete())
         {
             $products = Product::all();
             return response()->json(['success' => true, 'data' => $products]);
         }
 
         return response()->json(['success' => false]);
+    }
+
+    /**
+     * List of cells containing product with $id
+     *
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function showInfo(Product $product)
+    {
+        return response()->json(['success' => true, 'data' => $product->cells]);
     }
 }

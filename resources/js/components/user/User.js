@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import axios from "axios";
 import '../Style.css';
 
 class User extends Component {
@@ -39,39 +38,23 @@ class User extends Component {
 
     handleRoleChange(evt) {
         const value = evt.target.options[evt.target.selectedIndex].value;
-        console.log(value);
         this.setState({
             userInfo: {
                 ...this.state.userInfo,
                 role: value,
             }
-        }, function () {
-            console.log(this.state.userInfo.role);
         });
     };
 
     handleSubmit = (evt) => {
         evt.preventDefault();
-        const params = new URLSearchParams();
-        if (this.state.userInfo.id !== null)
-            params.append('id', this.state.userInfo.id);
-        params.append('name', this.state.userInfo.name);
-        params.append('email', this.state.userInfo.email);
-        params.append('role', this.state.userInfo.role);
-        params.append('password', '12345678');
-        params.append('password_confirmation', '12345678');
-        params.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        axios.post('/api/register', params, {
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        }).then(response => {
-            console.log('fulfilled', response);
-            console.log(response.data);
-            this.props.rerenderUsersList(response.data);
+
+        new Promise((resolve, reject) => {
+            this.props.createUser(resolve, reject, this.state.userInfo)
+        }).then(() => {
+            this.props.unmountForm()
         }).catch(response => {
-            console.log('rejected', response);
-            // this.setState({errors: response.response.data.errors})
-            this.setState({errors: response.response.data}, function () {
-                console.log('state ', this.state)
+            this.setState({errors: response.response.data.errors[Object.keys(response.response.data.errors)[0]]}, function () {
                 $("div.failure").fadeIn(300).delay(1500).fadeOut(400);
             })
         })
@@ -79,11 +62,11 @@ class User extends Component {
 
     deleteUser = (event) => {
         event.preventDefault();
-        const id = new URLSearchParams();
-        id.append('id', this.state.userInfo.id);
-        axios.delete(`/api/deleteUser/${this.state.userInfo.id}`).then(response => {
-            this.props.rerenderUsersList(response.data);
+
+        new Promise(() => {
+            this.props.deleteUser(this.state.userInfo.id)
         })
+
         this.props.unmountForm()
     }
 
@@ -106,7 +89,6 @@ class User extends Component {
 
                 <div className="card-body">
                     <form onSubmit={this.handleSubmit}>
-                        {/*<input type="hidden" name="_token" value={$('meta[name="csrf-token"]').attr('content')}/>*/}
                         <div className="form-group">
                             <label htmlFor="name" className="col-form-label text-md-left">Name</label>
 
@@ -128,7 +110,7 @@ class User extends Component {
                                    required/>
 
                             <div className='col-sm-12 center alert-box failure mt-2'>
-                                {this.state.errors ? this.state.errors.errors.email[0] : ''}
+                                {this.state.errors ? this.state.errors : ''}
                             </div>
                         </div>
                         <div className="form-group">

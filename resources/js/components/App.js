@@ -3,9 +3,11 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Redirect, Route, Router, Switch} from 'react-router-dom'
 import {applyMiddleware, compose, createStore} from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {connect, Provider} from 'react-redux';
-import createHistory from 'history/createBrowserHistory';
+import {createBrowserHistory} from 'history';
 import createSagaMiddleware from 'redux-saga';
+import LoadingBar, {loadingBarMiddleware} from 'react-redux-loading-bar'
 
 import reducers from '../reducers';
 import {ROUTES} from "./routes";
@@ -13,24 +15,34 @@ import {SET_USER} from "../types/users";
 import {setUser, unsetUser} from "../actions/users";
 import rootSaga from "../saga/rootSaga";
 import HeaderContainer from "../containers/HeaderContainer";
+import {getUser} from "../api/users";
+import {PRELOADED_STATE} from "./preloadedState";
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = applyMiddleware(sagaMiddleware);
-const store = createStore(reducers, compose(middlewares));
+const middlewares = applyMiddleware(sagaMiddleware, loadingBarMiddleware());
+const store = createStore(reducers, PRELOADED_STATE, composeWithDevTools(middlewares));
 sagaMiddleware.run(rootSaga);
-const history = createHistory();
+const history = createBrowserHistory();
 
 class App extends Component {
 
     constructor(props) {
         super(props)
-        const user = JSON.parse(localStorage.getItem('user'));
+        let user = JSON.parse(localStorage.getItem('user'));
+        getUser().then(response => {
+            store.dispatch({type: SET_USER, payload: response.data})
+            user = response.data
+        }).catch(rejected => {
+            if (rejected.response.status === 401 && localStorage.user) {
+                localStorage.removeItem('user');
+            }
+        })
         store.dispatch({type: SET_USER, payload: user})
     }
 
-    router() {
+    router = () => {
 
-        const {user} = store.getState();
+        const {user} = store.getState()
         const userRole = user.user ? user.user.role : 'unauthorized';
         const routesData = ROUTES[userRole]
 
@@ -49,6 +61,7 @@ class App extends Component {
                 <Router history={history}>
                     <div>
                         <HeaderContainer history={history}/>
+                        <LoadingBar/>
                         {this.router()}
                     </div>
                 </Router>

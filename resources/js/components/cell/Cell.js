@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import axios from "axios";
 
 import '../Style.css';
-import {loadCellInfo} from "../api";
+import {loadCellInfo} from "../../api/cells";
 
 class Cell extends Component {
 
@@ -23,7 +22,7 @@ class Cell extends Component {
         const {cellProducts} = this.state;
         const {unmountForm} = this.props;
         return (
-            <div>
+            <div className='sticky-1'>
                 <div className="card card-header">
                     <div className="row">
                         <div className='col-sm-10'>{`Cell id: ` + this.state.cellId}</div>
@@ -53,7 +52,7 @@ class Cell extends Component {
                                 {product.name}
                             </td>
                             <td className='badge badge-pill col-4'>
-                                {product.quantity}
+                                {product.pivot.quantity}
                             </td>
 
                             <td className='badge badge-pill col-4'>
