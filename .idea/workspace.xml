@@ -2,17 +2,124 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6ee742c-a7b2-421a-9931-c9fbd6147599" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/canvasjs.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/canvasjs.react.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/animated-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-from-json-data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-axis-scale-breaks.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-crosshair.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-custom-legend-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-image-overlay.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-index-data-label.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-inverted-reversed-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-logarithmic-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-secondary-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/chart-with-zoom-pan.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/dynamic-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/interactive-draggable-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/multi-series-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/null-data-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/performance-demo.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/dashed-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/dynamic-spline-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/line-chart-with-axis-scale-breaks.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/line-chart-with-data-markers.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/line-chart-with-logarithmic-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/line-chart-with-multiple-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/line-chart-with-zoom-pan.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/multi-series-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/multi-series-spline-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/multi-series-step-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/spline-chart-with-legends.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/spline-chart-with-secondary-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/spline-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/02-line-spline-step-line-charts/step-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/multi-series-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/multi-series-range-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/multi-series-spline-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/range-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/range-spline-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/spline-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/stacked-area-100-chart-with-date-time-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/stacked-area-100-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/stacked-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/03-stacked-spline-range-area-charts/step-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/bar-chart-with-axis-scale-break.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/bar-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/column-chart-with-multiple-axis.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/column-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/multi-series-bar-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/multi-series-range-column-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/multi-series-waterfall-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/range-bar-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/range-column-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/stacked-bar-100-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/stacked-bar-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/stacked-column-100-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/stacked-column-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/waterfall-chart-with-custom-color.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/04-column-stacked-range-waterfall-charts/waterfall-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/doughnut-Chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/doughnut-chart-with-custom-inner-radius.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/funnel-chart-with-custom-neck.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/funnel-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/inverted-reversed-funnel-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/pie-chart-with-custom-radius.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/pie-chart-with-legends.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/pie-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/pyramid-chart-where-area-represents-value.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/pyramid-chart-with-index-label-placed-Inside.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/05-pie-doughnut-funnel-pyramid-charts/pyramid-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/06-candlestick-ohlc-charts/candlestick-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/06-candlestick-ohlc-charts/multi-series-candlestick-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/06-candlestick-ohlc-charts/ohlc-chart-from-json-data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/06-candlestick-ohlc-charts/ohlc-stock-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/07-scatter-bubble-charts/bubble-chart-with-data-marker.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/07-scatter-bubble-charts/bubble-chart-with-zoom-pan.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/07-scatter-bubble-charts/bubble-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/07-scatter-bubble-charts/multi-series-scatter-point-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/07-scatter-bubble-charts/scatter-point-chart-with-custom-marker.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/07-scatter-bubble-charts/scatter-point-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/08-box-and-whisker-charts/box-and-whisker-chart-with-custom-color.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/08-box-and-whisker-charts/box-and-whisker-chart-with-outliers.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/08-box-and-whisker-charts/box-and-whisker-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/column-line-area-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/error-bar-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/error-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/error-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/ohlc-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/pareto-chart-with-index-data-label.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/pareto-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/09-combination-charts/range-area-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/10-dynamic-charts/dynamic-column-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/10-dynamic-charts/dynamic-line-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/10-dynamic-charts/dynamic-multi-series-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/11-integration/jquery-charts.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/11-integration/jquery-line-chart-with-zoom-pan.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/11-integration/jquery-resizable-chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/11-integration/jquery-spline-area-chart-in-tab.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/examples/11-integration/jquery-spline-chart-with-image-export.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/instruction.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/jquery.canvasjs.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/canvasjs-2/license.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f557484a-85ef-4e0d-b2ce-7b716b0a3312.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f557484a-85ef-4e0d-b2ce-7b716b0a3312.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Cell.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Cell.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CellController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CellController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/api/cells.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/api/cells.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/cell/Cell.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/cell/Cell.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/prodcut/Product.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/prodcut/Product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/task/NewTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/task/NewTask.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/task/TasksList.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/task/TasksList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/saga/sessionSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/saga/sessionSaga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,153 +145,188 @@
     <expand>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="wms@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="wms_db@localhost" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="wms_db@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="wms@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="wms_db@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="wms@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="wms_db: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="wms: schema" type="c314c289:MysqlImplModel$Schema" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="wms_db@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="wms@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="wms_db: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="cell_product: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="wms_db@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="wms_db: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="cells: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="wms_db@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="wms_db: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="products: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="wms_db@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="wms_db: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="subtasks: table" type="285a2a93:MysqlImplModel$Table" />
+        <item name="wms: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="cell_product: table" type="98d5ac3d:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1327017896">
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="PHP//Applications/MAMP/htdocs/WarehouseManagementSystem/app/Http/Controllers" value="1" />
+          <entry key="PHP//Applications/MAMP/htdocs/WarehouseManagementSystem/app/Http/Controllers/Auth" value="2" />
+          <entry key="PHP/\App\Cell" value="2" />
+          <entry key="PHP/\App\Http\Controllers\CellController" value="1" />
+          <entry key="Procfile" value="1" />
+          <entry key="babelrc" value="1" />
+          <entry key="cell_product" value="1" />
+          <entry key="cells" value="1" />
+          <entry key="css" value="1" />
+          <entry key="env" value="3" />
+          <entry key="html" value="1" />
+          <entry key="js" value="75" />
+          <entry key="json" value="1" />
+          <entry key="password_resets" value="1" />
+          <entry key="php" value="56" />
+          <entry key="sql" value="2" />
+          <entry key="subtasks" value="1" />
+          <entry key="users" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Blade" value="5" />
+          <entry key="CSS" value="1" />
+          <entry key="Database Element" value="5" />
+          <entry key="HTML" value="1" />
+          <entry key="JSON" value="2" />
+          <entry key="JavaScript" value="75" />
+          <entry key="PHP" value="51" />
+          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="Scratch" value="2" />
+          <entry key="UML" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.local" value="3" />
+          <entry key="git.branch.create.new" value="1" />
+          <entry key="git.checkout.as.new.branch" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="6" />
+          <entry key="project.open.time.11" value="2" />
+          <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="js" value="290" />
+          <entry key="php" value="287" />
+          <entry key="sql" value="123" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Blade" value="8" />
+          <entry key="JavaScript" value="290" />
+          <entry key="PHP" value="279" />
+          <entry key="SQL" value="2" />
+          <entry key="Scratch" value="121" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Cell.php">
+        <entry file="uml://PHP//Applications/MAMP/htdocs/WarehouseManagementSystem/app/Http/Controllers/Auth">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>PHP</ID>
+              <OriginalElement>$PROJECT_DIR$/app/Http/Controllers/Auth</OriginalElement>
+              <nodes>
+                <node x="845.5" y="213.0">\Illuminate\Foundation\Auth\ResetsPasswords</node>
+                <node x="535.5" y="191.0">\Illuminate\Foundation\Auth\AuthenticatesUsers</node>
+                <node x="499.75" y="546.0">\App\Http\Controllers\Auth\LoginController</node>
+                <node x="270.625" y="0.0">\Illuminate\Routing\Controller</node>
+                <node x="361.625" y="323.0">\App\Http\Controllers\Controller</node>
+                <node x="0.0" y="279.0">\Illuminate\Foundation\Auth\RegistersUsers</node>
+                <node x="881.25" y="579.5">\App\Http\Controllers\Auth\ResetPasswordController</node>
+                <node x="314.75" y="579.5">\App\Http\Controllers\Auth\VerificationController</node>
+                <node x="53.75" y="535.0">\App\Http\Controllers\Auth\RegisterController</node>
+              </nodes>
+              <notes />
+              <edges>
+                <edge source="\App\Http\Controllers\Auth\RegisterController" target="\Illuminate\Foundation\Auth\RegistersUsers">
+                  <point x="-60.25" y="-70.5" />
+                  <point x="0.0" y="59.0" />
+                </edge>
+                <edge source="\App\Http\Controllers\Auth\VerificationController" target="\App\Http\Controllers\Controller">
+                  <point x="0.0" y="-26.0" />
+                  <point x="-11.875" y="15.0" />
+                </edge>
+                <edge source="\App\Http\Controllers\Auth\RegisterController" target="\App\Http\Controllers\Controller">
+                  <point x="60.25" y="-70.5" />
+                  <point x="234.5" y="515.0" />
+                  <point x="373.5" y="515.0" />
+                  <point x="-35.625" y="15.0" />
+                </edge>
+                <edge source="\App\Http\Controllers\Auth\ResetPasswordController" target="\Illuminate\Foundation\Auth\ResetsPasswords">
+                  <point x="47.25" y="-26.0" />
+                  <point x="0.0" y="125.0" />
+                </edge>
+                <edge source="\App\Http\Controllers\Auth\LoginController" target="\App\Http\Controllers\Controller">
+                  <point x="-60.25" y="-59.5" />
+                  <point x="560.0" y="515.0" />
+                  <point x="421.0" y="515.0" />
+                  <point x="11.875" y="15.0" />
+                </edge>
+                <edge source="\App\Http\Controllers\Controller" target="\Illuminate\Routing\Controller">
+                  <point x="0.0" y="-15.0" />
+                  <point x="0.0" y="70.5" />
+                </edge>
+                <edge source="\App\Http\Controllers\Auth\LoginController" target="\Illuminate\Foundation\Auth\AuthenticatesUsers">
+                  <point x="60.25" y="-59.5" />
+                  <point x="0.0" y="147.0" />
+                </edge>
+                <edge source="\App\Http\Controllers\Auth\ResetPasswordController" target="\App\Http\Controllers\Controller">
+                  <point x="-47.25" y="-26.0" />
+                  <point x="928.5" y="505.0" />
+                  <point x="444.75" y="505.0" />
+                  <point x="35.625" y="15.0" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="190.33333333333337" y="260.0" />
+              <SelectedNodes>
+                <node>\Illuminate\Foundation\Auth\RegistersUsers</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Fields</Category>
+                <Category>Methods</Category>
+              </Categories>
+              <VISIBILITY>private</VISIBILITY>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+            <state relative-caret-position="45">
+              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="82" column="27" lean-forward="true" selection-start-line="82" selection-start-column="27" selection-end-line="82" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CellController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="87" column="5" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/js/api/products.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TaskController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="68" column="5" lean-forward="true" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AdminController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/js/api/cells.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/js/components/cell/Cell.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="58" column="47" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="47" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Product.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="85" selection-start-line="24" selection-start-column="85" selection-end-line="24" selection-end-column="85" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/api.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="89" column="39" lean-forward="true" selection-start-line="89" selection-start-column="39" selection-end-line="89" selection-end-column="39" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/Procfile">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -199,102 +341,94 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>showInfoTable</find>
-      <find>?</find>
-      <find>sty</find>
-      <find>style</find>
-      <find>Style</find>
-      <find>let</find>
-      <find>error</find>
-      <find>handle</find>
-      <find>handleUserCha</find>
-      <find>value</find>
-      <find>errors</find>
-      <find>startDate</find>
-      <find>handleChange</find>
-      <find>At</find>
-      <find>At:</find>
-      <find>Users</find>
-      <find>register</find>
-      <find>res</find>
-      <find>products</find>
-      <find>stocks</find>
-      <find>console.log</find>
-      <find>userI</find>
-      <find>task-&gt;sub</find>
-      <find>showTaskInfo</find>
-      <find>save</find>
+      <find>evt</find>
+      <find>handleEma</find>
+      <find>unmountForm</find>
+      <find>unm</find>
+      <find>setSta</find>
       <find>delete</find>
-      <find>produc</find>
-      <find>tasks</find>
-      <find>users</find>
-      <find>cells</find>
+      <find>users.map</find>
+      <find>WMS</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="infoPopups" />
       </map>
     </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/js/types/products.js" />
-        <option value="$PROJECT_DIR$/resources/js/reducers/index.js" />
-        <option value="$PROJECT_DIR$/resources/js/actions/products.js" />
-        <option value="$PROJECT_DIR$/resources/js/reducers/products.js" />
-        <option value="$PROJECT_DIR$/resources/js/containers/ProductsListContainer.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/password/ResetPasswordForm.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/user/Register.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/Header.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/preloadedState.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/api.js" />
-        <option value="$PROJECT_DIR$/resources/js/containers/UserContainer.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/user/UsersList.js" />
-        <option value="$PROJECT_DIR$/resources/js/saga/rootSaga.js" />
-        <option value="$PROJECT_DIR$/resources/js/containers/UsersListContainer.js" />
-        <option value="$PROJECT_DIR$/resources/js/actions/actionCreators.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/user/User.js" />
-        <option value="$PROJECT_DIR$/resources/js/api/headers.js" />
-        <option value="$PROJECT_DIR$/resources/js/api/users.js" />
-        <option value="$PROJECT_DIR$/resources/js/saga/usersSaga.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/App.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/cell/CellSelector.js" />
-        <option value="$PROJECT_DIR$/resources/js/saga/cellsSaga.js" />
-        <option value="$PROJECT_DIR$/resources/js/api/stocks.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/stock/StocksList.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/cell/CellsList.js" />
-        <option value="$PROJECT_DIR$/resources/js/api/products.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/prodcut/ProductsList.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/prodcut/ProductSelector.js" />
-        <option value="$PROJECT_DIR$/resources/js/saga/productsSaga.js" />
-        <option value="$PROJECT_DIR$/resources/js/api/reports.js" />
-        <option value="$PROJECT_DIR$/resources/js/saga/reportsSaga.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/task/NewTask.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/task/Task.js" />
-        <option value="$PROJECT_DIR$/resources/js/saga/tasksSaga.js" />
-        <option value="$PROJECT_DIR$/resources/js/api/api.js" />
-        <option value="$PROJECT_DIR$/app/Task.php" />
-        <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="$PROJECT_DIR$/resources/js/api/tasks.js" />
-        <option value="$PROJECT_DIR$/resources/js/containers/TasksListContainer.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/task/TasksList.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" />
-        <option value="$PROJECT_DIR$/app/Cell.php" />
-        <option value="$PROJECT_DIR$/resources/js/api/cells.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/cell/Cell.js" />
         <option value="$PROJECT_DIR$/app/Product.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/prodcut/Product.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
+        <option value="$PROJECT_DIR$/app/Report.php" />
+        <option value="$PROJECT_DIR$/app/Task.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_02_27_083710_create_cell_table.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/Cells.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/ReportsList.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_02_28_085709_create_cell_poduct_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_02_28_090020_create_subtask_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_02_28_090817_create_reports_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_02_26_123346_create_tasks_table.php" />
+        <option value="$PROJECT_DIR$/resources/js/types/users.js" />
+        <option value="$PROJECT_DIR$/resources/js/actions/users.js" />
+        <option value="$PROJECT_DIR$/resources/js/App.js" />
+        <option value="$PROJECT_DIR$/resources/js/reducers/users.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/Login.js" />
+        <option value="$PROJECT_DIR$/composer.json" />
+        <option value="$PROJECT_DIR$/resources/js/components/UsersList.js" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_02_26_113758_create_stocks_table.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/StockController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/User.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/StocksList.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CellController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/CellsList.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/ProductsList.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/Cell.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/Task.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/Style.css" />
+        <option value="$PROJECT_DIR$/resources/js/types/task.js" />
+        <option value="$PROJECT_DIR$/resources/js/reducers/task.js" />
+        <option value="$PROJECT_DIR$/resources/js/actions/task.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/TasksList.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/NewTask.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/user/UsersList.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/report/ReportsList.js" />
+        <option value="$PROJECT_DIR$/resources/views/app.blade.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/login/Login.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/App.js" />
+        <option value="$PROJECT_DIR$/resources/js/saga/sessionSaga.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/task/NewTask.js" />
+        <option value="$PROJECT_DIR$/tests/Unit/ExampleTest.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/task/TasksList.js" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/f557484a-85ef-4e0d-b2ce-7b716b0a3312/console.sql" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/TaskController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/Header.js" />
       </list>
     </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -394,11 +528,9 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php56" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="67" />
-    <option name="y" value="27" />
-    <option name="width" value="1853" />
-    <option name="height" value="810" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -406,227 +538,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="Auth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Middleware" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="cell" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="prodcut" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="stock" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="task" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="containers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="saga" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="types" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wms" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Http" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Http" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Controllers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Http" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Controllers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Auth" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="js" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="js" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="js" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="login" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="wms" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="js" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="saga" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="WarehouseManagementSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WarehouseManagementSystem" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -635,31 +553,24 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="mysql" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/redux-tutorial" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/js/api" />
-      <recent name="$PROJECT_DIR$/resources/js/components/password" />
-      <recent name="$PROJECT_DIR$/resources/views/report" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/resources/js/components/report" />
+      <recent name="$PROJECT_DIR$/resources/js/components" />
+      <recent name="$PROJECT_DIR$/resources/js" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Http/Controllers/Auth" />
       <recent name="$PROJECT_DIR$/resources/js" />
-      <recent name="$PROJECT_DIR$/resources/js/actions" />
-      <recent name="$PROJECT_DIR$/resources/js/reducers" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/Auth" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -700,347 +611,143 @@
       <workItem from="1551426892732" duration="24087000" />
       <workItem from="1551687002377" duration="26722000" />
       <workItem from="1551773485519" duration="13566000" />
-      <workItem from="1551852126707" duration="21377000" />
-      <workItem from="1551942132493" duration="10194000" />
-      <workItem from="1551964196205" duration="10927000" />
-      <workItem from="1552291035331" duration="20936000" />
-      <workItem from="1552377988487" duration="13039000" />
-      <workItem from="1552453018970" duration="9715000" />
-      <workItem from="1552475190052" duration="12852000" />
-      <workItem from="1552557092500" duration="20550000" />
-      <workItem from="1552637075621" duration="13041000" />
-      <workItem from="1552659473848" duration="7533000" />
-      <workItem from="1552898102516" duration="22347000" />
-      <workItem from="1552983745643" duration="14795000" />
-      <workItem from="1553004547567" duration="10224000" />
-      <workItem from="1553069438757" duration="16451000" />
-      <workItem from="1553171084454" duration="279000" />
-      <workItem from="1553171509949" duration="134000" />
-      <workItem from="1553171677630" duration="1352000" />
-      <workItem from="1553249483084" duration="18883000" />
-      <workItem from="1553502748200" duration="23738000" />
-      <workItem from="1553589353551" duration="12520000" />
-      <workItem from="1553751583266" duration="7833000" />
-      <workItem from="1553773406136" duration="9658000" />
-      <workItem from="1553787936465" duration="236000" />
-      <workItem from="1553844410691" duration="15146000" />
-      <workItem from="1554107158778" duration="21611000" />
-      <workItem from="1554194270019" duration="18897000" />
-      <workItem from="1554279981822" duration="12165000" />
-      <workItem from="1554301101204" duration="7699000" />
-      <workItem from="1554454282809" duration="17740000" />
-      <workItem from="1554712569413" duration="19564000" />
-      <workItem from="1554796052650" duration="27937000" />
-      <workItem from="1554878335925" duration="15958000" />
-      <workItem from="1555051780610" duration="19363000" />
-      <workItem from="1555319224287" duration="19711000" />
-      <workItem from="1555406957864" duration="5538000" />
-      <workItem from="1555493039225" duration="2000000" />
-      <workItem from="1555662475905" duration="10248000" />
-      <workItem from="1555921711385" duration="4370000" />
+      <workItem from="1551852126707" duration="21125000" />
+      <workItem from="1552508682777" duration="2331000" />
+      <workItem from="1553237766043" duration="7000" />
+      <workItem from="1553277641020" duration="3064000" />
+      <workItem from="1553634304352" duration="3505000" />
+      <workItem from="1553933391130" duration="9202000" />
+      <workItem from="1557057374559" duration="8330000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="734867000" />
+    <option name="totallyTimeSpent" value="287576000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49920255" visible="true" weight="0.26286662" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27110156" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info id="npm" order="3" sideWeight="0.50079745" side_tool="true" weight="0.24903154" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32937366" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32891566" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="8" weight="0.32937366" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4986165" visible="true" weight="0.32289416" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5013835" side_tool="true" weight="0.32289416" />
-      <window_info anchor="bottom" id="TypeScript" order="12" weight="0.32937366" />
-      <window_info anchor="bottom" id="Database Console" order="13" weight="0.32937366" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49928468" visible="true" weight="0.28433734" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007153" side_tool="true" weight="0.28433734" />
+      <window_info anchor="bottom" id="Database Console" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24958494" />
-      <window_info anchor="right" id="Database" order="3" weight="0.2080797" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" weight="0.3297568" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/js/types/reports.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/types/task.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/reducers/products.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/preloadedState.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/types/users.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/types/tasks.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/containers/UserContainer.js" />
-    <entry file="file://$PROJECT_DIR$/resources/js/reducers/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/actions/actionCreators.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="34" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/login/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/user/UsersList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1620">
-          <caret line="109" column="9" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1395">
-          <caret line="100" column="58" selection-start-line="100" selection-start-column="58" selection-end-line="100" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/containers/UsersListContainer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/saga/rootSaga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/user/User.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="32" column="39" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/api/headers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/api/users.js">
+    <entry file="file://$PROJECT_DIR$/resources/js/types/message.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/reducers/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/saga/usersSaga.js">
+    <entry file="file://$PROJECT_DIR$/webpack.mix.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-2" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.babelrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="795">
+          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/cell/CellSelector.js">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="49" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
+        <state relative-caret-position="360">
+          <caret line="26" column="15" selection-start-line="26" selection-start-column="15" selection-end-line="26" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/saga/cellsSaga.js">
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="53" selection-start-line="1" selection-start-column="53" selection-end-line="1" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/api/stocks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/stock/StocksList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="78" selection-start-line="2" selection-start-column="78" selection-end-line="2" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/cell/CellsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/prodcut/ProductsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="72" selection-start-line="2" selection-start-column="72" selection-end-line="2" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/saga/productsSaga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="63" selection-start-line="1" selection-start-column="63" selection-end-line="1" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/api/api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="15" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
+        <state relative-caret-position="90">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/saga/sessionSaga.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#73#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="73" selection-start-column="73" selection-end-column="73" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ResetsPasswords.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/RegistersUsers.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/AuthenticatesUsers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1955" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Container/Container.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/Unit/ExampleTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/TestCase.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/CreatesApplication.php">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/task/NewTask.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/task/taskActions.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/saga/tasksSaga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="54" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/api/reports.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/saga/reportsSaga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="60" selection-start-line="1" selection-start-column="60" selection-end-line="1" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/api/tasks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Task.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        <state relative-caret-position="2475">
+          <caret line="177" column="4" selection-start-line="177" selection-start-column="4" selection-end-line="177" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1054,20 +761,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/containers/TasksListContainer.js">
+    <entry file="file://$PROJECT_DIR$/resources/js/saga/tasksSaga.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+        <state>
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#0#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/task/Task.js">
+    <entry file="file://$PROJECT_DIR$/config/app.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/cell/CellSelector.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+        <state relative-caret-position="210">
+          <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -1076,102 +785,310 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/api/cells.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="120">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/cell/Cell.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="58" column="47" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductController.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="das://f557484a-85ef-4e0d-b2ce-7b716b0a3312/schema/wms/table/cell_product">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/api/products.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+    <entry file="das://f557484a-85ef-4e0d-b2ce-7b716b0a3312/schema/wms/table/cells">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Cell.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+    <entry file="das://f557484a-85ef-4e0d-b2ce-7b716b0a3312/schema/wms/table/subtasks">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Product.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="85" selection-start-line="24" selection-start-column="85" selection-end-line="24" selection-end-column="85" />
+    <entry file="file://$PROJECT_DIR$/resources/js/canvasjs-2/examples/01-overview/dynamic-chart.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="das://f557484a-85ef-4e0d-b2ce-7b716b0a3312/schema/wms/table/password_resets">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/prodcut/ProductSelector.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-249">
-          <caret line="12" column="15" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+    <entry file="das://f557484a-85ef-4e0d-b2ce-7b716b0a3312/schema/wms/table/users">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/prodcut/Product.js">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/f557484a-85ef-4e0d-b2ce-7b716b0a3312/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="49" selection-start-column="49" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TaskController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="68" column="5" lean-forward="true" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AdminController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="89" column="39" lean-forward="true" selection-start-line="89" selection-start-column="39" selection-end-line="89" selection-end-column="39" />
+        <state relative-caret-position="-56">
+          <caret line="424" column="67" selection-start-line="424" selection-start-column="67" selection-end-line="424" selection-end-column="67" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CellController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="87" column="5" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
+        <state relative-caret-position="-1148" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="160" column="42" selection-start-line="160" selection-start-column="42" selection-end-line="160" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductController.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="82" column="27" lean-forward="true" selection-start-line="82" selection-start-column="27" selection-end-line="82" selection-end-column="27" />
+        <state relative-caret-position="483">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://PHP/\App\Http\Controllers\CellController">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>PHP</ID>
+          <OriginalElement>\App\Http\Controllers\CellController</OriginalElement>
+          <nodes>
+            <node x="0.0" y="271.0">\App\Http\Controllers\TaskController</node>
+            <node x="193.5" y="0.0">\Illuminate\Routing\Controller</node>
+            <node x="284.5" y="191.0">\App\Http\Controllers\Controller</node>
+            <node x="387.0" y="403.0">\App\Http\Controllers\CellController</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="\App\Http\Controllers\Controller" target="\Illuminate\Routing\Controller">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="70.5" />
+            </edge>
+            <edge source="\App\Http\Controllers\CellController" target="\App\Http\Controllers\Controller">
+              <point x="0.0" y="-81.5" />
+              <point x="480.5" y="246.0" />
+              <point x="355.75" y="246.0" />
+              <point x="23.75" y="15.0" />
+            </edge>
+            <edge source="\App\Http\Controllers\TaskController" target="\App\Http\Controllers\Controller">
+              <point x="0.0" y="-213.5" />
+              <point x="183.5" y="246.0" />
+              <point x="308.25" y="246.0" />
+              <point x="-23.75" y="15.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.7520891364902507" x="-71.33518518518514" y="309.11111111111114" />
+          <SelectedNodes>
+            <node>\App\Http\Controllers\TaskController</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Constants</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://PHP//Applications/MAMP/htdocs/WarehouseManagementSystem/app/Http/Controllers">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>PHP</ID>
+          <OriginalElement>$PROJECT_DIR$/app/Http/Controllers</OriginalElement>
+          <nodes>
+            <node x="" y="">\Illuminate\Routing\Controller</node>
+            <node x="" y="">\App\Http\Controllers\Controller</node>
+            <node x="" y="">\App\Http\Controllers\ReportController</node>
+            <node x="" y="">\App\Http\Controllers\StockController</node>
+            <node x="" y="">\App\Http\Controllers\AdminController</node>
+            <node x="" y="">\App\Http\Controllers\ProductController</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.7977374378948285" x="618.6813201904297" y="318.45722561612564" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Methods</Category>
+            <Category>Constants</Category>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+          </Categories>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://PHP/\App\Cell">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>PHP</ID>
+          <OriginalElement>\App\Cell</OriginalElement>
+          <nodes>
+            <node x="" y="">\Illuminate\Contracts\Support\Jsonable</node>
+            <node x="" y="">\App\Subtask</node>
+            <node x="" y="">\ArrayAccess</node>
+            <node x="" y="">\Illuminate\Contracts\Support\Arrayable</node>
+            <node x="" y="">\App\Task</node>
+            <node x="" y="">\Illuminate\Database\Eloquent\Model</node>
+            <node x="" y="">\App\Report</node>
+            <node x="" y="">\App\Cell</node>
+            <node x="" y="">\App\Product</node>
+            <node x="" y="">\Illuminate\Contracts\Queue\QueueableEntity</node>
+            <node x="" y="">\Illuminate\Contracts\Routing\UrlRoutable</node>
+            <node x="" y="">\App\User</node>
+            <node x="" y="">\App\Stock</node>
+            <node x="" y="">\JsonSerializable</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="489.5" y="250.0" />
+          <SelectedNodes />
+          <Categories />
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Report.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Product.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Cell.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Stock.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Subtask.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Task.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="37" column="7" selection-start-line="33" selection-start-column="4" selection-end-line="37" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="79" column="31" selection-start-line="79" selection-start-column="31" selection-end-line="79" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://PHP//Applications/MAMP/htdocs/WarehouseManagementSystem/app/Http/Controllers/Auth">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>PHP</ID>
+          <OriginalElement>$PROJECT_DIR$/app/Http/Controllers/Auth</OriginalElement>
+          <nodes>
+            <node x="845.5" y="213.0">\Illuminate\Foundation\Auth\ResetsPasswords</node>
+            <node x="535.5" y="191.0">\Illuminate\Foundation\Auth\AuthenticatesUsers</node>
+            <node x="499.75" y="546.0">\App\Http\Controllers\Auth\LoginController</node>
+            <node x="270.625" y="0.0">\Illuminate\Routing\Controller</node>
+            <node x="361.625" y="323.0">\App\Http\Controllers\Controller</node>
+            <node x="0.0" y="279.0">\Illuminate\Foundation\Auth\RegistersUsers</node>
+            <node x="881.25" y="579.5">\App\Http\Controllers\Auth\ResetPasswordController</node>
+            <node x="314.75" y="579.5">\App\Http\Controllers\Auth\VerificationController</node>
+            <node x="53.75" y="535.0">\App\Http\Controllers\Auth\RegisterController</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="\App\Http\Controllers\Auth\RegisterController" target="\Illuminate\Foundation\Auth\RegistersUsers">
+              <point x="-60.25" y="-70.5" />
+              <point x="0.0" y="59.0" />
+            </edge>
+            <edge source="\App\Http\Controllers\Auth\VerificationController" target="\App\Http\Controllers\Controller">
+              <point x="0.0" y="-26.0" />
+              <point x="-11.875" y="15.0" />
+            </edge>
+            <edge source="\App\Http\Controllers\Auth\RegisterController" target="\App\Http\Controllers\Controller">
+              <point x="60.25" y="-70.5" />
+              <point x="234.5" y="515.0" />
+              <point x="373.5" y="515.0" />
+              <point x="-35.625" y="15.0" />
+            </edge>
+            <edge source="\App\Http\Controllers\Auth\ResetPasswordController" target="\Illuminate\Foundation\Auth\ResetsPasswords">
+              <point x="47.25" y="-26.0" />
+              <point x="0.0" y="125.0" />
+            </edge>
+            <edge source="\App\Http\Controllers\Auth\LoginController" target="\App\Http\Controllers\Controller">
+              <point x="-60.25" y="-59.5" />
+              <point x="560.0" y="515.0" />
+              <point x="421.0" y="515.0" />
+              <point x="11.875" y="15.0" />
+            </edge>
+            <edge source="\App\Http\Controllers\Controller" target="\Illuminate\Routing\Controller">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="70.5" />
+            </edge>
+            <edge source="\App\Http\Controllers\Auth\LoginController" target="\Illuminate\Foundation\Auth\AuthenticatesUsers">
+              <point x="60.25" y="-59.5" />
+              <point x="0.0" y="147.0" />
+            </edge>
+            <edge source="\App\Http\Controllers\Auth\ResetPasswordController" target="\App\Http\Controllers\Controller">
+              <point x="-47.25" y="-26.0" />
+              <point x="928.5" y="505.0" />
+              <point x="444.75" y="505.0" />
+              <point x="35.625" y="15.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="190.33333333333337" y="260.0" />
+          <SelectedNodes>
+            <node>\Illuminate\Foundation\Auth\RegistersUsers</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Methods</Category>
+          </Categories>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Procfile">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

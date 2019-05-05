@@ -56,6 +56,7 @@ class App extends Component {
 
     render() {
 
+        console.log('redirect')
         return (
             <Provider store={store}>
                 <Router history={history}>

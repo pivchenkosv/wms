@@ -57,7 +57,7 @@ class Header extends React.Component {
             <nav id='navbar' className="navbar navbar-expand-md navbar-light navbar-laravel nav-down">
                 <div className="container">
                     <a className="navbar-brand" href="/">
-                        WMS React
+                        Warehouse Management System
                     </a>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">

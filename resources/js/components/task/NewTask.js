@@ -45,7 +45,7 @@ class NewTask extends Component {
             switch (this.state.task.action) {
                 case 'shipment': {
                     const newSubtasks = this.state.subtasks.map(el => (
-                        {...el, ['to_cell']: 1, ['from_cell']: 0, ['product_id']: 0}
+                        {...el, ['to_cell']: 3, ['from_cell']: 0, ['product_id']: 0}
                     ))
 
                     this.setState({
@@ -55,7 +55,7 @@ class NewTask extends Component {
                 }
                 case 'acceptance': {
                     const newSubtasks = this.state.subtasks.map(el => (
-                        {...el, ['from_cell']: 1, ['to_cell']: 0, ['product_id']: 0}
+                        {...el, ['from_cell']: 3, ['to_cell']: 0, ['product_id']: 0}
                     ))
 
                     this.setState({

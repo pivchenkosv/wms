@@ -385,8 +385,8 @@ class TaskController extends Controller
                 }
 
                 $subtask = [
-                    'from_cell' => $taskType === 'acceptance' ? 1 : $cell->id,
-                    'to_cell' => $taskType === 'shipment' ? 1 : $cell->id,
+                    'from_cell' => $taskType === 'acceptance' ? 3 : $cell->id,
+                    'to_cell' => $taskType === 'shipment' ? 3 : $cell->id,
                     'product_id' => $product->product_id,
                     'quantity' => $productQuantityRemaining < $quantity ?
                         $productQuantityRemaining :
@@ -422,14 +422,14 @@ class TaskController extends Controller
      * @param $subtasks
      * @return float|int|mixed
      */
-    private function countAvailableVolumeRemaining($cell, $subtasks)
+    public function countAvailableVolumeRemaining($cell, $subtasks)
     {
         $openedSubtasksVolume = DB::table('subtasks')
             ->where('tasks.status', '=', 'OPENED')
             ->where('subtasks.to_cell', $cell->id)
             ->leftJoin('products', 'products.id', '=', 'subtasks.product_id')
             ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
-            ->select('subtasks.to_cell',
+            ->select(
                 DB::raw('sum(subtasks.quantity * products.volume) as volume')
             )
             ->groupBy('subtasks.to_cell')
@@ -496,6 +496,8 @@ class TaskController extends Controller
      */
     public function getCells($taskType, $productId)
     {
+//        $taskType = $request->input('taskType');
+//        $productId = $request->input('productId');
         switch ($taskType) {
             case 'acceptance':
                 {
@@ -507,7 +509,7 @@ class TaskController extends Controller
                             DB::raw('ifnull(cells.volume - SUM(cell_product.quantity * products.volume), cells.volume) as available_volume')
                         )
                         ->where('cells.status', '!=', 'RESERVED')
-                        ->orWhereRaw('cells.id not in(select distinct(cell_product.cell_id) as ids from cell_product)')
+                        ->whereRaw('cells.id not in(select distinct(cell_product.cell_id) as ids from cell_product)')
                         ->orderBy('available_volume', 'asc')
                         ->groupBy('cells.id')
                         ->get();

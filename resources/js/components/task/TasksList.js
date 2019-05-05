@@ -57,9 +57,9 @@ class TasksList extends Component {
         evt.preventDefault();
 
         handleDeleteTask(this.state.task.id).then(response => {
-            this.props.loadTasks(response.data)
+            this.props.loadTasks(response.data.data)
             this.setState({
-                tasks: response.data
+                tasks: response.data.data
             })
         })
         this.setState({task: null});
@@ -69,9 +69,9 @@ class TasksList extends Component {
         evt.preventDefault();
 
         handleCompleteTask(this.state.task.id).then(response => {
-            this.props.loadTasks(response.data)
+            this.props.loadTasks(response.data.data)
             this.setState({
-                tasks: response.data
+                tasks: response.data.data
             })
         })
         this.setState({task: null});

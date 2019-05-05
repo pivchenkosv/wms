@@ -154,3 +154,10 @@ Route::post('makeSubtasks', [
 Route::get('cellProducts', [
     'uses' => 'TaskController@cellProducts'
 ]);
+Route::post('getCells', [
+    'uses' => 'TaskController@getCells'
+]);
+
+Route::post('countAvailableVolumeRemaining', [
+    'uses' => 'TaskController@countAvailableVolumeRemaining'
+]);
