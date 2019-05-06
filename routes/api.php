@@ -73,10 +73,10 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     ])->middleware(['manager']);
 
     //Cells
-//    Route::get('cells', [
-//        'as' => 'cells',
-//        'uses' => 'CellController@showCells'
-//    ]);
+    Route::get('cells', [
+        'as' => 'cells',
+        'uses' => 'CellController@showCells'
+    ]);
     Route::get('cellInfo/{cell}', [
         'as' => 'cellInfo',
         'uses' => 'CellController@showInfo'
@@ -160,8 +160,4 @@ Route::post('getCells', [
 
 Route::post('countAvailableVolumeRemaining', [
     'uses' => 'TaskController@countAvailableVolumeRemaining'
-]);
-Route::get('cells', [
-    'as' => 'cells',
-    'uses' => 'CellController@showCells'
 ]);
