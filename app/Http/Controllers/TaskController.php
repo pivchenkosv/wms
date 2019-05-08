@@ -511,7 +511,7 @@ class TaskController extends Controller
                         ->where('cells.status', '!=', 'RESERVED')
                         ->whereRaw('cells.id not in(select distinct(cell_product.cell_id) as ids from cell_product)')
                         ->orderBy('available_volume', 'asc')
-                        ->groupBy('cells.id')
+                        ->groupBy('cells.id', 'cells.volume', 'cells.status', 'cells.stock_id')
                         ->get();
 
                     return $cells;
