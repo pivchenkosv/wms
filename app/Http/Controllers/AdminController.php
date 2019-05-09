@@ -40,4 +40,12 @@ class AdminController extends Controller
 
         return response()->json(['success' => true, 'data' => $users]);
     }
+
+    public function usersRating(){
+        $users = User::where('role', '=', 'ROLE_WORKER')
+            ->select('id', 'name')
+            ->withCount('tasks', 'subtasks')->get();
+
+        return  response()->json(['success' => true, 'data' => $users]);
+    }
 }

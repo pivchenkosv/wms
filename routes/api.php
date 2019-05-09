@@ -25,6 +25,10 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => 'users',
         'uses' => 'AdminController@index'
     ]);
+    Route::middleware(['admin'])->get('users/rating', [
+        'as' => 'usersRating',
+        'uses' => 'AdminController@usersRating'
+    ]);
     Route::delete('deleteUser/{user}', [
         'as' => '',
         'uses' => 'AdminController@delete'
@@ -44,6 +48,10 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     Route::get('products', [
         'as' => 'products',
         'uses' => 'ProductController@index'
+    ]);
+    Route::get('products/report', [
+        'as' => 'products',
+        'uses' => 'ProductController@getReport'
     ]);
     Route::put('editProduct', [
         'as' => '',

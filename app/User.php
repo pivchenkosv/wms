@@ -49,4 +49,27 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function tasks()
+    {
+        return $this->hasManyThrough(Report::class, Task::class, 'assigned_user')
+            ->where('reports.action', '=', 'TASK_COMPLETED')
+            ->where('reports.created_at', '>', (new \Carbon\Carbon)->submonths(1) );
+    }
+
+    public function subtasks()
+    {
+        $tasks = $this->hasManyThrough(Report::class, Task::class, 'assigned_user')
+            ->where('reports.action', '=', 'TASK_COMPLETED')
+            ->where('reports.created_at', '>', (new \Carbon\Carbon)->submonths(1) )
+            ->pluck('task_id')->toArray();
+        return $this->hasManyThrough(Subtask::class, Task::class,'assigned_user')
+            ->whereIn('task_id', $tasks)
+            ->where('subtasks.created_at', '>', (new \Carbon\Carbon)->submonths(1) );
+    }
+
+    public function scopeRecent($query)
+    {
+        return $query->where('created_at', '>', (new \Carbon\Carbon)->submonths(1) );
+    }
 }

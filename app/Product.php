@@ -24,4 +24,5 @@ class Product extends Model
     {
         return $this->belongsToMany(Cell::class, 'cell_product')->withPivot('quantity');
     }
+
 }

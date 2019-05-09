@@ -1,6 +1,13 @@
 import axios from "axios";
 import {headers} from "./headers";
 
+export function loadProductsReport() {
+    return axios.get("/api/products/report", {
+        headers: headers
+    })
+}
+
+
 export const loadProducts = () => {
     return axios.get("/api/products", {
         headers: headers

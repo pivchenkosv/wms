@@ -139,23 +139,23 @@ class ProductsList extends Component {
         } else {
             return (
                 <tr
-                    key={product.id}
-                    className='card-body list-group-item list-group-item-action d-flex'
-                    onClick={() => this.editProduct(product)}
-                >
-                    <td className='badge-pill col-2'>
-                        {product.id}
-                    </td>
-                    <td className='badge-pill col-4'>
-                        {product.name}
-                    </td>
-                    <td className='badge-pill col-4'>
-                        {product.description}
-                    </td>
-                    <td className='badge-pill col-2'>
-                        {product.volume}
-                    </td>
-                </tr>
+            key={product.id}
+            className='card-body list-group-item list-group-item-action d-flex'
+            onClick={() => this.editProduct(product)}
+        >
+        <td className='badge-pill col-2'>
+                {product.id}
+        </td>
+        <td className='badge-pill col-4'>
+                {product.name}
+        </td>
+        <td className='badge-pill col-4'>
+                {product.description}
+        </td>
+        <td className='badge-pill col-2'>
+                {product.volume}
+        </td>
+        </tr>
 
             );
         }

@@ -1,6 +1,13 @@
 import axios from "axios";
 import {headers} from "./headers";
 
+export function loadUsersRating() {
+    return axios.get('/api/users/rating', {
+        headers: headers
+    })
+}
+
+
 export const usersApi = () => {
     return axios.get('/api/admin/users', {
         headers: headers

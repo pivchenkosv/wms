@@ -93,4 +93,15 @@ class ProductController extends Controller
     {
         return response()->json(['success' => true, 'data' => $product->cells]);
     }
+
+    public function getReport()
+    {
+        $products = DB::table('products')
+            ->leftJoin('cell_product', 'products.id', '=', 'cell_product.product_id')
+            ->select('products.*', DB::raw('ifnull(sum(cell_product.quantity), 0) as quantity'))
+            ->groupBy('products.id')
+            ->get();
+
+        return response()->json(['success' => true, 'data' => $products]);
+    }
 }
