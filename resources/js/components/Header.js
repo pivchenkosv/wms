@@ -53,13 +53,19 @@ class Header extends React.Component {
     }
 
     render() {
+        const {user} = this.props.user
+        const userRole = user ? user.role : 'unauthorized';
         return (
             <nav id='navbar' className="navbar navbar-expand-md navbar-light navbar-laravel nav-down">
                 <div className="container">
-                    <a className="navbar-brand" href="/">
-                        Warehouse Management System
-                    </a>
-
+                    {userRole === 'ROLE_ADMIN' || userRole === 'ROLE_MANAGER' ?
+                        <a className="navbar-brand" href="/home">
+                            Warehouse Management System
+                        </a> :
+                        <a className="navbar-brand" href="/">
+                            Warehouse Management System
+                        </a>
+                    }
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                         </ul>
