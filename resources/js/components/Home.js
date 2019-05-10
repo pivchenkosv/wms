@@ -72,6 +72,7 @@ class Home extends Component {
     render() {
 
         const {tasksCountData, subtasksCountData, products, filled, free} = this.state
+
         console.log('data', tasksCountData)
         console.log(subtasksCountData)
 
