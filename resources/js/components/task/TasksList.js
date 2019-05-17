@@ -140,7 +140,7 @@ class TasksList extends Component {
         }
     }
 
-    taskInfo = (task) => {
+    taskInfo = (task, k) => {
         return (
             <tr
                 key={task.id}
@@ -148,7 +148,7 @@ class TasksList extends Component {
                 onClick={() => this.showTaskInfo(task)}
             >
                 <td className='badge-pill col-1'>
-                    {task.id}
+                    {k + 1}
                 </td>
                 <td className='badge-pill col-3'>
                     {task.description}
@@ -157,7 +157,7 @@ class TasksList extends Component {
                     {task.at}
                 </td>
                 <td className='badge-pill col-2'>
-                    {task.assigned_user}
+                    {task.name}
                 </td>
                 <td className='badge-pill col-2'>
                     {task.status}
@@ -173,7 +173,7 @@ class TasksList extends Component {
         let {tasks} = this.props
         const {history, user} = this.props;
 
-        tasks = user.user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.user.id) : tasks
+        // tasks = user.user.role === 'ROLE_WORKER' ? tasks.filter(task => task.assigned_user === user.user.id) : tasks
         return (
             <div className='container py-4'>
                 <div className='row justify-content-left'>
@@ -182,7 +182,7 @@ class TasksList extends Component {
                         <table id="tasks" className='card' width="100%">
                             <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-                                <th className='col-1'>id</th>
+                                <th className='col-1'>№</th>
                                 <th className='col-3'>description</th>
                                 <th className='col-2'>at</th>
                                 <th className='col-2'>assigned worker</th>
@@ -191,8 +191,8 @@ class TasksList extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {tasks.map(task => (
-                                this.taskInfo(task)
+                            {tasks.map((task, k) => (
+                                this.taskInfo(task, k)
                             ))}
                             </tbody>
                         </table>

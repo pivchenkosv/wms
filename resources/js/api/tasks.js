@@ -63,3 +63,9 @@ export const handleCreateTasks = (task, products) => {
         headers: headers
     })
 }
+
+export const approveTask = (task) => {
+    return axios.post(`api/approveTask/${task.id}`,{
+        headers: headers
+    })
+}

@@ -38,9 +38,15 @@ class TaskController extends Controller
 
         if (Auth::user()->role === 'ROLE_ADMIN' || Auth::user()->role === 'ROLE_MANAGER') {
 
-            $tasks = Task::where('status', '!=', 'REMOVED')->orderBy('at', 'desc')->paginate(15);
+            $tasks = Task::where('status', '!=', 'REMOVED')
+                ->leftJoin('users', 'assigned_user', '=', 'users.id', 'user_id')
+                ->select('tasks.id', 'tasks.description', 'tasks.at', 'users.name', 'tasks.status', 'tasks.created_at')
+                ->orderBy('at', 'desc')->paginate(15);
         } else {
             $tasks = Task::where('status', '!=', 'REMOVED')
+                ->where('status', '!=', 'PENDING')
+                ->leftJoin('users', 'assigned_user', '=', 'users.id')
+                ->select('tasks.id', 'tasks.description', 'tasks.at', 'users.name', 'tasks.status', 'tasks.created_at')
                 ->where('assigned_user', Auth::user()->id)
                 ->orderBy('at', 'desc')->paginate(15);
         }
@@ -108,6 +114,30 @@ class TaskController extends Controller
             $id = $request->input('id');
             $task = Task::find($id);
             $action = 'TASK_UPDATED';
+        }
+
+        if ($task->status === 'PENDING') {
+            $cellsAvailableVolume = 0;
+            $cells = DB::table('cells')
+                ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
+                ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
+                ->select('cells.*', DB::raw('ifnull(cells.volume - sum(cell_product.quantity * products.volume), cells.volume) as available_volume'))
+                ->groupBy('cells.id')->get();
+            foreach ($cells as $cell)
+                $cellsAvailableVolume += $cell->volume;
+            $openedSubtasksVolume = DB::table('subtasks')
+                ->where('tasks.status', '=', 'OPENED')
+                ->leftJoin('products', 'products.id', '=', 'subtasks.product_id')
+                ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
+                ->select(
+                    DB::raw('sum(subtasks.quantity * products.volume) as volume')
+                )
+                ->groupBy('subtasks.to_cell')
+                ->get();
+            foreach ($openedSubtasksVolume as $volume)
+                $cellsAvailableVolume -= $volume;
+
+            return response()->json(['success' => true, 'message' => 'Out of volume!']);
         }
 
         //Initialize or rewrite task fields and persist to database
@@ -324,6 +354,7 @@ class TaskController extends Controller
         $returnedArray = $this->makeSubtasks($taskType, $products);
         $subtasks = $returnedArray['subtasks'];
         $message = $returnedArray['message'];
+        $opts['message'] = $message;
 
         $id = new ArrayIterator($userIds);
         $subtasksForUsers = [];
@@ -341,6 +372,11 @@ class TaskController extends Controller
 
         return response()->json(['success' => true, 'message' => $message]);
 
+    }
+
+    public function approveTaskCreation(Task $task)
+    {
+        return response()->json(['success' => true, 'data' => null]);
     }
 
     /**
@@ -471,6 +507,8 @@ class TaskController extends Controller
         $task = new Task;
         $task->assigned_user = $userId;
         $task->description = $opts['description'];
+        if ($opts['message'] !== 'Success!')
+            $task->status = 'PENDING';
         $task->at = $opts['at'];
         $task->created_by = Auth::user()->id;
         $task->save();

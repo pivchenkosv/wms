@@ -37,7 +37,7 @@ class Task extends Component {
                     <tr className='card-header list-group-item d-flex justify-content-between align-items-left'>
                         <th className='badge badge-pill col-3'>from cell</th>
                         <th className='badge badge-pill col-3'>to cell</th>
-                        <th className='badge badge-pill col-3'>product id</th>
+                        <th className='badge badge-pill col-3'>product name</th>
                         <th className='badge badge-pill col-3'>quantity</th>
                     </tr>
                     </thead>
@@ -50,7 +50,7 @@ class Task extends Component {
                         >
                             <td className='badge badge-pill col-3'>{subtask.from_cell}</td>
                             <td className='badge badge-pill col-3'>{subtask.to_cell}</td>
-                            <td className='badge badge-pill col-3'>{subtask.product_id}</td>
+                            <td className='badge badge-pill col-3'>{subtask.name}</td>
                             <td className='badge badge-pill col-3'>{subtask.quantity}</td>
                         </tr>
                     ))}

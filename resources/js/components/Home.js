@@ -3,6 +3,7 @@ import CanvasJSReact from '../canvasjs-2/canvasjs.react';
 import {loadUsersRating} from "../api/users";
 import {loadProductsReport} from "../api/products";
 import {loadAvailableCells, loadCellInfo} from "../api/cells";
+import {Report} from 'react-powerbi';
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -14,7 +15,8 @@ class Home extends Component {
         cells: [],
         usersRating: [],
         tasksCountData: [],
-        subtasksCountData: []
+        subtasksCountData: [],
+        buttonName: 'Subtasks'
     }
 
     componentDidMount() {
@@ -27,7 +29,9 @@ class Home extends Component {
                 const subtasksCountData = []
 
                 if (this.state)
-                    this.state.usersRating.forEach((item, index) => {
+                    this.state.usersRating.sort((a, b) => {
+                        return a.tasks_count - b.tasks_count;
+                    }).forEach((item, index) => {
                         tasksCountData.push({x: index, y: item.tasks_count, label: item.name})
                         subtasksCountData.push({x: index, y: item.subtasks_count, label: item.name})
                     })
@@ -52,9 +56,11 @@ class Home extends Component {
                 const filled = []
                 const free = []
 
-                this.state.cells.forEach((item, index) => {
-                    filled.push({x: index, y: 100 * item.available_volume / item.volume, label: item.id})
-                    free.push({x: index, y: 100 - 100 * item.available_volume / item.volume, label: item.id})
+                this.state.cells.sort((a, b) => {
+                    return (a.available_volume / a.volume) - (b.available_volume / b.volume);
+                }).forEach((item, index) => {
+                    free.push({x: index, y: 100 * item.available_volume / item.volume, label: item.id})
+                    filled.push({x: index, y: 100 - 100 * item.available_volume / item.volume, label: item.id})
                 })
                 this.setState({
                     filled: filled,
@@ -67,6 +73,10 @@ class Home extends Component {
     toggleDataSeries(e) {
         e.dataSeries.visible = !(typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible);
         this.chart.render();
+    }
+
+    onEmbedded(embed) {
+        console.log(`Report embedded: `, embed, this);
     }
 
     render() {
@@ -96,15 +106,36 @@ class Home extends Component {
             data: [
                 {
                     type: "stackedBar",
-                    name: "Tasks",
-                    showInLegend: "true",
-                    dataPoints: tasksCountData.sort()
-                },
-                {
-                    type: "stackedBar",
                     name: "Subtasks",
                     showInLegend: "true",
                     dataPoints: subtasksCountData
+                },
+            ]
+        }
+
+        const options1 = {
+            height: tasksCountData.length * 100,
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Users rating"
+            },
+            toolTip: {
+                shared: true
+            },
+            axisY: {
+                interval: 1,
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: this.toggleDataSeries
+            },
+            data: [
+                {
+                    type: "stackedBar",
+                    name: "Tasks",
+                    showInLegend: "true",
+                    dataPoints: tasksCountData
                 },
             ]
         }
@@ -137,7 +168,7 @@ class Home extends Component {
                 color: "#7f7f7f",
                 name: "free",
                 showInLegend: true,
-                indexLabel: "{y}%",
+                indexLabel: "{y}",
                 indexLabelFontColor: "white",
                 yValueFormatString: "#,###'%'",
                 dataPoints: free
@@ -149,11 +180,24 @@ class Home extends Component {
                 <div className="row justify-content-center">
                     <div className="col-md-10">
                         <div className="card" style={{height: tasksCountData.length * 100 + 100}}>
-                            <div className="card-header">Dashboard</div>
+                            <div className="card-header row">
+                                <span className="col-4">Dashboard</span>
+                                <button
+                                    className="col-3 btn btn-primary btn-success"
+                                    onClick={() => {
+                                        this.setState({buttonName: this.state.buttonName === 'Subtasks' ? 'Tasks' : 'Subtasks'})
+                                    }}>{this.state.buttonName}</button>
+                            </div>
+
                             <div className="card-body">
-                                <CanvasJSChart options={options}
-                                               onRef={ref => this.chart = ref}
-                                />
+                                {this.state.buttonName === 'Subtasks' ?
+                                    <CanvasJSChart options={options1}
+                                                   onRef={ref => this.chart = ref}
+                                    /> :
+                                    <CanvasJSChart options={options}
+                                                   onRef={ref => this.chart = ref}
+                                    />
+                                }
                             </div>
                         </div>
 
@@ -161,7 +205,7 @@ class Home extends Component {
                             <div className="card-header">Products</div>
                             <thead>
                             <tr className='card-header list-group-item list-group-item-action d-flex'>
-                                <th className='badge-pill col-2'>id</th>
+                                <th className='badge-pill col-2'>№</th>
                                 <th className='badge-pill col-4'>name</th>
                                 <th className='badge-pill col-4'>description</th>
                                 <th className='badge-pill col-2'>quantity available</th>
@@ -169,13 +213,13 @@ class Home extends Component {
                             </thead>
 
                             <tbody>
-                            {products.map(product => (
+                            {products.map((product, k) => (
                                 <tr
                                     key={product.id}
                                     className='card-body list-group-item list-group-item-action d-flex'
                                 >
                                     <td className='badge-pill col-2'>
-                                        {product.id}
+                                        {k + 1}
                                     </td>
                                     <td className='badge-pill col-4'>
                                         {product.name}

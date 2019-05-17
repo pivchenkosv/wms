@@ -6,6 +6,7 @@ use App\Cell;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -20,7 +21,29 @@ class AdminController extends Controller
             return collect($user)->except(['auth_token']);
         });
 
-        return response()->json(['success' => true, 'data' => $users]);
+        $cellsAvailableVolume = 0;
+        $cells = DB::table('cells')
+            ->where('status', '!=', 'RESERVED')
+            ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
+            ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
+            ->select('cells.*', DB::raw('ifnull(cells.volume - sum(cell_product.quantity * products.volume), cells.volume) as available_volume'))
+            ->groupBy('cells.id')->get();
+        foreach ($cells as $cell)
+            $cellsAvailableVolume += $cell->available_volume;
+        $openedSubtasksVolume = DB::table('subtasks')
+            ->where('tasks.status', '=', 'OPENED')
+            ->leftJoin('products', 'products.id', '=', 'subtasks.product_id')
+            ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
+            ->select(
+                DB::raw('sum(subtasks.quantity * products.volume) as volume')
+            )
+            ->groupBy('subtasks.to_cell')
+            ->get();
+//        return response()->json(['success' => true, 'data' => $users, 'volume' => $cellsAvailableVolume]);
+        foreach ($openedSubtasksVolume as $volume)
+            $cellsAvailableVolume -= $volume->volume;
+
+        return response()->json(['success' => true, 'data' => $users, 'volume' => $cellsAvailableVolume]);
     }
 
     /**

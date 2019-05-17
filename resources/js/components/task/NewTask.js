@@ -101,7 +101,7 @@ class NewTask extends Component {
             const users = response.data.data.map((user) => {
                 return {key: user.id, value: user.id, text: user.name, role: user.role}
             })
-            this.setState({users: users})
+            this.setState({users: users, availableVolume: response.data.volume})
         })
 
         if (this.props.task && this.props.task.id !== 0) {
@@ -186,12 +186,20 @@ class NewTask extends Component {
         button.disabled = true;
         button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp Loading...'
 
-        this.handleRequest(this.state.task, this.state.subtasks).then(() => {
+        this.handleRequest(this.state.task, this.state.subtasks).then((response) => {
 
-            this.setState({message: 'Success!'}, function () {
-                const message = $('div#message').addClass('success');
-                message.fadeIn(300).delay(1500).fadeOut(400);
-            })
+            if (response.data.success) {
+                this.setState({message: 'Success!'}, function () {
+                    const message = $('div#message').addClass('success');
+                    message.fadeIn(300).delay(1500).fadeOut(400);
+                })
+            } else {
+                this.setState({message: response.data.message}, function () {
+                    const message = $('div#message').addClass('danger');
+                    message.fadeIn(300).delay(1500).fadeOut(400);
+                })
+            }
+
 
             setTimeout(() => this.cancel(), 2500);
 
@@ -328,9 +336,12 @@ class NewTask extends Component {
                                     New Task
                                 </div>
                                 <div className='col-6 px-1 pt-2'>
-                                    {
+                                    {this.state.message ?
                                         <div id='message' className='alert-box success'>
                                             {this.state.message}
+                                        </div> :
+                                        <div id='volume' className="text-center">
+                                            Estimated cells total volume: {this.state.availableVolume}
                                         </div>
                                     }
                                 </div>

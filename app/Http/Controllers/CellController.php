@@ -102,8 +102,8 @@ class CellController extends Controller
         $cells = DB::table('cells')
             ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
             ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
-            ->select('cells.*', DB::raw('ifnull(cells.volume - (cell_product.quantity * products.volume), cells.volume) as available_volume'))
-            ->groupBy('cells.id', 'cells.volume', 'cells.status', 'cells.stock_id', 'cell_product.quantity', 'products.volume')->get();
+            ->select('cells.*', DB::raw('ifnull(cells.volume - sum(cell_product.quantity * products.volume), cells.volume) as available_volume'))
+            ->groupBy('cells.id')->get();
 
         return response()->json(['success' => true, 'data' => $cells]);
     }

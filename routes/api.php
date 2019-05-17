@@ -115,6 +115,10 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         'as' => '',
         'uses' => 'TaskController@completeTask'
     ]);
+    Route::post('approveTask/{task}', [
+        'as' => '',
+        'uses' => 'TaskController@approveTaskCreation'
+    ]);
     Route::put('editTask', [
         'as' => '',
         'uses' => 'TaskController@save'

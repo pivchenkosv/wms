@@ -22,6 +22,6 @@ class Task extends Model
 
     public function subtask()
     {
-        return $this->hasMany(Subtask::class);
+        return $this->hasMany(Subtask::class)->leftJoin('products', 'products.id', '=', 'product_id');
     }
 }
