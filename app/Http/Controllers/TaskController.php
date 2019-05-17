@@ -370,7 +370,7 @@ class TaskController extends Controller
             $tasks[] = $this->makeTask($id, $subtasksForUser, $opts);
         }
 
-        return response()->json(['success' => true, 'message' => $message]);
+        return response()->json(['success' => true, 'message' => $message, 'subtasksForUsers' => $subtasksForUsers, 'cells' => $returnedArray['cells']]);
 
     }
 
@@ -445,7 +445,7 @@ class TaskController extends Controller
 
         }
 
-        return ['subtasks' => $subtasks, 'message' => $message, 'tracker' => $tracker];
+        return ['subtasks' => $subtasks, 'message' => $message, 'tracker' => $tracker, 'cells' => $this->getCells('acceptance', 1)];
     }
 
     /**
@@ -547,7 +547,7 @@ class TaskController extends Controller
                             DB::raw('ifnull(cells.volume - SUM(cell_product.quantity * products.volume), cells.volume) as available_volume')
                         )
                         ->where('cells.status', '!=', 'RESERVED')
-                        ->whereRaw('cells.id not in(select distinct(cell_product.cell_id) as ids from cell_product)')
+//                        ->whereRaw('cells.id not in(select distinct(cell_product.cell_id) as ids from cell_product)')
                         ->orderBy('available_volume', 'asc')
                         ->groupBy('cells.id', 'cells.volume', 'cells.status', 'cells.stock_id')
                         ->get();

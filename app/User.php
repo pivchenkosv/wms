@@ -64,8 +64,7 @@ class User extends Authenticatable implements JWTSubject
             ->where('reports.created_at', '>', (new \Carbon\Carbon)->submonths(1) )
             ->pluck('task_id')->toArray();
         return $this->hasManyThrough(Subtask::class, Task::class,'assigned_user')
-            ->whereIn('task_id', $tasks)
-            ->where('subtasks.created_at', '>', (new \Carbon\Carbon)->submonths(1) );
+            ->whereIn('subtasks.task_id', $tasks);
     }
 
     public function scopeRecent($query)

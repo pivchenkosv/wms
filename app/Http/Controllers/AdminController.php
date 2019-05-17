@@ -32,6 +32,8 @@ class AdminController extends Controller
             $cellsAvailableVolume += $cell->available_volume;
         $openedSubtasksVolume = DB::table('subtasks')
             ->where('tasks.status', '=', 'OPENED')
+            ->where('cells.status', '!=', 'RESERVED')
+            ->leftJoin('cells', 'cells.id', '=', 'subtasks.from_cell')
             ->leftJoin('products', 'products.id', '=', 'subtasks.product_id')
             ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
             ->select(
@@ -49,8 +51,7 @@ class AdminController extends Controller
     /**
      * Delete user
      *
-     * @param Request $request
-     * @param $id
+     * @param User $user
      * @return JsonResponse
      * @throws \Exception
      */

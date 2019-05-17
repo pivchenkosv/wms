@@ -189,7 +189,7 @@ class NewTask extends Component {
         this.handleRequest(this.state.task, this.state.subtasks).then((response) => {
 
             if (response.data.success) {
-                this.setState({message: 'Success!'}, function () {
+                this.setState({message: response.data.message}, function () {
                     const message = $('div#message').addClass('success');
                     message.fadeIn(300).delay(1500).fadeOut(400);
                 })
