@@ -27,7 +27,7 @@ class AdminController extends Controller
             ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
             ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
             ->select('cells.*', DB::raw('ifnull(cells.volume - sum(cell_product.quantity * products.volume), cells.volume) as available_volume'))
-            ->groupBy('cells.id', 'cells.volume')->get();
+            ->groupBy('cells.id', 'cells.volume', 'cells.status')->get();
         foreach ($cells as $cell)
             $cellsAvailableVolume += $cell->available_volume;
         $openedSubtasksVolume = DB::table('subtasks')
