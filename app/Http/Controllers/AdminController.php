@@ -27,13 +27,13 @@ class AdminController extends Controller
             ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
             ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
             ->select('cells.*', DB::raw('ifnull(cells.volume - sum(cell_product.quantity * products.volume), cells.volume) as available_volume'))
-            ->groupBy('cells.id')->get();
+            ->groupBy('cells.id', 'cells.volume')->get();
         foreach ($cells as $cell)
             $cellsAvailableVolume += $cell->available_volume;
         $openedSubtasksVolume = DB::table('subtasks')
             ->where('tasks.status', '=', 'OPENED')
             ->where('cells.status', '!=', 'RESERVED')
-            ->leftJoin('cells', 'cells.id', '=', 'subtasks.from_cell')
+            ->leftJoin('cells', 'cells.id', '=', 'subtasks.to_cell')
             ->leftJoin('products', 'products.id', '=', 'subtasks.product_id')
             ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
             ->select(
@@ -45,7 +45,7 @@ class AdminController extends Controller
         foreach ($openedSubtasksVolume as $volume)
             $cellsAvailableVolume -= $volume->volume;
 
-        return response()->json(['success' => true, 'data' => $users, 'volume' => $cellsAvailableVolume]);
+        return response()->json(['success' => true, 'data' => $users, 'volume' => $cellsAvailableVolume, 'openedSubtasksVolume' => $openedSubtasksVolume]);
     }
 
     /**

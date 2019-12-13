@@ -334,6 +334,7 @@ class TaskController extends Controller
      */
     public function createTasks(Request $request)
     {
+
         $userIds = json_decode($request->input('userIds'));
         $validator = Validator::make([
             'at' => $request->input('at'),
@@ -346,9 +347,23 @@ class TaskController extends Controller
         if ($validator->fails()) {
             return $validator->errors();
         }
+        $cellsAvailableVolume = $this->getCellsAvailableVolume();
+        $totalProductsVolume = 0;
 
         $taskType = $request->input('taskType');
         $products = json_decode($request->input('products'));
+        foreach ($products as $product) {
+            switch ($taskType) {
+                case 'acceptance':
+                    $volume = Product::find($product->product_id);
+                    $totalProductsVolume += $product->quantity * $volume->volume;
+                    break;
+            }
+        }
+
+        if ($cellsAvailableVolume['volume'] <= $totalProductsVolume)
+            return response()->json(['success' => false, 'message' => 'Out of storage! Try later']);
+
         $opts = ['description' => $request->input('description'), 'at' => $request->input('at')];
 
         $returnedArray = $this->makeSubtasks($taskType, $products);
@@ -370,7 +385,7 @@ class TaskController extends Controller
             $tasks[] = $this->makeTask($id, $subtasksForUser, $opts);
         }
 
-        return response()->json(['success' => true, 'message' => $message, 'subtasksForUsers' => $subtasksForUsers, 'cells' => $returnedArray['cells']]);
+        return response()->json(['success' => true, 'message' => $message, 'subtasksForUsers' => $subtasksForUsers, 'cells' => $returnedArray['cells'], 'totalProductsVolume' => $totalProductsVolume, 'cellsAvailableVolume' => $cellsAvailableVolume]);
 
     }
 
@@ -570,6 +585,36 @@ class TaskController extends Controller
             default:
                 return Cell::all();
         }
+
+    }
+
+    private function getCellsAvailableVolume()
+    {
+        $cellsAvailableVolume = 0;
+        $cells = DB::table('cells')
+            ->where('status', '!=', 'RESERVED')
+            ->leftJoin('cell_product', 'cells.id', '=', 'cell_product.cell_id')
+            ->leftJoin('products', 'products.id', '=', 'cell_product.product_id')
+            ->select('cells.*', DB::raw('ifnull(cells.volume - sum(cell_product.quantity * products.volume), cells.volume) as available_volume'))
+            ->groupBy('cells.id')->get();
+        foreach ($cells as $cell)
+            $cellsAvailableVolume += $cell->available_volume;
+        $openedSubtasksVolume = DB::table('subtasks')
+            ->where('tasks.status', '=', 'OPENED')
+            ->where('cells.status', '!=', 'RESERVED')
+            ->leftJoin('cells', 'cells.id', '=', 'subtasks.to_cell')
+            ->leftJoin('products', 'products.id', '=', 'subtasks.product_id')
+            ->leftJoin('tasks', 'tasks.id', '=', 'subtasks.task_id')
+            ->select(
+                DB::raw('sum(subtasks.quantity * products.volume) as volume')
+            )
+            ->groupBy('subtasks.to_cell')
+            ->get();
+//        return response()->json(['success' => true, 'data' => $users, 'volume' => $cellsAvailableVolume]);
+        foreach ($openedSubtasksVolume as $volume)
+            $cellsAvailableVolume -= $volume->volume;
+
+        return ['success' => true, 'volume' => $cellsAvailableVolume, 'openedSubtasksVolume' => $openedSubtasksVolume];
 
     }
 }

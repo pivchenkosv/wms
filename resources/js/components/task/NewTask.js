@@ -192,16 +192,17 @@ class NewTask extends Component {
                 this.setState({message: response.data.message}, function () {
                     const message = $('div#message').addClass('success');
                     message.fadeIn(300).delay(1500).fadeOut(400);
+
+                    setTimeout(() => this.cancel(), 2500);
                 })
             } else {
                 this.setState({message: response.data.message}, function () {
                     const message = $('div#message').addClass('danger');
-                    message.fadeIn(300).delay(1500).fadeOut(400);
+                    message.fadeIn(300).delay(1500);
+                    button.disabled = false;
+                    button.innerHTML = 'Create Task'
                 })
             }
-
-
-            setTimeout(() => this.cancel(), 2500);
 
         }).catch(response => {
             this.setState({message: response.response.data.errors[Object.keys(response.response.data.errors)[0]]}, function () {
